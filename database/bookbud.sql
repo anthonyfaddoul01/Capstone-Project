@@ -19,26 +19,50 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `lms`
+-- Database: `bookbud`
 --
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `genreid`
+--
+CREATE TABLE genreid(
+    `genre` varchar(40) NOT NULL ,
+    `genreID` int,
+    `count` int 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `book`
 --
 
 CREATE TABLE `book` (
-  `BookId` int(10) NOT NULL,
-  `Section` varchar(255) NOT NULL,
-  `Subject` varchar(50) DEFAULT NULL,
-  `Textbook` varchar(255) NOT NULL,
-  `Volume` varchar(255) DEFAULT NULL,
-  `Year` varchar(50) DEFAULT NULL,
-  `Availability` int(10) DEFAULT NULL,
-  `Author` varchar(255) NOT NULL,
-  `ISBN` varchar(255) NOT NULL,
-  `Status` varchar(255) DEFAULT NULL
+    `bookId` int(10) NOT NULL,
+    `title` varchar(255) NOT NULL,
+    `series` varchar(145),
+    `author` varchar(385) NOT NULL DEFAULT 'Unspecified Author',
+    `rating` Numeric(3,2)  ,
+    `bookDescription` TEXT ,
+    `publicationLanguage` VARCHAR(37) NOT NULL DEFAULT 'Unspecified Language',
+    `genres` VARCHAR(200) NOT NULL ,
+    `mainGenre` VARCHAR(30) NOT NULL  ,
+    `genreID` int NOT NULL,
+    `numericCount` int NOT NULL ,
+    `alphabeticalCount` VARCHAR(5) NOT NULL  ,
+    `shelf` VARCHAR(10) NOT NULL,
+    `bookForm` VARCHAR(40) DEFAULT 'Unspecified' ,
+    `bookEdition` TEXT  ,
+    `pages` int DEFAULT -1,
+    `publisher` VARCHAR(130) NOT NULL DEFAULT 'Unspecified Publisher',
+    `yearOfPublication` VARCHAR(250) DEFAULT 'Unspecified Year' ,
+    `firstYearOfPublication` VARCHAR(50) DEFAULT 'Unspecified Year' ,
+    `awards` TEXT   ,
+    `numRating` int,
+    `ratingbyStars` VARCHAR(55)DEFAULT 'Unspecified' ,
+    `likedPercent` int  ,
+    `coverImage` VARCHAR(150) DEFAULT 'Unspecified' ,
+    `isAvailable` BINARY(1) DEFAULT 1,
+    `reservedNb` INT DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -78,7 +102,7 @@ CREATE TABLE `recommendations` (
 CREATE TABLE `record` (
   `id` int(11) NOT NULL,
   `userId` int(10) NOT NULL,
-  `BookId` int(255) NOT NULL,
+  `bookId` int(255) NOT NULL,
   `Date_of_Issue` date NOT NULL,
   `Due_Date` date NOT NULL,
   `Date_of_Return` date NOT NULL,
@@ -95,7 +119,7 @@ CREATE TABLE `record` (
 
 CREATE TABLE `renew` (
   `userId` int(10) NOT NULL,
-  `BookId` int(10) NOT NULL
+  `bookId` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -107,7 +131,7 @@ CREATE TABLE `renew` (
 CREATE TABLE `return` (
   `id` int(11) NOT NULL,
   `userId` int(10) NOT NULL,
-  `BookId` int(255) NOT NULL
+  `bookId` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -129,7 +153,7 @@ CREATE TABLE `stock` (
 --
 
 CREATE TABLE `tbl` (
-  `BookId` int(11) NOT NULL,
+  `bookId` int(11) NOT NULL,
   `deletor` varchar(255) NOT NULL,
   `item` varchar(255) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -154,11 +178,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`RollNo`, `Name`, `Type`, `Category`, `Department`, `EmailId`, `MobNo`, `Password`) VALUES
-('1002416', 'King A.Albaracin', 'Student', 'Student', 'Compstud', 'kingalbaracin50@gmail.com', 975, 'q'),
-('admin', 'Administrator', 'Admin', 'admin', 'admin', 'admin@gmail.com', 0, 'admin'),
-('librarian', 'Librarian', 'librarian', 'librarian', 'library', 'librarymsulnac.edu.ph', 2, 'msu'),
-('staff', 'staff', 'staff ', 'staff', 'library staff', 'staff', 0, 'staff');
+INSERT INTO `user` (`userId`, `name`, `username`, `email`, `password`,`type`) VALUES
+('1', 'Administrator', 'admin', 'admin', 'admin','Admin');
 
 --
 -- Indexes for dumped tables
@@ -167,9 +188,14 @@ INSERT INTO `user` (`RollNo`, `Name`, `Type`, `Category`, `Department`, `EmailId
 --
 -- Indexes for table `book`
 --
+ALTER TABLE `genreid`
+  ADD PRIMARY KEY (`genreID`);
+
+--
+-- Indexes for table `book`
+--
 ALTER TABLE `book`
-  ADD PRIMARY KEY (`BookId`),
-  ADD UNIQUE KEY `ISBN` (`ISBN`);
+  ADD PRIMARY KEY (`bookId`);
 
 --
 -- Indexes for table `message`
@@ -195,8 +221,8 @@ ALTER TABLE `record`
 -- Indexes for table `renew`
 --
 ALTER TABLE `renew`
-  ADD PRIMARY KEY (`RollNo`,`BookId`),
-  ADD KEY `BookId` (`BookId`);
+  ADD PRIMARY KEY (`userId`,`bookId`),
+  ADD KEY `bookId` (`bookId`);
 
 --
 -- Indexes for table `return`
@@ -214,7 +240,7 @@ ALTER TABLE `stock`
 -- Indexes for table `tbl`
 --
 ALTER TABLE `tbl`
-  ADD PRIMARY KEY (`BookId`);
+  ADD PRIMARY KEY (`bookId`);
 
 --
 -- Indexes for table `user`
@@ -237,8 +263,7 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for table `book`
 --
-ALTER TABLE `book`
-  MODIFY `BookId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+
 
 --
 -- AUTO_INCREMENT for table `message`
@@ -298,7 +323,7 @@ ALTER TABLE `recommendations`
 --
 ALTER TABLE `renew`
   ADD CONSTRAINT `renew_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
-  ADD CONSTRAINT `renew_ibfk_2` FOREIGN KEY (`BookId`) REFERENCES `book` (`BookId`);
+  ADD CONSTRAINT `renew_ibfk_2` FOREIGN KEY (`bookId`) REFERENCES `book` (`bookId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
