@@ -46,7 +46,6 @@ if ($_SESSION['type'] == 'User') {
                 $result = $conn->query($sql);
 
                 ?>
-                <br><br>
                 <table class="table table-bordered table-striped" id="example2">
                     <thead>
                         <tr>
@@ -93,7 +92,16 @@ if ($_SESSION['type'] == 'User') {
         <?php require("scripts.php") ?>
         <script>
             $(document).ready(function () {
-                $('example2').DataTable();
+                $('#example2').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "responsive": true,
+                    "pageLength": 15
+                });
 
             });
 
