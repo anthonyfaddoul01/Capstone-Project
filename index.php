@@ -15,6 +15,7 @@ require('dbconn.php');
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="keywords" content="Library Member Login Form Widget Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 	<!-- //Meta-Tags -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<!-- Style --> <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
@@ -38,9 +39,7 @@ window.onload = function() {
 <!-- //Head -->
 
 <!-- Body -->
-<body>
-
-	<h1>LIBRARY MANAGEMENT </h1>
+<body class="flex-row">
 	<div class="container">
 		<input type="checkbox" id="flip">
 		<div class="cover">
@@ -108,7 +107,6 @@ window.onload = function() {
 if(isset($_POST['signin']))
 {$u=$_POST['email'];
  $p=$_POST['password'];
- $c=$_POST['Category'];
 
  $sql="select * from bookbud.user where email='$u' OR username='$u'";
 
@@ -116,15 +114,18 @@ if(isset($_POST['signin']))
 $row = $result->fetch_assoc();
 $x=$row['password'];
 $y=$row['type'];
+$id=$row['userId'];
 if(strcasecmp($x,$p)==0 && !empty($u) && !empty($p))
   {//echo "Login Successful";
    $_SESSION['email']=$u;
+   $_SESSION['userId']=$id;
+   $_SESSION['type']=$y;
    
 if ($y == 'Admin') {
 	echo header("Location:admin/index.php");
 
-}elseif($y=='librarian'){
-echo header("Location:librarian/index.php");
+}elseif($y=='Librarian'){
+	echo header("Location:librarian/index.php");
 
 }elseif ($y=='User') {
 	echo header("Location:user/index.php");
