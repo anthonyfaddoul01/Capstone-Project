@@ -34,39 +34,15 @@ if ($_SESSION['userId'] == '1') {
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <form class="form-horizontal row-fluid" action="user.php" method="post">
-                            <div class="control-group">
-                                <label class="control-label" for="Search"><b>Search:</b></label>
-                                <div class="controls">
-                                    <input type="text" id="title" name="title" placeholder="Enter Name/ID No of Student"
-                                        class="span8" required>
-                                    <button type="submit" name="submit" class="btn">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                        <br>
                         <?php
-                        if (isset($_POST['submit'])) {
-                            $s = $_POST['title'];
-                            $sql = "select * from bookbud.user where (userId='$s' or name like '%$s% or username like '%$s%') 
-                            and Type<>'ADMIN'";
-                        } else
-                            $sql = "select * from bookbud.user where Type<>'ADMIN'";
-
+                        $sql = "select * from bookbud.user where Type<>'ADMIN'";
                         $result = $conn->query($sql);
-                        $rowcount = mysqli_num_rows($result);
-
-                        if (!($rowcount))
-                            echo "<br><center><h2><b><i>No Results</i></b></h2></center>";
-                        else {
-
-
                             ?>
-                            <table class="table" id="tables">
+                            <table class="table table-bordered table-striped" id="example1">
                                 <thead>
                                     <tr>
+                                        <th>ID no.</th>
                                         <th>Name</th>
-                                        <th>ID No.</th>
                                         <th>Username</th>
                                         <th>Email</th>
                                         <th></th>
@@ -86,10 +62,10 @@ if ($_SESSION['userId'] == '1') {
                                         ?>
                                         <tr>
                                             <td>
-                                                <?php echo $name ?>
+                                                <?php echo $id ?>
                                             </td>
                                             <td>
-                                                <?php echo $id ?>
+                                                <?php echo $name ?>
                                             </td>
                                             <td>
                                                 <?php echo $username ?>
@@ -101,12 +77,10 @@ if ($_SESSION['userId'] == '1') {
                                                 <center>
                                                     <a href="userdetails.php?id=<?php echo $id; ?>"
                                                         class="btn btn-success">Details</a>
-                                                    <!--a href="remove_student.php?id=<?php echo $id; ?>" class="btn btn-danger">Remove</a-->
                                                 </center>
                                             </td>
                                         </tr>
-                                    <?php }
-                        } ?>
+                                    <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -123,6 +97,26 @@ if ($_SESSION['userId'] == '1') {
         <!--/.wrapper-->
 
         <?php require("scripts.php") ?>
+        <script>
+            $(document).ready(function () {
+                $('#example2').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "responsive": true,
+                    "ordering": false,
+                    "pageLength": 15
+                });
+                $("#example1").DataTable({
+                    "responsive": true, "lengthChange": false, "autoWidth": false,"ordering": false,
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+            });
+
+        </script>
     </body>
 
     </html>

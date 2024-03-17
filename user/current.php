@@ -36,12 +36,12 @@ if ($_SESSION['type'] == 'User') {
                 if (isset($_POST['submit'])) { //need to make a search bar same as in admin
                     $s = $_POST['Textbook'];
                     $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
-                                            and Date_of_Issue is NOT NULL and Date_of_Return is NOT NULL 
+                                            and Date_of_Issue is NOT NULL and Date_of_Return is NULL 
                                             and book.bookid = record.bookId and (record.bookId='$s' or title like '%$s%')";
 
                 } else
                     $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
-                and Date_of_Issue is NOT NULL and Date_of_Return is NOT NULL and book.bookid = record.bookId";
+                and Date_of_Issue is NOT NULL and Date_of_Return is NULL and book.bookid = record.bookId";
 
                 $result = $conn->query($sql);
 
@@ -52,7 +52,8 @@ if ($_SESSION['type'] == 'User') {
                             <th>Book ID</th>
                             <th>Title</th>
                             <th>Issue Date</th>
-                            <th>Return Date</th>
+                            <th>Due Date</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +65,8 @@ if ($_SESSION['type'] == 'User') {
                             $bookid = $row['bookId'];
                             $name = $row['title'];
                             $issuedate = $row['Date_of_Issue'];
-                            $returndate = $row['Date_of_Return'];
+                            $duedate = $row['Due_Date'];
+                            $renewals = $row['Renewals_left'];
                             ?>
 
                             <tr>
@@ -78,7 +80,17 @@ if ($_SESSION['type'] == 'User') {
                                     <?php echo $issuedate ?>
                                 </td>
                                 <td>
-                                    <?php echo $returndate ?>
+                                    <?php echo $duedate ?>
+                                </td>
+                                <td>
+                                    <center>
+                                        <?php
+                                        if ($renewals)
+                                            echo "<a href=\"renew_request.php?id=" . $bookid . "\" class=\"btn btn-success\">Renew</a>";
+                                        ?>
+                                        <a href="return_request.php?id=<?php echo $bookid; ?>"
+                                            class="btn btn-danger">Return</a>
+                                    </center>
                                 </td>
                             </tr>
                         <?php } ?>

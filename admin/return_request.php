@@ -53,7 +53,7 @@ if ($_SESSION['userId'] == '1') {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "select return.bookId,return.userId,Textbook,datediff(curdate(),Due_Date) 
+                                                $sql = "select return.bookId,return.userId,title,datediff(curdate(),Due_Date) 
                                                 as x from bookbud.return,bookbud.book,bookbud.record where Date_of_Return is NULL and 
                                                 return.bookId=book.bookId and return.bookId=record.bookId and return.userId=record.userId";
 
@@ -61,7 +61,10 @@ if ($_SESSION['userId'] == '1') {
                                                 while ($row = $result->fetch_assoc()) {
                                                     $bookid = $row['bookId'];
                                                     $userid = $row['userId'];
-                                                    $name = $row['title'];
+                                                    $namequery = "SELECT username FROM bookbud.user WHERE userId='$userid'";
+                                                    $result = $conn->query($namequery);
+                                                    $name = $result->fetch_all(MYSQLI_ASSOC);
+                                                    $title = $row['title'];
                                                     $dues = $row['x'];
 
 
@@ -71,13 +74,13 @@ if ($_SESSION['userId'] == '1') {
                                                             <?php echo $userid ?>
                                                         </td>
                                                         <td>
-                                                            username
+                                                            <?php echo $name[0]['username'] ?>
                                                         </td>
                                                         <td>
                                                             <?php echo $bookid ?>
                                                         </td>
                                                         <td><b>
-                                                                <?php echo $name ?>
+                                                                <?php echo $title ?>
                                                             </b></td>
                                                         <td>
                                                             <?php echo $dues ?>
