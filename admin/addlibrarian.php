@@ -25,7 +25,7 @@ if ($_SESSION['userId'] == '1') {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Add Admin</h1>
+                            <h1>Add Librarian</h1>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -48,27 +48,27 @@ if ($_SESSION['userId'] == '1') {
                         $pass = $row['password'];
                         ?>
                         <!-- form start -->
-                        <form action="addadmin.php" method="post">
+                        <form action="addlibrarian.php" method="post">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="name" id="name" required
-                                        placeholder="Enter admin name" required>
+                                        placeholder="Enter librarian name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="email" id="email"
-                                        placeholder="Enter admin email" required>
+                                        placeholder="Enter librarian email" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="username" id="username"
-                                        placeholder="Enter admin username" required>
+                                        placeholder="Enter librarian username" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" class="form-control" name="password" id="password"
-                                        placeholder="Enter admin password" required>
+                                        placeholder="Enter librarian password" required>
                                 </div>
 
                             </div>
@@ -95,7 +95,7 @@ if ($_SESSION['userId'] == '1') {
             $email = $_POST['email'];
             $username = $_POST['username'];
             $pass = $_POST['password'];
-            $type = "Admin";
+            $type = "Librarian";
 
 
             $sql = "insert into bookbud.user (name,username,email,password,type) values ('$name','$email','$username','$pass','$type')";

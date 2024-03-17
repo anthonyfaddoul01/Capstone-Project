@@ -91,8 +91,11 @@ if ($_SESSION['userId'] == '1') {
                                                 while ($row = $result->fetch_assoc()) {
                                                     $id = $row['id'];
                                                     $userid = $row['userId'];
-                                                    $bookid = $row['BookId'];
-                                                    $name = $row['title'];
+                                                    $bookid = $row['bookId'];
+                                                    $namequery = "SELECT username FROM bookbud.user WHERE userId='$userid'";
+                                                    $result = $conn->query($namequery);
+                                                    $name = $result->fetch_assoc();
+                                                    $title = $row['title'];
                                                     $issuedate = $row['Date_of_Issue'];
                                                     $return = $row['Date_of_Return'];
                                                     $duedate = $row['Due_Date'];
@@ -104,12 +107,14 @@ if ($_SESSION['userId'] == '1') {
                                                         <td>
                                                             <?php echo $userid ?>
                                                         </td>
-
+                                                        <td>
+                                                            <?php echo $name['username'] ?>
+                                                        </td>
                                                         <td>
                                                             <?php echo $bookid ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo $name ?>
+                                                            <?php echo $title ?>
                                                         </td>
                                                         <td>
                                                             <?php echo $issuedate ?>

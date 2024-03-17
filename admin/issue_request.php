@@ -61,8 +61,10 @@ if ($_SESSION['userId'] == '1') {
                                                     $id = $row['id'];
                                                     $bookid = $row['bookId'];
                                                     $userid = $row['userId'];
-                                                    $username= $row['name'];
-                                                    $name = $row['title'];
+                                                    $namequery = "SELECT username FROM bookbud.user WHERE userId='$userid'";
+                                                    $result = $conn->query($namequery);
+                                                    $name = $result->fetch_all(MYSQLI_ASSOC);
+                                                    $title = $row['title'];
                                                     $avail = $row['isAvailable'];
 
 
@@ -72,13 +74,13 @@ if ($_SESSION['userId'] == '1') {
                                                             <?php echo $userid ?>
                                                         </td>
                                                         <td>
-                                                        <!-- <?php echo $username ?> i added thiss... -->
+                                                            <?php echo $name[0]['username'] ?>
                                                         </td>
                                                         <td>
                                                             <?php echo $bookid ?>
                                                         </td>
                                                         <td><b>
-                                                                <?php echo $name ?>
+                                                                <?php echo $title ?>
                                                             </b></td>
                                                         <td>
                                                             <?php echo $avail ?>
@@ -90,7 +92,7 @@ if ($_SESSION['userId'] == '1') {
                                                                     echo "<a href=\"accept.php?id1=" . $bookid . "&id2=" . $userid . "\" class=\"btn btn-success\">Accept</a>";
                                                                 }
                                                                 ?>
-                                                                <a href="reject.php?id1=<?php echo $id ?>&id2=<?php echo $id ?>"
+                                                                <a href="reject.php?id1=<?php echo $bookid ?>&id2=<?php echo $userid ?>"
                                                                     class="btn btn-danger">Reject</a>
                                                             </center>
                                                         </td>

@@ -30,8 +30,8 @@
     <!-- /.navbar -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
-            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <a href="index.php" class="brand-link">
+            <img src="images/logo.png" alt="Logo" class="brand-image img-circle elevation-3"
                 style="opacity: .8">
             <span class="brand-text font-weight-light">BookBud</span>
         </a>
@@ -96,28 +96,28 @@
                             <p>Add Book</p>
                         </a>
                     </li>
-                    <li class="nav-item menu-is-opening menu-open">
+                    <li class="nav-item">
                         <a href="requests.php" class="nav-link">
                             <i class="nav-icon fas fa-tasks"></i>
-                            <p>Issue/Return Requests<i class="fas fa-angle-left right"></i></p>
+                            <p>Requests<i class="fas fa-angle-left right"></i></p>
                         </a>
-                        <ul class="nav nav-treeview ml-4" style="display: block;">
+                        <ul class="nav nav-treeview ml-4" style="display: none;">
                             <li class="nav-item">
                                 <a href="issue_request.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Issue Request</p>
+                                    <p>Issue Requests</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="renew_request.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Renew Request</p>
+                                    <p>Renew Requests</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="return_request.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Return Request</p>
+                                    <p>Return Requests</p>
                                 </a>
                             </li>
                         </ul>
@@ -135,7 +135,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="history.php" class="nav-link">
+                        <a href="testbook.php" class="nav-link">
                             <i class="nav-icon fas fa-list-ul"></i>
                             <p>Recent Deletion Books</p>
                         </a>
