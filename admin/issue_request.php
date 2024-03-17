@@ -53,14 +53,15 @@ if ($_SESSION['userId'] == '1') {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "select * from bookbud.record,bookbud.book where 
-                                                Date_of_Issue is NULL and record.bookId=book.bookId order by Time";
+                                                $sql = "select * from bookbud.record,bookbud.book,bookbud.user where 
+                                                Date_of_Issue is NULL and record.bookId=book.bookId and record.userId=user.userId order by Time";
 
                                                 $result = $conn->query($sql);
                                                 while ($row = $result->fetch_assoc()) {
                                                     $id = $row['id'];
                                                     $bookid = $row['bookId'];
                                                     $userid = $row['userId'];
+                                                    $username= $row['name'];
                                                     $name = $row['title'];
                                                     $avail = $row['isAvailable'];
 
@@ -71,7 +72,7 @@ if ($_SESSION['userId'] == '1') {
                                                             <?php echo $userid ?>
                                                         </td>
                                                         <td>
-                                                            username
+                                                        <!-- <?php echo $username ?> i added thiss... -->
                                                         </td>
                                                         <td>
                                                             <?php echo $bookid ?>
