@@ -67,13 +67,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="message.php" class="nav-link">
+                        <a href="send_message.php" class="nav-link">
                             <i class="nav-icon fas fa-inbox"></i>
                             <p>Messages</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="receive.php" class="nav-link">
+                        <a href="receive_message.php" class="nav-link">
                             <i class="nav-icon fas fa-reply"></i>
                             <p>Receive Message</p>
                         </a>
