@@ -1,7 +1,7 @@
 <?php
 require('dbconn.php');
   
-        $csvFilePath = 'finalData.csv';
+        $csvFilePath = 'books.csv';
         $fileHandle = fopen($csvFilePath, 'r');
 
         if ($fileHandle === false) {
@@ -19,13 +19,13 @@ require('dbconn.php');
             $rowNumber++; // Increment row number at the beginning of the loop
             $sql = "INSERT INTO `book`(`bookId`, `title`, `series`, `author`, `rating`, `bookDescription`,
               `publicationLanguage`, `genres`, `mainGenre`, `genreID`, `numericCount`, `alphabeticalCount`, `shelf`, 
-               `bookForm`, `bookEdition`, `pages`, `publisher`, `yearOfPublication`, `firstYearOfPublication`, 
-              `awards`, `numRating`, `ratingbyStars`, `likedPercent`, `coverImage`) 
-              VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+               `bookForm`, `bookEdition`, `pages`, `publisher`, `yearOfPublication`, 
+              `awards`, `numRating`, `ratingbyStars`, `coverImage`) 
+              VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             
             $stmt->execute([intval($data[0]),$data[1],$data[2],$data[3],floatval($data[4]),$data[5],$data[6],$data[7],$data[8],intval($data[9]),intval($data[10]),$data[11],$data[12],
-            $data[13],$data[14],intval($data[15]),$data[16],$data[17],$data[18],$data[19],intval($data[20]),$data[21],intval($data[22]),$data[23]]);
+            $data[13],$data[14],intval($data[15]),$data[16],$data[17],$data[18],intval($data[19]),$data[20],$data[21]]);
             } catch (Exception $e) {
                 // Log the error with row number
                 echo "Error at row $rowNumber: " . $e->getMessage() . "\n";

@@ -55,11 +55,9 @@ CREATE TABLE `book` (
     `pages` int DEFAULT -1,
     `publisher` VARCHAR(130) NOT NULL DEFAULT 'Unspecified Publisher',
     `yearOfPublication` VARCHAR(250) DEFAULT 'Unspecified Year' ,
-    `firstYearOfPublication` VARCHAR(50) DEFAULT 'Unspecified Year' ,
     `awards` TEXT   ,
     `numRating` int,
     `ratingbyStars` VARCHAR(55)DEFAULT 'Unspecified' ,
-    `likedPercent` int  ,
     `coverImage` VARCHAR(150) DEFAULT 'Unspecified' ,
     `isAvailable` BINARY(1) DEFAULT 1,
     `reservedNb` INT DEFAULT 0
