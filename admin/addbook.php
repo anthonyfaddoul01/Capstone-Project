@@ -87,7 +87,7 @@ if ($_SESSION['userId'] == '1') {
                 </div>
                 <div class="form-group">
                   <label>Main Genre <span class="text-danger">*</span></label>
-                  <select class="select2" name="mainGenre" style="width: 100%;" data-placeholder="Select book genres">
+                  <select class="form-control select2bs4" style="width: 100%;">
                     <?php
                     $query = "SELECT * FROM genreid";
                     $result = $conn->query($query);
@@ -103,12 +103,11 @@ if ($_SESSION['userId'] == '1') {
                       <?php
                     }
                     ?>
-
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Genre <span class="text-danger">* (select the main genre first)</span></label>
-                  <select class="select2" id="mySelect"  multiple="multiple" data-placeholder="Select book genres"
+                  <label>Genres <span class="text-danger">*</span></label>
+                  <select class="select2" id="mySelect" multiple="multiple" data-placeholder="Select book genres"
                     style="width: 100%;" name="genre[]">
                     <?php
                     $query = "SELECT * FROM genreid";
@@ -170,11 +169,11 @@ if ($_SESSION['userId'] == '1') {
                 <!--Cover Image should be last input-->
               </div>
               <!-- /.card-body -->
-            <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
-              <div class="card-footer float-right">
-                <button type="submit" name="submit" class="btn btn-success">Add Book</button>
+              <div class="d-flex justify-content-end align-items-center" style="height: 100px;">
+                <div class="card-footer float-right">
+                  <button type="submit" name="submit" class="btn btn-success">Add Book</button>
+                </div>
               </div>
-             </div>
             </form>
           </div>
           <!-- /.card -->
@@ -253,8 +252,8 @@ if ($_SESSION['userId'] == '1') {
       } else {
         echo "<script>alert('Book inserted successfully.');</script>";
       }
-          // Close the statement
-    $stmt->close();
+      // Close the statement
+      $stmt->close();
     }
 
 
