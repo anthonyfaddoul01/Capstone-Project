@@ -1,5 +1,5 @@
 <?php
-require('dbconn.php');
+require ('dbconn.php');
 
 ?>
 
@@ -14,11 +14,11 @@ if ($_SESSION['userId'] == '1') {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Library</title>
-        <?php require("links.php") ?>
+        <?php require ("links.php") ?>
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">
-        <?php require("nav.php") ?>
+        <?php require ("nav.php") ?>
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -53,173 +53,191 @@ if ($_SESSION['userId'] == '1') {
                 $available = $row["isAvailable"] == '1' ? 'Yes' : 'No';
                 $img = $row['coverImage'];
                 ?>
-                <div class="col">
-                    <!-- Box Comment -->
-                    <div class="card card-widget">
-                        <div class="card-header">
-                            <div class="user-block">
-                                <?php echo '<img src="' . $img . '">' ?>
-                                <span class="username"><a href="#">
-                                        <?php echo $title; ?>
-                                    </a></span>
-                                <span class="description">
-                                    By
-                                    <?php echo $author; ?>
-                                </span>
-                            </div>
-                            <!-- /.card-tools -->
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body row">
-                        <form class="form-horizontal row-fluid" action="edit_book_details.php?id=<?php echo $bookid ?>" method="post">
-                                           
-                                           <div class="control-group">
-     
-                                                 <label class="control-label" for="Section"><b>Book Section:</b></label>
-                                                 <div class="controls">
-                                                     <select name = "Section" tabindex="1" value="SC" data-placeholder="" class="span8" required>
-                                                       <!--   <option value="<?php echo $status?>"><?php echo $status ?> </option> -->
-                                                       <option value=""></option>
-                                                         <option value="General Reference"<?php echo($row['Section']=="General Reference")? 'selected':''; ?>>General Reference</option>
-     
-                                                         <option value="Reference"<?php echo($row['Section']=="Reference")? 'selected':''; ?>>Reference</option>
-     
-                                                         <option value="Filipiniana" <?php echo($row['Section']=="Filipiniana")? 'selected':''; ?>>Filipiniana</option>
-     
-                                                         <option class="Periodical" <?php echo($row['Section']=="Periodical")? 'selected':''; ?>>Periodical</option>
-     
-                                                         <option value="Reserved Books"<?php echo($row['Section']=="Reserved Books")? 'selected':''; ?>> Reserved Books</option>
-     
-                                                         <option value="Graduate Studies" <?php echo($row['Section']=="Graduate Studies")? 'selected':''; ?>>Graduate Studies</option>
-     
-                                                         <option value="Special Collections" <?php echo($row['Section']=="Special Collections")? 'selected':''; ?>>Special Collection</option>
-     
-                                                         <option value="Rare Book"  <?php echo($row['Section']=="Rare Book")? 'selected':''; ?>> Rare Book</option>
-     
-                                                         <option value="Computer Internet Area"  <?php echo($row['Section']=="Computer Internet Area")? 'selected':''; ?>>Computer Internet Area</option>
-                                                         
-                                                     </select>
-                                                 </div>
-                                                 
-                                         </div>
-                                             <div class="control-group">
-                                                 <label class="control-label" for="Subject"><b>Subject</b></label>
-                                                 <div class="controls">
-                                                     <input type="text" id="Subject" name="Subject" placeholder="Subject" class="span8" required value="<?php echo $subject?>">
-                                                 </div>
-                                             </div>
-                                              <div class="control-group">
-                                                 <label class="control-label" for="book"><b>Textbook</b></label>
-                                                 <div class="controls">
-                                                     <input type="text" id="book" name="book" placeholder="Textbook" class="span8" required value="<?php echo $name?>">
-                                                 </div>
-                                             </div>
-                                             
-                                             <div class="control-group">
-                                                 <label class="control-label" for="Copyright"><b>Copyright Year</b></label>
-                                                 <div class="controls">
-                                                     <input type="text" id="Copyright" name="Copyright" placeholder="Copyright" class="span8" required value="<?php echo $year?>">
-                                                 </div>
-                                             </div>
-                                             <div class="control-group">
-                                                 <label class="control-label" for="Title"><b>Volume</b></label>
-                                                 <div class="controls">
-                                                     <input type="text" id="Title" name="Title" placeholder="Volumes" class="span8" required value="<?php echo $vol?>">
-                                                 </div>
-                                             </div>
-                                             <div class="control-group">
-                                                 <label class="control-label" for="Availability"><b>Number of Copies</b></label>
-                                                 <div class="controls">
-                                                     <input type="text" id="availability" name="availability" placeholder="Number of Copies" class="span8" required value="<?php echo $avail?>">
-                                                 </div >
-                                             </div>
-                                             <div class="control-group">
-                                                 <label class="control-label" for="Author"><b>Author</b></label>
-                                                 <div class="controls">
-                                                     <input type="text" id="Author" name="Author" placeholder="Author" class="span8" required value="<?php echo $author?>">
-                                                 </div>
-                                             </div>
-                                             <div class="control-group">
-                                                 <label class="control-label" for="ISBN"><b>ISBN</b></label>
-                                                 <div class="controls">
-                                                     <input type="text" id="ISBN" name="ISBN" placeholder="ISBN" class="span8" required value="<?php echo $isbn?>">
-                                                 </div >
-                                             </div>
-                                              <div class="control-group">
-                                                 <label class="control-label" for="status"><b>Book Status:</b></label>
-                                                 <div class="controls">
-                                                    
-                                                   <select name = "status" tabindex="1" value="SC" data-placeholder="Select Status" class="span6">
-                                                       <!--   <option value="<?php echo $status?>"><?php echo $status ?> </option> -->
-                                                       <option value=""></option>
-     
-                                                         <option value="GOOD" <?php echo($row['Status']=="GOOD")? 'selected':''; ?>>GOOD</option>
-     
-                                                         <option value="DAMAGE" <?php echo($row['Status']=="DAMAGE")? 'selected':''; ?>>DAMAGE</option>
-     
-                                                         <option value="DILAPIDATED" <?php echo($row['Status']=="DILAPIDATED")? 'selected':''; ?>>DILAPIDATED</option>
-                                                         
-                                                     </select>
-                                                 </div>
-                                         </div>
-     
-     
-                                             <div class="control-group">
-                                                 <div class="controls">
-                                                     <button type="submit" name="submit"class="btn">Update Details</button>
-                                                 </div>
-                                             </div>
-     
-                                            
-                                         </form> 
-                            </div>
 
+                <div class="card-body row justify-content-center m-0">
+                    <div class="col-6">
+                        <div class="card card-info">
+                            <div class="card card-widget">
+                                <div class="card-header">
+                                    <div class="user-block">
+                                        <?php echo '<img src="' . $img . '">' ?>
+                                        <span class="username"><a href="#">
+                                                <?php echo $title; ?>
+                                            </a></span>
+                                        <span class="description">
+                                            By
+                                            <?php echo $author; ?>
+                                        </span>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <form action="editbookdetails.php?id=<?php echo $bookid ?>" method="post">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="title">Title <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" name="title" id="title"
+                                                placeholder="Enter book title" required value="<?php echo $title ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="author">Author</label>
+                                            <input type="text" class="form-control" name="author" id="author"
+                                                placeholder="Enter book author" value="<?php echo $author ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="series">Series</label>
+                                            <input type="text" class="form-control" name="series" id="series"
+                                                placeholder="Enter book series" value="<?php echo $series ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rating">Rating</label>
+                                            <input type="text" class="form-control" name="rating" id="rating"
+                                                placeholder="Enter book rating" value="<?php echo $rating ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control" id="description" name="description" rows="4"
+                                                placeholder="Enter book description"
+                                                value="<?php echo $description ?>"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="language">Language</label>
+                                            <input type="text" class="form-control" name="language" id="language"
+                                                placeholder="Enter book language" value="<?php echo $lang ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Main Genre <span class="text-danger">*</span></label>
+                                            <select class="form-control select2bs4" style="width: 100%;"
+                                                value="<?php echo $genre ?>">
+                                                <?php
+                                                $query = "SELECT * FROM genreid";
+                                                $result = $conn->query($query);
+                                                if ($result->num_rows > 0) {
+                                                    $options = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                                }
 
+                                                foreach ($options as $option) {
+                                                    ?>
+                                                    <option>
+                                                        <?php echo $option['genre']; ?>
+                                                    </option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Genres <span class="text-danger">*</span></label>
+                                            <select class="select2" id="mySelect" multiple="multiple"
+                                                data-placeholder="Select book genres" style="width: 100%;" name="genre[]"
+                                                value="<?php echo $title ?>">
+                                                <?php
+                                                $query = "SELECT * FROM genreid";
+                                                $result = $conn->query($query);
+                                                if ($result->num_rows > 0) {
+                                                    $options = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                                }
+
+                                                foreach ($options as $option) {
+                                                    ?>
+                                                    <option>
+                                                        <?php echo $option['genre']; ?>
+                                                    </option>
+                                                    <?php
+                                                }
+                                                ?>
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label for="bookform">Book Form</label>
+                                            <input type="text" class="form-control" name="bookform" id="bookform"
+                                                placeholder="Enter book form" value="<?php echo $title ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bookedition">Book Edition</label>
+                                            <input type="text" class="form-control" name="bookedition" id="bookedition"
+                                                placeholder="Enter book edition" value="<?php echo $bookEdition ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pages">No. of Pages</label>
+                                            <input type="text" class="form-control" name="pages" id="pages"
+                                                placeholder="Enter book no. of pages" value="<?php echo $pages ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="publisher">Publisher</label>
+                                            <input type="text" class="form-control" name="publisher" id="publisher"
+                                                placeholder="Enter book publisher" value="<?php echo $publisher ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="yearpub">Year of Publication</label>
+                                            <input type="text" class="form-control" name="yearpub" id="yearpub"
+                                                placeholder="Enter book year of publication" value="<?php echo $year ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="awards">Awards</label>
+                                            <input type="text" class="form-control" name="awards" id="awards"
+                                                placeholder="Enter book awards" value="<?php echo $title ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="coverimg">Cover Image <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" name="coverimg" id="coverimg"
+                                                placeholder="Enter book cover image" required value="<?php echo $img ?>">
+                                        </div>
+                                        <!--Cover Image should be last input-->
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="d-flex justify-content-end align-items-center" style="height: 100px;">
+                                        <div class="card-footer float-right">
+                                            <button type="submit" name="submit" class="btn btn-success">Add
+                                                Book</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <!-- /.card -->
-
                 </div>
-
-
-
             </div>
+            <!-- /.card -->
+
+        </div>
+
+
+
+        </div>
         </div>
         <!--/.wrapper-->
 
-        <?php require("scripts.php") ?>
+        <?php require ("scripts.php") ?>
 
         <?php
-if(isset($_POST['submit']))
-{
-     $bookid = $_GET['id'];
-   $Section = $_POST['Section'];
-$Subject = $_POST['Subject'];
-$book = $_POST['book'];
-$Copyright = $_POST['Copyright'];
-$Title = $_POST['Title'];
-$availability = $_POST['availability'];
-$Author = $_POST['Author'];
-$ISBN = $_POST['ISBN'];
-$status = $_POST['status'];
+        if (isset ($_POST['submit'])) {
+            $bookid = $_GET['id'];
+            $Section = $_POST['Section'];
+            $Subject = $_POST['Subject'];
+            $book = $_POST['book'];
+            $Copyright = $_POST['Copyright'];
+            $Title = $_POST['Title'];
+            $availability = $_POST['availability'];
+            $Author = $_POST['Author'];
+            $ISBN = $_POST['ISBN'];
+            $status = $_POST['status'];
 
 
- // $sql1 = "INSERT INTO `book`( `Section`, `Subject`, `Textbook`, `Volume`, `Year`, `Availability`, `Author`, `ISBN`, `Status`) VALUES ('$Section','$Subject','$book','$Copyright','$Title','$availability','$Author','$ISBN','$status')";
+            // $sql1 = "INSERT INTO `book`( `Section`, `Subject`, `Textbook`, `Volume`, `Year`, `Availability`, `Author`, `ISBN`, `Status`) VALUES ('$Section','$Subject','$book','$Copyright','$Title','$availability','$Author','$ISBN','$status')";
+    
+            echo $sql1 = "update LMS.book set `Section`='$Section',`Subject`='$subject',`Textbook`='$book',`Volume`='$Title',`Year`='$Copyright',`Availability`='$availability',`Author`='$Author',`ISBN`='$ISBN',`Status`='$status' WHERE BookId='$bookid'";
 
-echo $sql1="update LMS.book set `Section`='$Section',`Subject`='$subject',`Textbook`='$book',`Volume`='$Title',`Year`='$Copyright',`Availability`='$availability',`Author`='$Author',`ISBN`='$ISBN',`Status`='$status' WHERE BookId='$bookid'";
-
-// $conn->query($sql1) or die($conn->error);
-
-if($conn->query($sql1) == TRUE){
-echo "<script type='text/javascript'>alert('Success')</script>";
-header( "Refresh:0.01; url=book.php", true, 303);
-}
-else
-{//echo $conn->error;
-echo "<script type='text/javascript'>alert('Error')</script>";
-}
-}
-?>
+            // $conn->query($sql1) or die($conn->error);
+    
+            if ($conn->query($sql1) == TRUE) {
+                echo "<script type='text/javascript'>alert('Success')</script>";
+                header("Refresh:0.01; url=book.php", true, 303);
+            } else {//echo $conn->error;
+                echo "<script type='text/javascript'>alert('Error')</script>";
+            }
+        }
+        ?>
     </body>
 
     </html>

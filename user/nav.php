@@ -1,40 +1,10 @@
-<div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-        </ul>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top header-inner-pages">
+    <div class="container d-flex align-items-center justify-content-lg-between">
 
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-            <!-- Messages Dropdown Menu -->
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-user"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <a href="index.php" class="dropdown-item">
-                        Your Profile
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="logout.php" class="dropdown-item">
-                        Logout
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-    <!-- /.navbar -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="index.php" class="brand-link">
-            <img src="images/logo.png" alt="Logo" class="brand-image img-circle elevation-3"
-                style="opacity: .8">
-            <span class="brand-text font-weight-light">BookBud</span>
-        </a>
+        <h1 class="logo me-auto me-lg-0"><a href="index.php"><img src="images/logo.png" alt="Logo" ></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         <?php
         $userId = $_SESSION['userId'];
         $sql = "select * from bookbud.user where userId='$userId'";
@@ -45,63 +15,37 @@
         $username = $row['username'];
         $type = $row['type'];
         ?>
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="info">
-                    <a class="d-block">
-                        <?php echo $name ?>
-                    </a>
-                </div>
-            </div>
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto " href="#hero">Home</a></li>
+                <li><a class="nav-link scrollto" href="#about">About</a></li>
+                <li><a class="nav-link scrollto" href="#services">Services</a></li>
+                <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
+                <li><a class="nav-link scrollto" href="#team">News</a></li>
+                <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="#">Drop Down 1</a></li>
+                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                                    class="bi bi-chevron-right"></i></a>
+                            <ul>
+                                <li><a href="#">Deep Drop Down 1</a></li>
+                                <li><a href="#">Deep Drop Down 2</a></li>
+                                <li><a href="#">Deep Drop Down 3</a></li>
+                                <li><a href="#">Deep Drop Down 4</a></li>
+                                <li><a href="#">Deep Drop Down 5</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Drop Down 2</a></li>
+                        <li><a href="#">Drop Down 3</a></li>
+                        <li><a href="#">Drop Down 4</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
 
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-link">
-                            <i class="nav-icon fas fa-user"></i>
-                            <p>Home</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="message.php" class="nav-link">
-                            <i class="nav-icon fas fa-inbox"></i>
-                            <p>Messages</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="book.php" class="nav-link">
-                            <i class="nav-icon fas fa-book-open"></i>
-                            <p>All Books</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="current.php" class="nav-link">
-                            <i class="nav-icon fas fa-list-ul"></i>
-                            <p>Currently Issued Books</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pre.php" class="nav-link">
-                            <i class="nav-icon fas fa-list-ul"></i>
-                            <p>Prev Borrowed Books</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="logout.php" class="nav-link">
-                            <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
-                            <p class="text">Logout</p>
-                        </a>
-                    </li>
-                </ul>
+        <a href="logout.php" class="get-started-btn scrollto">Logout</a>
 
-            </nav>
-            <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-    </aside>
-</div>
-<!-- /navbar -->
+    </div>
+</header><!-- End Header -->
