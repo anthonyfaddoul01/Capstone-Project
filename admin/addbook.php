@@ -87,7 +87,7 @@ if ($_SESSION['userId'] == '1') {
                 </div>
                 <div class="form-group">
                   <label>Main Genre <span class="text-danger">*</span></label>
-                  <select class="form-control select2bs4" style="width: 100%;">
+                  <select class="form-control select2bs4" style="width: 100%;" name="mainGenre">
                     <?php
                     $query = "SELECT * FROM genreid";
                     $result = $conn->query($query);
@@ -225,8 +225,8 @@ if ($_SESSION['userId'] == '1') {
       $alphabeticCount = getLetterPart(getCount(getGenreID($mainGenre)));
       $shelf = generateShelvingCode(getGenreID($mainGenre), getCount(getGenreID($mainGenre)));
       $sql = "INSERT INTO `book`(`bookId`, `title`, `series`, `author`, `rating`, `bookDescription`, `publicationLanguage`, `genres`, `mainGenre`, `genreID`, `numericCount`,
-       `alphabeticalCount`, `shelf`, `bookForm`, `bookEdition`, `pages`, `publisher`, `yearOfPublication`, `firstYearOfPublication`, `awards`, `numRating`, `ratingbyStars`,
-        `likedPercent`, `coverImage`, `isAvailable`, `reservedNb`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+       `alphabeticalCount`, `shelf`, `bookForm`, `bookEdition`, `pages`, `publisher`, `yearOfPublication`, `awards`, `numRating`, `ratingbyStars`,
+        `coverImage`, `isAvailable`, `reservedNb`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
       $stmt = $conn->prepare($sql);
 
@@ -242,7 +242,7 @@ if ($_SESSION['userId'] == '1') {
       $likedPercent = NULL; // Adjust according to your needs
   
       // Bind the parameters to the statement
-      $stmt->bind_param("issssssssiissssissssisssii", $ID, $title, $series, $author, $rating, $description, $language, $genres, $mainGenre, $GenreID, $numericCount, $alphabeticCount, $shelf, $bookform, $bookedition, $pages, $publisher, $yearpub, $fyearpub, $awards, $numRating, $ratingbyStars, $likedPercent, $coverimg, $isAvailable, $reservedNb);
+      $stmt->bind_param("issssssssiissssissssisii", $ID, $title, $series, $author, $rating, $description, $language, $genres, $mainGenre, $GenreID, $numericCount, $alphabeticCount, $shelf, $bookform, $bookedition, $pages, $publisher, $yearpub, $awards, $numRating, $ratingbyStars, $coverimg, $isAvailable, $reservedNb);
 
       // Execute the statement
       if (!$stmt->execute()) {
@@ -418,4 +418,4 @@ if ($_SESSION['userId'] == '1') {
 
 </body>
 
-</html>
+</html> 

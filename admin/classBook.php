@@ -127,7 +127,7 @@ function updateAndReturnNewCount($genreID) {
 // Function to get the letter part
 function getLetterPart($occurrence) {
 // Adjusting the starting point so that 'AA' is the first sequence
-$occurrence = intdiv($occurrence - 1, 99) + 1; // How many times we've filled 99 books, starting count at 1 for 'AA'
+$occurrence = intdiv($occurrence - 1, 49) + 1; // How many times we've filled 99 books, starting count at 1 for 'AA'
 
 $letterPart = "";
 // Since 'AA' is considered the start, we add an offset of 25 (one full alphabet cycle)
