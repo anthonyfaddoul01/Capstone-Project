@@ -1,7 +1,7 @@
 <?php
 require('dbconn.php');
   
-        $csvFilePath = 'books.csv';
+        $csvFilePath = 'SoftwareData.csv';
         $fileHandle = fopen($csvFilePath, 'r');
 
         if ($fileHandle === false) {
@@ -36,7 +36,7 @@ require('dbconn.php');
         fclose($fileHandle);
        // db_close($dbh);
 
-        $csvFilePath1 = 'genre.csv';
+        $csvFilePath1 = 'genreTable.csv';
         $fileHandle1 = fopen($csvFilePath1, 'r');
 
         if ($fileHandle1 === false) {
