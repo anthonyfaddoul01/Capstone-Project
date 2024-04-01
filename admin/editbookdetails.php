@@ -1,74 +1,12 @@
 <?php
 require ('dbconn.php');
-require ('dbconn.php');
 
 ?>
 
 <?php
 if ($_SESSION['userId'] == '1') {
-  ?>
-
-                <div class="card-body row justify-content-center m-0">
-                    <div class="col-6">
-                        <div class="card card-info">
-                            <div class="card card-widget">
-                                <div class="card-header">
-                                    <div class="user-block">
-                                        <?php echo '<img src="' . $img . '">' ?>
-                                        <span class="username"><a href="#">
-                                                <?php echo $title; ?>
-                                            </a></span>
-                                        <span class="description">
-                                            By
-                                            <?php echo $author; ?>
-                                        </span>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                </div>
-                                <form action="editbookdetails.php?id=<?php echo $bookid ?>" method="post">
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="title">Title <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="title" id="title"
-                                                placeholder="Enter book title" required value="<?php echo $title ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="author">Author</label>
-                                            <input type="text" class="form-control" name="author" id="author"
-                                                placeholder="Enter book author" value="<?php echo $author ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="series">Series</label>
-                                            <input type="text" class="form-control" name="series" id="series"
-                                                placeholder="Enter book series" value="<?php echo $series ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="rating">Rating</label>
-                                            <input type="text" class="form-control" name="rating" id="rating"
-                                                placeholder="Enter book rating" value="<?php echo $rating ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="description">Description</label>
-                                            <textarea class="form-control" id="description" name="description" rows="4"
-                                                placeholder="Enter book description"
-                                                value="<?php echo $description ?>"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="language">Language</label>
-                                            <input type="text" class="form-control" name="language" id="language"
-                                                placeholder="Enter book language" value="<?php echo $lang ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Main Genre <span class="text-danger">*</span></label>
-                                            <select class="form-control select2bs4" style="width: 100%;"
-                                                value="<?php echo $genre ?>">
-                                                <?php
-                                                $query = "SELECT * FROM genreid";
-                                                $result = $conn->query($query);
-                                                if ($result->num_rows > 0) {
-                                                    $options = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                                                }
-
+  ?>    
+  
   <!DOCTYPE html>
   <html lang="en">
 
@@ -212,83 +150,44 @@ if ($_SESSION['userId'] == '1') {
       </div>
 
 
+      <?php
+if(isset($_POST['submit']))
+{
+     $bookid = $_GET['id'];
+   $Section = $_POST['Section'];
+$Subject = $_POST['Subject'];
+$book = $_POST['book'];
+$Copyright = $_POST['Copyright'];
+$Title = $_POST['Title'];
+$availability = $_POST['availability'];
+$Author = $_POST['Author'];
+$ISBN = $_POST['ISBN'];
+$status = $_POST['status'];
 
-    <?php } else {
-  echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
-} ?>
 
-    <?php
-    if (isset($_POST['bookId'])) {
-      // Sanitize input
-      $bookId = mysqli_real_escape_string($conn, $_POST['bookId']);
-      $title = mysqli_real_escape_string($conn, $_POST['title']);
-      $author = mysqli_real_escape_string($conn, $_POST['author']);
-      $series = mysqli_real_escape_string($conn, $_POST['series']);
-      $rating = mysqli_real_escape_string($conn, $_POST['rating']);
-      $bookdescription = mysqli_real_escape_string($conn, $_POST['description']);
-      $language = mysqli_real_escape_string($conn, $_POST['language']);
-      // $mainGenre = mysqli_real_escape_string($conn, $_POST['mainGenre']);
-      // if (isset($_POST['genre']) && is_array($_POST['genre'])) {
-      //   $genre = array_map(function ($item) use ($conn) {
-      //     return mysqli_real_escape_string($conn, $item);
-      //   }, $_POST['genre']);
-      // } else {
-      //   $genre = []; // Or handle the error as appropriate
-      // }
-      // $genres = implode($genre);
-      $bookform = mysqli_real_escape_string($conn, $_POST['bookform']);
-      $bookedition = mysqli_real_escape_string($conn, $_POST['bookedition']);
-      $pages = mysqli_real_escape_string($conn, $_POST['pages']);
-      $publisher = mysqli_real_escape_string($conn, $_POST['publisher']);
-      $yearpub = mysqli_real_escape_string($conn, $_POST['yearpub']);
-      $awards = mysqli_real_escape_string($conn, $_POST['awards']);
-      $coverimg = mysqli_real_escape_string($conn, $_POST['coverimg']);
-      $sql = "UPDATE `book` 
-        SET `title` = ?, `series` = ?, `author` = ?, `rating` = ?, 
-            `bookDescription` = ?, `publicationLanguage` = ?, 
-            `bookForm` = ?, `bookEdition` = ?, `pages` = ?, `publisher` = ?, 
-            `yearOfPublication` = ?, `awards` = ?, `coverImage` = ? 
-        WHERE `bookId` = ?";
+ // $sql1 = "INSERT INTO `book`( `Section`, `Subject`, `Textbook`, `Volume`, `Year`, `Availability`, `Author`, `ISBN`, `Status`) VALUES ('$Section','$Subject','$book','$Copyright','$Title','$availability','$Author','$ISBN','$status')";
 
-      if ($stmt = $conn->prepare($sql)) {
-        // Assuming 'rating', 'pages', 'yearOfPublication' are integers and the rest are strings
-        // Note: Adjust the types as necessary (i.e., 'i' for integers, 's' for strings)
-        $stmt->bind_param(
-          "sssissssissss",
-          $title,
-          $series,
-          $author,
-          $rating,
-          $bookdescription,
-          $language,
-          // $genres,
-          // $mainGenre,
-          $bookform,
-          $bookedition,
-          $pages,
-          $publisher,
-          $yearpub,
-          $awards,
-          $coverimg,
-          $bookId
-        );
+echo $sql1="update LMS.book set `Section`='$Section',`Subject`='$subject',`Textbook`='$book',`Volume`='$Title',`Year`='$Copyright',`Availability`='$availability',`Author`='$Author',`ISBN`='$ISBN',`Status`='$status' WHERE BookId='$bookid'";
 
-        $stmt->execute();
-        if (!$stmt->execute()) {
-          echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-      }
+// $conn->query($sql1) or die($conn->error);
+
+if($conn->query($sql1) == TRUE){
+echo "<script type='text/javascript'>alert('Success')</script>";
+header( "Refresh:0.01; url=book.php", true, 303);
+}
+else
+{//echo $conn->error;
+echo "<script type='text/javascript'>alert('Error')</script>";
+}
+}
+?>
       
+    </body>
 
-        if ($stmt->affected_rows > 0) {
-          echo "Record updated successfully";
-        } else {
-          echo "No records were updated";
-        }
+</html>
 
-        $stmt->close();
-      } else {
-        echo "Error preparing the statement: " . $conn->error;
-      }
 
-    }
-    ?>
+<?php }
+else {
+    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+} ?>
