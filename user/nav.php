@@ -18,34 +18,23 @@
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
                 <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-                <li><a class="nav-link scrollto" href="#about">About</a></li>
-                <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
+                <li><a class="nav-link scrollto " href="#hero">Books</a></li>
                 <li><a class="nav-link scrollto" href="#team">News</a></li>
-                <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                <li class="dropdown"><a href="#"><span>My Books</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
-                        <li><a href="#">Drop Down 1</a></li>
-                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
-                                    class="bi bi-chevron-right"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Drop Down 1</a></li>
-                                <li><a href="#">Deep Drop Down 2</a></li>
-                                <li><a href="#">Deep Drop Down 3</a></li>
-                                <li><a href="#">Deep Drop Down 4</a></li>
-                                <li><a href="#">Deep Drop Down 5</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Drop Down 2</a></li>
-                        <li><a href="#">Drop Down 3</a></li>
-                        <li><a href="#">Drop Down 4</a></li>
+                        <li><a href="current.php">Currently Issued Books</a></li>
+                        <li><a href="#">Favorites</a></li>
+                        <li><a href="pre.php">Prev Borrowed Books</a></li>
                     </ul>
                 </li>
-                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
-
-        <a href="logout.php" class="get-started-btn scrollto">Logout</a>
+        <div>
+            <a href="profile.php" style="border: 5px solid #000000; border-radius:50px; background:#000000;" class="mr-3 p-1"><i class="fas fa-user"></i></a>
+            <a href="logout.php" class="get-started-btn scrollto">Logout</a>
+        </div>
+        
 
     </div>
 </header><!-- End Header -->
