@@ -13,7 +13,7 @@ if ($_SESSION['type'] == 'User') {
     <html>
 
     <head>
-        <title>Live Search using AJAX</title>
+        <title>Search</title>
         <!-- Including jQuery is required. -->
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <!-- Including our scripting file. -->
@@ -62,7 +62,7 @@ if ($_SESSION['type'] == 'User') {
         <script>
             function searchBooks(searchTerm, page) {
                 $.ajax({
-                    url: "ajax.php",
+                    url: "searchbytitle.php",
                     type: "GET",
                     data: { searchTerm: searchTerm, page: page },
                     success: function (data) {
