@@ -1,5 +1,5 @@
 <?php
-require('dbconn.php');
+require ('dbconn.php');
 
 ?>
 
@@ -14,28 +14,23 @@ if ($_SESSION['type'] == 'User') {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Library</title>
-        <?php require("links.php") ?>
+        <?php require ("links.php") ?>
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">
-        <?php require("nav.php") ?>
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1>Edit Details</h1>
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
+        <?php require ("nav.php") ?>
+        <section style="margin-top:100px;">
             <div class="card-body row justify-content-center">
 
                 <!-- left column -->
                 <div class="col-6">
                     <!-- general form elements -->
-                    <div class="card card-info">
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <div class="section-title pb-0">
+                                <p class="mb-0" style="font-size:20px">Change Details</p>
+                            </div>
+                        </div>
                         <?php
                         $userid = $_SESSION['userId'];
                         $sql = "select * from bookbud.user where userId='$userid'";
@@ -79,7 +74,7 @@ if ($_SESSION['type'] == 'User') {
                             </div>
                             <!-- /.card-body -->
 
-                            <div class="card-footer float-right">
+                            <div class="float-right p-3">
                                 <button type="submit" name="submit" class="btn btn-success">Update Details</button>
                             </div>
                         </form>
@@ -89,10 +84,8 @@ if ($_SESSION['type'] == 'User') {
                 <!-- /.row -->
 
             </div>
-        </div>
-        <!--/.wrapper-->
-
-        <?php require("scripts.php") ?>
+        </section>
+        <?php require ("scripts.php") ?>
 
         <?php
         if (isset($_POST['submit'])) {

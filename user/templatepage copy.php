@@ -18,83 +18,6 @@ if ($_SESSION['type'] == 'User') {
         <title>Library</title>
         <?php require ("links.php") ?>
         <style>
-            img {
-                -webkit-user-drag: none;
-                -moz-user-drag: none;
-                -o-user-drag: none;
-                user-drag: none;
-            }
-
-            img {
-                pointer-events: none;
-            }
-
-            .movie_card {
-                padding: 0 !important;
-                width: 22rem;
-                margin: 14px;
-                border-radius: 10px;
-                box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
-            }
-
-            .movie_card img {
-                border-top-left-radius: 10px;
-                border-top-right-radius: 10px;
-                height: 33rem;
-            }
-
-            .movie_info {
-                color: #5e5c5c;
-            }
-
-            .movie_info i {
-                font-size: 20px;
-            }
-
-            .card-title {
-                width: 80%;
-                height: 4rem;
-            }
-
-            .play_button {
-                background-color: #ff3d49;
-                position: absolute;
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                right: 20px;
-                bottom: 111px;
-                font-size: 27px;
-                padding-left: 21px;
-                padding-top: 16px;
-                color: #FFFFFF;
-                cursor: pointer;
-            }
-
-            .credits {
-                margin-top: 20px;
-                margin-bottom: 20px;
-                border-radius: 8px;
-                border: 2px solid #8e24aa;
-                font-size: 18px;
-            }
-
-            .credits .card-body {
-                padding: 0;
-            }
-
-            .credits p {
-                padding-top: 15px;
-                padding-left: 18px;
-            }
-
-            .credits .card-body i {
-                color: #8e24aa;
-            }
-
-
-
-
             .cover {
                 position: relative;
                 padding: 0px 30px;
@@ -161,6 +84,14 @@ if ($_SESSION['type'] == 'User') {
                 cursor: pointer;
                 font-size: 25px;
             }
+
+            .imgcontainer {
+                height: 400px;
+                width: 100%;
+                object-fit: cover;
+                object-position: center;
+
+            }
         </style>
     </head>
 
@@ -186,7 +117,7 @@ if ($_SESSION['type'] == 'User') {
                 <div class="card-body">
                     <?php
                     $userid = $_SESSION['userId'];
-                    if (isset ($_POST['submit'])) { //need to make a search bar same as in admin
+                    if (isset($_POST['submit'])) { //need to make a search bar same as in admin
                         $s = $_POST['Textbook'];
                         $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
                                             and Date_of_Issue is NOT NULL and Date_of_Return is NULL 
@@ -200,39 +131,31 @@ if ($_SESSION['type'] == 'User') {
 
                     ?>
 
-                        <div class="cover">
-                            <button class="left" onclick="leftScroll()">
-                                <i class="fas fa-arrow-left"></i>
-                            </button>
-                            <div class="scroll-images">
-                                        <?php
+                    <div class="cover px-4 px-lg-5 mt-5">
+                        <button class="left" onclick="leftScroll()">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <div class="scroll-images ">
+                            <?php
 
 
-                                        while ($row = $result->fetch_assoc()) {
-                                            $bookid = $row['bookId'];
-                                            $name = $row['title'];
-                                            $issuedate = $row['Date_of_Issue'];
-                                            $duedate = $row['Due_Date'];
-                                            $renewals = $row['Renewals_left'];
-                                            $author = $row['author'];
-                                            $img = $row['coverImage'];
-                                            ?>
-                                            
-                                                <div class="card movie_card child">
-                                                    <img src="<?php echo $img ?>" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">
-                                                            <?php echo $name ?>
-                                                        </h5>
-                                                        <span class="movie_info">
-                                                            <?php echo $author ?>
-                                                        </span>
-                                                        <span class="movie_info float-right"><i class="fas fa-star"></i> 9 /
-                                                            10</span>
-                                                    </div>
-                                                </div>
-                                           
-                                            <!--
+                            while ($row = $result->fetch_assoc()) {
+                                $bookid = $row['bookId'];
+                                $name = $row['title'];
+                                $issuedate = $row['Date_of_Issue'];
+                                $duedate = $row['Due_Date'];
+                                $rating = $row['rating'];
+                                $author = $row['author'];
+                                $img = $row['coverImage'];
+                                ?>
+
+                                <div class="col mb-5">
+                                    <div class="card" style="width: 18rem;">
+                                        <a href="bookdetails.php?id=<?php echo $bookid ?>"><img src="<?php echo $img ?>" class="card-img-top imgcontainer"></a>
+                                    </div>
+                                </div>
+
+                                <!--
                                         <center>
                                             <?php
                                             if ($renewals)
@@ -241,14 +164,14 @@ if ($_SESSION['type'] == 'User') {
                                             <a href="return_request.php?id=<?php echo $bookid; ?>"
                                                 class="btn btn-danger">Return</a>
                                         </center>-->
-                                        <?php } ?>
-                                        
-                                </div>
-                                <button class="right" onclick="rightScroll()">
-                                        <i class="fas fa-arrow-right"></i>
-                                        </button>
-                            </div>
+                            <?php } ?>
+
                         </div>
+                        <button class="right" onclick="rightScroll()">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
             </section>
 
         </main><!-- End #main -->

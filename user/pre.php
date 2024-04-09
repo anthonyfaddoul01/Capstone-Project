@@ -1,5 +1,5 @@
 <?php
-require('dbconn.php');
+require ('dbconn.php');
 
 ?>
 
@@ -14,98 +14,142 @@ if ($_SESSION['type'] == 'User') {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Library</title>
-        <?php require("links.php") ?>
+        <link rel="stylesheet" href="assets/css/style2.css">
+        <?php require ("links.php") ?>
+        <style>
+            .pagination {
+                float: right;
+                text-align: right;
+                padding: 20px 0;
+            }
+
+            .pagination button {
+                margin-left: 5px;
+                padding: 5px 15px;
+                background-color: #007bff;
+                border: none;
+                border-radius: 5px;
+                color: white;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .pagination button:hover,
+            .pagination button:focus {
+                background-color: #0056b3;
+                outline: none;
+            }
+
+            .pagination button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+        </style>
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">
-        <?php require("nav.php") ?>
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1>Books</h1>
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
-            <div class="card-body">
-                <?php
-                $userid = $_SESSION['userId'];
-                if (isset($_POST['submit'])) { //need to make a search bar same as in admin
-                    $s = $_POST['Textbook'];
-                    $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
-                                            and Date_of_Issue is NOT NULL and Date_of_Return is NOT NULL 
-                                            and book.bookid = record.bookId and (record.bookId='$s' or title like '%$s%')";
-
-                } else
-                    $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
+        <?php require ("nav.php") ?>
+        <section class="container" style="padding-top:100px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center mb-4">Previous Borrowed Books</h3>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Issue Date</th>
+                                    <th>Return Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $userid = $_SESSION['userId'];
+                                $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
                 and Date_of_Issue is NOT NULL and Date_of_Return is NOT NULL and book.bookid = record.bookId";
 
-                $result = $conn->query($sql);
-
-                ?>
-                <table class="table table-bordered table-striped" id="example2">
-                    <thead>
-                        <tr>
-                            <th>Book ID</th>
-                            <th>Title</th>
-                            <th>Issue Date</th>
-                            <th>Return Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <?php
-
-
-                        while ($row = $result->fetch_assoc()) {
-                            $bookid = $row['bookId'];
-                            $name = $row['title'];
-                            $issuedate = $row['Date_of_Issue'];
-                            $returndate = $row['Date_of_Return'];
-                            ?>
-
-                            <tr>
-                                <td>
-                                    <?php echo $bookid ?>
-                                </td>
-                                <td>
-                                    <?php echo $name ?>
-                                </td>
-                                <td>
-                                    <?php echo $issuedate ?>
-                                </td>
-                                <td>
-                                    <?php echo $returndate ?>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-
-                </table>
+                                $result = $conn->query($sql);
+                                while ($row = $result->fetch_assoc()) {
+                                    $bookid = $row['bookId'];
+                                    $name = $row['title'];
+                                    $issuedate = $row['Date_of_Issue'];
+                                    $returndate = $row['Date_of_Return'];
+                                    ?>
+                                    <tr>
+                                        <th scope="row" class="scope">
+                                            <?php echo $name ?>
+                                        </th>
+                                        <td>
+                                            <?php echo $issuedate ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $returndate ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
         <!--/.wrapper-->
 
-        <?php require("scripts.php") ?>
+        <?php require ("scripts.php") ?>
         <script>
-            $(document).ready(function () {
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "responsive": true,
-                    "pageLength": 15
-                });
+            document.addEventListener('DOMContentLoaded', function () {
+                const rowsPerPage = 10;
+                const table = document.querySelector('.table');
+                const rows = table.querySelectorAll('tbody tr');
+                const numRows = rows.length;
+                const numPages = Math.ceil(numRows / rowsPerPage);
+                let currentPage = 1; // Track the current page
 
+                function displayPage(page) {
+                    rows.forEach((row, index) => {
+                        row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+                    });
+                }
+
+                function setupPagination() {
+                    const paginationWrapper = document.createElement('div');
+                    paginationWrapper.className = 'pagination';
+
+                    const prevBtn = document.createElement('button');
+                    prevBtn.innerHTML = '&laquo;'; // Left-pointing double angle quotation mark
+                    prevBtn.onclick = () => {
+                        if (currentPage > 1) {
+                            displayPage(--currentPage);
+                        }
+                        updateButtonStates();
+                    };
+
+                    const nextBtn = document.createElement('button');
+                    nextBtn.innerHTML = '&raquo;'; // Right-pointing double angle quotation mark
+                    nextBtn.onclick = () => {
+                        if (currentPage < numPages) {
+                            displayPage(++currentPage);
+                        }
+                        updateButtonStates();
+                    };
+
+                    paginationWrapper.appendChild(prevBtn);
+                    paginationWrapper.appendChild(nextBtn);
+                    table.parentNode.insertBefore(paginationWrapper, table.nextSibling);
+
+                    updateButtonStates();
+                }
+
+                function updateButtonStates() {
+                    document.querySelector('.pagination button:first-child').disabled = currentPage === 1;
+                    document.querySelector('.pagination button:last-child').disabled = currentPage === numPages;
+                }
+
+                displayPage(1);
+                setupPagination();
             });
-
         </script>
+
 
     </body>
 

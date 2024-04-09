@@ -44,10 +44,10 @@ window.onload = function() {
 		<input type="checkbox" id="flip">
 		<div class="cover">
 		<div class="front">
-			<img src="images/about.jpg" alt="">
+			<img src="images/loginimg.jpg" alt="">
 		</div>
 		<div class="back">
-			<img class="backImg" src="images/about.jpg" alt="">
+			<img class="backImg" src="images/loginimg.jpg" alt="">
 		</div>
 		</div>
 		<div class="forms">

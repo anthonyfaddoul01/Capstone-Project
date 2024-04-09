@@ -17,9 +17,13 @@
         ?>
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
-                <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-                <li><a class="nav-link scrollto " href="#hero">Books</a></li>
-                <li><a class="nav-link scrollto" href="#team">News</a></li>
+                <li><a class="nav-link" href="index.php">Home</a></li>
+                <li class="dropdown"><a href="#"><span>Browse Books</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="genresearch.php">By Genre</a></li>
+                        <li><a href="search.php">By Search</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown"><a href="#"><span>My Books</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="current.php">Currently Issued Books</a></li>
@@ -27,11 +31,12 @@
                         <li><a href="pre.php">Prev Borrowed Books</a></li>
                     </ul>
                 </li>
+                <li><a class="nav-link scrollto" href="profile.php">Profile</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
         <div>
-            <a href="profile.php" style="border: 5px solid #000000; border-radius:50px; background:#000000;" class="mr-3 p-1"><i class="fas fa-user"></i></a>
+            <!-- <a href="profile.php" style="border: 5px solid #000000; border-radius:50px; background:#000000;" class="mr-3 p-1"><i class="fas fa-user"></i></a> -->
             <a href="logout.php" class="get-started-btn scrollto">Logout</a>
         </div>
         

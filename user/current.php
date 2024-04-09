@@ -1,5 +1,5 @@
 <?php
-require('dbconn.php');
+require ('dbconn.php');
 
 ?>
 
@@ -14,108 +14,81 @@ if ($_SESSION['type'] == 'User') {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Library</title>
-        <?php require("links.php") ?>
+        <link rel="stylesheet" href="assets/css/style2.css">
+        <?php require ("links.php") ?>
+
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">
-        <?php require("nav.php") ?>
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1>Books</h1>
-                        </div>
+        <?php require ("nav.php") ?>
+        <section class="container" style="padding-top:100px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center mb-4">Current Issued Books</h3>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Dues</th>
+                                    <th>Penalty</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $userid = $_SESSION['userId'];
+                                $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
+                                and Date_of_Issue is NOT NULL and Date_of_Return is NULL and book.bookid = record.bookId";
+
+                                $result = $conn->query($sql);
+                                while ($row = $result->fetch_assoc()) {
+                                    $bookid = $row['bookId'];
+                                    $name = $row['title'];
+                                    $issuedate = $row['Date_of_Issue'];
+                                    $duedate = $row['Due_Date'];
+                                    $renewals = $row['Renewals_left'];
+                                    ?>
+                                    <tr>
+                                        <th scope="row" class="scope">
+                                            <?php echo $name ?>
+                                        </th>
+                                        <td>
+                                            <?php echo $issuedate ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $duedate ?>
+                                        </td>
+                                        <th scope="row" class="scope text-danger">10</th>
+                                        <td>10$</td>
+                                        <td>
+                                            <center>
+                                                <?php
+                                                if ($renewals)
+                                                    echo "<a href=\"renew_request.php?id=" . $bookid . "\" class=\"btn btn-success\">Renew</a>";
+                                                ?>
+                                                <a href="return_request.php?id=<?php echo $bookid; ?>"
+                                                    class="btn btn-danger">Return</a>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+
+
+                                <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
-                </div><!-- /.container-fluid -->
-            </section>
-            <div class="card-body">
-                <?php
-                $userid = $_SESSION['userId'];
-                if (isset($_POST['submit'])) { //need to make a search bar same as in admin
-                    $s = $_POST['Textbook'];
-                    $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
-                                            and Date_of_Issue is NOT NULL and Date_of_Return is NULL 
-                                            and book.bookid = record.bookId and (record.bookId='$s' or title like '%$s%')";
-
-                } else
-                    $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
-                and Date_of_Issue is NOT NULL and Date_of_Return is NULL and book.bookid = record.bookId";
-
-                $result = $conn->query($sql);
-
-                ?>
-                <table class="table table-bordered table-striped" id="example2">
-                    <thead>
-                        <tr>
-                            <th>Book ID</th>
-                            <th>Title</th>
-                            <th>Issue Date</th>
-                            <th>Due Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <?php
-
-
-                        while ($row = $result->fetch_assoc()) {
-                            $bookid = $row['bookId'];
-                            $name = $row['title'];
-                            $issuedate = $row['Date_of_Issue'];
-                            $duedate = $row['Due_Date'];
-                            $renewals = $row['Renewals_left'];
-                            ?>
-
-                            <tr>
-                                <td>
-                                    <?php echo $bookid ?>
-                                </td>
-                                <td>
-                                    <?php echo $name ?>
-                                </td>
-                                <td>
-                                    <?php echo $issuedate ?>
-                                </td>
-                                <td>
-                                    <?php echo $duedate ?>
-                                </td>
-                                <td>
-                                    <center>
-                                        <?php
-                                        if ($renewals)
-                                            echo "<a href=\"renew_request.php?id=" . $bookid . "\" class=\"btn btn-success\">Renew</a>";
-                                        ?>
-                                        <a href="return_request.php?id=<?php echo $bookid; ?>"
-                                            class="btn btn-danger">Return</a>
-                                    </center>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-
-                </table>
+                </div>
             </div>
-        </div>
+        </section>
         <!--/.wrapper-->
 
-        <?php require("scripts.php") ?>
+        <?php require ("scripts.php") ?>
         <script>
-            $(document).ready(function () {
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "responsive": true,
-                    "pageLength": 15
-                });
 
-            });
 
         </script>
 
