@@ -83,7 +83,7 @@ if ($_SESSION['userId'] == '1') {
                             $img = $row['coverImage'];
                             ?>
                             <form action="editbookdetails.php?id=<?php echo $x ?>" method="post">
-                                <input type="hidden" name="bookId" value="<?php echo htmlspecialchars($row['bookId']); ?>">
+                                <input type="hidden" name="bookId" value="<?php $row['bookId']; ?>">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="title">Title <span class="text-danger">*</span></label>
