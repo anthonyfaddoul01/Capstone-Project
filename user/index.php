@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require ('dbconn.php');
 ?>
 
@@ -19,8 +19,8 @@ if ($_SESSION['type'] == 'User') {
         <?php require ("links.php") ?>
         <style>
             /*--------------------------------------------------------------
-                                                    # Scroll horizontal
-                                                    --------------------------------------------------------------*/
+                                    # Scroll horizontal
+                                    --------------------------------------------------------------*/
             .cover {
                 position: relative;
                 padding: 0px 30px;
@@ -99,6 +99,24 @@ if ($_SESSION['type'] == 'User') {
             .imgcontainer:hover {
                 transform: scale(1.1);
             }
+
+            @media (max-width: 768px) {
+
+                .cover button.left,
+                .cover button.right {
+                    font-size: 20px;
+                    /* Adjust button size */
+                }
+
+                .scroll-images .child {
+                    min-width: 250px;
+                    /* Adjust book card width */
+                    height: auto;
+                    /* Adjust height as needed */
+                    padding: 0 10px;
+                    margin: 1px 5px;
+                }
+            }
         </style>
     </head>
 
@@ -151,292 +169,111 @@ if ($_SESSION['type'] == 'User') {
 
                 </div>
             </section><!-- End Hero -->
-            <section id="services" class="services mx-5 pb-0" id="toprated">
+            <div class="cover mx-3">
                 <div class="section-title pb-0">
                     <p class="mb-0">top rated books</p>
                 </div>
-                <?php
-                $userid = $_SESSION['userId'];
-                $sql = "select bookId, coverImage from bookbud.book where numRating > 1000000 order by rating desc";
-                $result = $conn->query($sql);
-                ?>
-
-                <div class="cover">
-                    <button class="left" onclick="leftScroll()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <div class="scroll-images">
-                        <?php
-                        $books = [];
-                        while ($row = $result->fetch_assoc()) {
-                            $books[] = $row;
-                        }
-                        shuffle($books);
-                        ?>
-                        <?php foreach ($books as $row): ?>
-                            <div class="col mb-5">
-                                <div class="card" style="width: 18rem;">
-                                    <a href="bookdetails.php?id=<?php echo $row['bookId'] ?>"><img
-                                            src="<?php echo $row['coverImage'] ?>" class="card-img-top imgcontainer"></a>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <button class="right" onclick="rightScroll()">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </section>
-            <section id="services" class="services mx-5 py-0" id="fiction">
+                <button class="left"><i class="fas fa-arrow-left"></i></button>
+                <div id="topRatedBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="cover mx-3">
                 <div class="section-title pb-0">
-                    <p class="mb-0">Fiction books</p>
+                    <p class="mb-0">fiction books</p>
                 </div>
-                <?php
-                $userid = $_SESSION['userId'];
-                $sql = "select bookId, coverImage from bookbud.book where mainGenre = 'Fiction' ORDER BY RAND() LIMIT 20";
-                $result = $conn->query($sql);
-                ?>
-
-                <div class="cover">
-                    <button class="left" onclick="leftScroll()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <div class="scroll-images ">
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
-                            $bookid = $row['bookId'];
-                            $img = $row['coverImage'];
-                            ?>
-                            <div class="col mb-5">
-                                <div class="card" style="width: 18rem;">
-                                    <a href="bookdetails.php?id=<?php echo $bookid ?>"><img src="<?php echo $img ?>"
-                                            class="card-img-top imgcontainer"></a>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <button class="right" onclick="rightScroll()">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </section>
-            <section id="services" class="services mx-5 py-0" id="fantasy">
+                <button class="left"><i class="fas fa-arrow-left"></i></button>
+                <div id="fictionBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="cover mx-3">
                 <div class="section-title pb-0">
-                    <p class="mb-0">Fantasy books</p>
+                    <p class="mb-0">fantasy books</p>
                 </div>
-                <?php
-                $userid = $_SESSION['userId'];
-                $sql = "select bookId, coverImage from bookbud.book where mainGenre = 'Fantasy' ORDER BY RAND() LIMIT 20";
-                $result = $conn->query($sql);
-                ?>
-
-                <div class="cover">
-                    <button class="left" onclick="leftScroll()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <div class="scroll-images ">
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
-                            $bookid = $row['bookId'];
-                            $img = $row['coverImage'];
-                            ?>
-                            <div class="col mb-5">
-                                <div class="card" style="width: 18rem;">
-                                    <a href="bookdetails.php?id=<?php echo $bookid ?>"><img src="<?php echo $img ?>"
-                                            class="card-img-top imgcontainer"></a>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <button class="right" onclick="rightScroll()">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </section>
-            <section id="services" class="services mx-5 py-0" id="youngadult">
+                <button class="left"><i class="fas fa-arrow-left"></i></button>
+                <div id="fantasyBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="cover mx-3">
                 <div class="section-title pb-0">
-                    <p class="mb-0">Young Adult books</p>
+                    <p class="mb-0">young adult books</p>
                 </div>
-                <?php
-                $userid = $_SESSION['userId'];
-                $sql = "select bookId, coverImage from bookbud.book where mainGenre = 'Young Adult' ORDER BY RAND() LIMIT 20";
-                $result = $conn->query($sql);
-                ?>
-
-                <div class="cover">
-                    <button class="left" onclick="leftScroll()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <div class="scroll-images ">
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
-                            $bookid = $row['bookId'];
-                            $img = $row['coverImage'];
-                            ?>
-                            <div class="col mb-5">
-                                <div class="card" style="width: 18rem;">
-                                    <a href="bookdetails.php?id=<?php echo $bookid ?>"><img src="<?php echo $img ?>"
-                                            class="card-img-top imgcontainer"></a>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <button class="right" onclick="rightScroll()">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </section>
-            <section id="services" class="services mx-5 py-0" id="romance">
+                <button class="left"><i class="fas fa-arrow-left"></i></button>
+                <div id="youngadultBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="cover mx-3">
                 <div class="section-title pb-0">
                     <p class="mb-0">Romance books</p>
                 </div>
-                <?php
-                $userid = $_SESSION['userId'];
-                $sql = "select bookId, coverImage from bookbud.book where mainGenre = 'Romance' ORDER BY RAND() LIMIT 20";
-                $result = $conn->query($sql);
-                ?>
-
-                <div class="cover">
-                    <button class="left" onclick="leftScroll()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <div class="scroll-images ">
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
-                            $bookid = $row['bookId'];
-                            $img = $row['coverImage'];
-                            ?>
-                            <div class="col mb-5">
-                                <div class="card" style="width: 18rem;">
-                                    <a href="bookdetails.php?id=<?php echo $bookid ?>"><img src="<?php echo $img ?>"
-                                            class="card-img-top imgcontainer"></a>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <button class="right" onclick="rightScroll()">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </section>
-            <section id="services" class="services mx-5 py-0" id="nonfiction">
+                <button class="left"><i class="fas fa-arrow-left"></i></button>
+                <div id="romanceBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="cover mx-3">
                 <div class="section-title pb-0">
                     <p class="mb-0">Nonfiction books</p>
                 </div>
-                <?php
-                $userid = $_SESSION['userId'];
-                $sql = "select bookId, coverImage from bookbud.book where mainGenre = 'Nonfiction' ORDER BY RAND() LIMIT 20";
-                $result = $conn->query($sql);
-                ?>
-
-                <div class="cover">
-                    <button class="left" onclick="leftScroll()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <div class="scroll-images ">
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
-                            $bookid = $row['bookId'];
-                            $img = $row['coverImage'];
-                            ?>
-                            <div class="col mb-5">
-                                <div class="card" style="width: 18rem;">
-                                    <a href="bookdetails.php?id=<?php echo $bookid ?>"><img src="<?php echo $img ?>"
-                                            class="card-img-top imgcontainer"></a>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <button class="right" onclick="rightScroll()">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </section>
-            <section id="services" class="services mx-5 pb-0" id="newbooks">
+                <button class="left"><i class="fas fa-arrow-left"></i></button>
+                <div id="nonfictionBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="cover mx-3">
                 <div class="section-title pb-0">
                     <p class="mb-0">New books - 2024</p>
                 </div>
-                <?php
-                $userid = $_SESSION['userId'];
-                $sql = "select bookId, coverImage from bookbud.book where yearOfPublication='2024'";
-                $result = $conn->query($sql);
-                ?>
-
-                <div class="cover">
-                    <button class="left" onclick="leftScroll()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <div class="scroll-images">
-                        <?php
-                        $books = [];
-                        while ($row = $result->fetch_assoc()) {
-                            $books[] = $row;
-                        }
-                        shuffle($books);
-                        ?>
-                        <?php foreach ($books as $row): ?>
-                            <div class="col mb-5">
-                                <div class="card" style="width: 18rem;">
-                                    <a href="bookdetails.php?id=<?php echo $row['bookId'] ?>"><img
-                                            src="<?php echo $row['coverImage'] ?>" class="card-img-top imgcontainer"></a>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <button class="right" onclick="rightScroll()">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </section>
-
+                <button class="left"><i class="fas fa-arrow-left"></i></button>
+                <div id="newBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
+            </div>
         </main><!-- End #main -->
         <?php require ("footer.php") ?>
 
         <?php require ("scripts.php") ?>
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const covers = document.querySelectorAll(".cover");
-
-                covers.forEach(function (cover) {
-                    const scrollImages = cover.querySelector(".scroll-images");
-                    const leftButton = cover.querySelector(".left");
-                    const rightButton = cover.querySelector(".right");
-                    function checkScroll() {
-                        const scrollLength = scrollImages.scrollWidth - scrollImages.clientWidth;
-                        const currentScroll = scrollImages.scrollLeft;
-                        if (currentScroll === 0) {
-                            leftButton.setAttribute("disabled", "true");
-                            rightButton.removeAttribute("disabled");
-                        } else if (currentScroll >= scrollLength - 1) {
-                            rightButton.setAttribute("disabled", "true");
-                            leftButton.removeAttribute("disabled");
-                        } else {
-                            leftButton.removeAttribute("disabled");
-                            rightButton.removeAttribute("disabled");
-                        }
+            function loadSectionBooks(section) {
+                $.ajax({
+                    url: "fetchBooks.php",
+                    type: "GET",
+                    data: { section: section },
+                    success: function (data) {
+                        const sectionId = '#' + section + 'Books';
+                        $(sectionId).html(data);
+                        // Apply scrolling functionality after the content is loaded
+                        applyScrolling(sectionId);
                     }
-
-                    scrollImages.addEventListener("scroll", checkScroll);
-                    window.addEventListener("resize", checkScroll);
-                    checkScroll();
-
-                    function leftScroll() {
-                        scrollImages.scrollBy({
-                            left: -300,
-                            behavior: "smooth"
-                        });
-                    }
-
-                    function rightScroll() {
-                        scrollImages.scrollBy({
-                            left: 300,
-                            behavior: "smooth"
-                        });
-                    }
-
-                    leftButton.addEventListener("click", leftScroll);
-                    rightButton.addEventListener("click", rightScroll);
                 });
+            }
+
+            function applyScrolling(sectionId) {
+                const $scrollContainer = $(sectionId);
+                const $leftButton = $(sectionId).siblings('.left');
+                const $rightButton = $(sectionId).siblings('.right');
+
+                // Function to scroll left
+                $leftButton.off('click').on('click', function () {
+                    $scrollContainer.animate({
+                        scrollLeft: '-=300'
+                    }, 'smooth');
+                });
+
+                // Function to scroll right
+                $rightButton.off('click').on('click', function () {
+                    $scrollContainer.animate({
+                        scrollLeft: '+=300'
+                    }, 'smooth');
+                });
+            }
+
+            // Call this function for each section on document ready or specific events
+            $(document).ready(function () {
+                loadSectionBooks('topRated');
+                loadSectionBooks('fiction');
+                loadSectionBooks('fantasy');
+                loadSectionBooks('youngadult');
+                loadSectionBooks('nonfiction');
+                loadSectionBooks('romance');
+                loadSectionBooks('new');
+
             });
 
 

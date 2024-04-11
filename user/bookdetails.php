@@ -148,12 +148,12 @@ if ($_SESSION['type'] == 'User') {
                                     ?>
                                 </dd>
 
-                                <dt class="col-4">Year of publication:</dt>
+                                <dt class="col-4">Shelf Location:</dt>
                                 <dd class="col-8">
                                     <?php echo $shelf; ?>
                                 </dd>
 
-                                <dt class="col-4">No. of pages:</dt>
+                                <dt class="col-4">Year of publication:</dt>
                                 <dd class="col-8">
                                     <?php echo $year; ?>
                                 </dd>
