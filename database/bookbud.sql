@@ -44,7 +44,7 @@ CREATE TABLE `book` (
     `rating` Numeric(3,2)  ,
     `bookDescription` TEXT ,
     `publicationLanguage` VARCHAR(37) NOT NULL DEFAULT 'Unspecified Language',
-    `genres` VARCHAR(200) NOT NULL ,
+    `genres` VARCHAR(250) NOT NULL ,
     `mainGenre` VARCHAR(30) NOT NULL  ,
     `genreID` int NOT NULL,
     `numericCount` int NOT NULL ,
@@ -172,7 +172,8 @@ CREATE TABLE `user` (
   `password` varchar(50) DEFAULT NULL,
   `type` varchar(50) DEFAULT NULL,
   `balance` int(255) DEFAULT NULL,
-  `currentBorrowed` int(255) DEFAULT NULL
+  `currentBorrowed` int(255) DEFAULT NULL,
+  `interests` VARCHAR(250) DEFAULT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

@@ -4,7 +4,7 @@ require('dbconn.php');
 ?>
 
 <?php
-if ($_SESSION['userId'] == '1') {
+if ($_SESSION['type'] == 'admin') {
     ?>
 
     <!DOCTYPE html>
