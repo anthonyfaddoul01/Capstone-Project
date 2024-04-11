@@ -12,7 +12,7 @@ if ($_SESSION['type'] == 'User') {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MoviePire - Your Movie Guide</title>
+    <title>Genre Search</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
@@ -82,7 +82,7 @@ if ($_SESSION['type'] == 'User') {
       }
 
       .imgcontainer {
-        height: 400px;
+        height: 40vh;
         width: 100%;
         object-fit: fill;
         object-position: center;
@@ -295,7 +295,7 @@ if ($_SESSION['type'] == 'User') {
       </div>
     </header><!-- End Header -->
     <div class="content-wrapper mt-5 bg-white">
-      <div id="display" class="display row"></div>
+      <div id="display" class="display row col-12"></div>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
