@@ -53,7 +53,7 @@ if ($_SESSION['type'] == 'User') {
                                     ?>
                                     <tr>
                                         <th scope="row" class="scope">
-                                            <?php echo $name ?>
+                                            <a class="text-black" href="bookdetails.php?id=<?php echo $bookid ?>"><?php echo $name ?></a>
                                         </th>
                                         <td>
                                             <?php echo $issuedate ?>

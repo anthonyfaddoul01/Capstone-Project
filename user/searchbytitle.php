@@ -7,10 +7,10 @@ $limit = 24; // Number of items per page
 $offset = ($page - 1) * $limit;
 
 // Prepare the SQL statement to fetch books
-$sql = "SELECT bookId, coverImage FROM book WHERE title LIKE ? LIMIT ?, ?";
+$sql = "SELECT bookId, coverImage FROM book WHERE (title LIKE ? OR author LIKE ?) LIMIT ?, ?";
 $stmt = $conn->prepare($sql);
 $searchTerm = "%$searchTerm%";
-$stmt->bind_param("sii", $searchTerm, $offset, $limit);
+$stmt->bind_param("ssii", $searchTerm, $searchTerm, $offset, $limit);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -18,7 +18,7 @@ $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $bookid = $row['bookId'];
     $img = $row['coverImage'];
-    echo "<div class='col-3 mb-5 d-flex justify-content-center'>
+    echo "<div class='col-lg-3 col-sm-6 mb-5 d-flex justify-content-center'>
             <div class='card' style='width: 18rem;'>
                 <a href='bookdetails.php?id=$bookid'><img src='$img' class='card-img-top imgcontainer'></a>
             </div>
@@ -26,9 +26,9 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Pagination logic (calculate total pages)
-$totalSql = "SELECT COUNT(*) FROM book WHERE title LIKE ?";
+$totalSql = "SELECT COUNT(*) FROM book WHERE (title LIKE ? OR author LIKE ?)";
 $totalStmt = $conn->prepare($totalSql);
-$totalStmt->bind_param("s", $searchTerm);
+$totalStmt->bind_param("ss", $searchTerm, $searchTerm);
 $totalStmt->execute();
 $totalResult = $totalStmt->get_result();
 $totalRows = $totalResult->fetch_array()[0];

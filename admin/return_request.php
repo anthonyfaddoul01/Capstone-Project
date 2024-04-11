@@ -62,8 +62,8 @@ if ($_SESSION['userId'] == '1') {
                                                     $bookid = $row['bookId'];
                                                     $userid = $row['userId'];
                                                     $namequery = "SELECT username FROM bookbud.user WHERE userId='$userid'";
-                                                    $result = $conn->query($namequery);
-                                                    $name = $result->fetch_all(MYSQLI_ASSOC);
+                                                    $result2 = $conn->query($namequery);
+                                                    $name = $result2->fetch_all(MYSQLI_ASSOC);
                                                     $title = $row['title'];
                                                     $dues = $row['x'];
 

@@ -105,6 +105,7 @@ CREATE TABLE `record` (
   `Due_Date` date NOT NULL,
   `Date_of_Return` date NOT NULL,
   `Dues` int(255) NOT NULL,
+  `Penalty` int(255) NOT NULL,
   `Renewals_left` int(255) NOT NULL,
   `Time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -169,7 +170,19 @@ CREATE TABLE `user` (
   `username` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
-  `type` varchar(50) DEFAULT NULL
+  `type` varchar(50) DEFAULT NULL,
+  `balance` int(255) DEFAULT NULL,
+  `currentBorrowed` int(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Table structure for table `favorites`
+--
+
+CREATE TABLE `favorites` (
+  `userId` int(10) NOT NULL,
+  `bookId` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -309,6 +322,12 @@ ALTER TABLE `tbl`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
+
+-- Constraints for table `favorites`
+--
+ALTER TABLE `favorites`
+  ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
+  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`bookId`) REFERENCES `book` (`bookId`);
 
 --
 -- Constraints for table `recommendations`

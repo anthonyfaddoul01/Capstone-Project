@@ -1,5 +1,5 @@
 <?php
-require('dbconn.php');
+require ('dbconn.php');
 
 ?>
 
@@ -14,11 +14,11 @@ if ($_SESSION['userId'] == '1') {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Library</title>
-        <?php require("links.php") ?>
+        <?php require ("links.php") ?>
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">
-        <?php require("nav.php") ?>
+        <?php require ("nav.php") ?>
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -88,6 +88,9 @@ if ($_SESSION['userId'] == '1') {
                                             <tbody>
                                                 <?php
                                                 while ($row = $result->fetch_assoc()) {
+                                                    $namequery = "SELECT username FROM bookbud.user WHERE userId='$userid'";
+                                                    $result2 = $conn->query($namequery);
+                                                    $name = $result2->fetch_assoc();
                                                     $id = $row['id'];
                                                     $userid = $row['userId'];
                                                     $bookid = $row['BookId'];
@@ -102,7 +105,9 @@ if ($_SESSION['userId'] == '1') {
                                                         <td>
                                                             <?php echo $userid ?>
                                                         </td>
-
+                                                        <td>
+                                                            <?php echo $name['username'] ?>
+                                                        </td>
                                                         <td>
                                                             <?php echo $bookid ?>
                                                         </td>
@@ -139,9 +144,10 @@ if ($_SESSION['userId'] == '1') {
 
                                                         </td>
 
-                                                </tbody>
-                                            </table>
-                                        <?php } ?>
+
+                                                    <?php } ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
@@ -159,8 +165,8 @@ if ($_SESSION['userId'] == '1') {
         </div>
         <!--/.wrapper-->
 
-        <?php require("scripts.php") ?>
-        
+        <?php require ("scripts.php") ?>
+
     </body>
 
     </html>

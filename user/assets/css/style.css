@@ -1609,3 +1609,7 @@ section {
   font-size: 13px;
   color: #fff;
 }
+
+.nav-item.dropdown {
+  list-style-type: none; /* Removes the marker */
+}

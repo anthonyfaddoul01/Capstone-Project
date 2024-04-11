@@ -6,7 +6,7 @@ require ('dbconn.php');
 
 
 if ($_SESSION['type'] == 'User') {
-
+    //require ('cal.php');
     ?>
 
     <!DOCTYPE html>
@@ -19,8 +19,8 @@ if ($_SESSION['type'] == 'User') {
         <?php require ("links.php") ?>
         <style>
             /*--------------------------------------------------------------
-                                    # Scroll horizontal
-                                    --------------------------------------------------------------*/
+                                                    # Scroll horizontal
+                                                    --------------------------------------------------------------*/
             .cover {
                 position: relative;
                 padding: 0px 30px;
@@ -107,16 +107,16 @@ if ($_SESSION['type'] == 'User') {
         <main id="main">
             <!-- ======= Hero Section ======= -->
             <section id="hero" class="d-flex align-items-center justify-content-center mt-0">
-                <div class="container" data-aos="fade-up">
+                <div class="container">
 
-                    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
-                        <div class="col-xl-6 col-lg-8">
-                            <h1>Powerful Digital Solutions With Gp<span>.</span></h1>
-                            <h2>We are team of talented digital marketers</h2>
+                    <div class="row justify-content-center">
+                        <div class="col-xl-8 col-lg-8">
+                            <h1 id="quoteDisplay"></h1>
+                            <!-- <h2>We are team of talented digital marketers</h2> -->
                         </div>
                     </div>
 
-                    <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+                    <!-- <div class="row gy-4 mt-5 justify-content-center">
                         <div class="col-xl-2 col-md-4">
                             <div class="icon-box">
                                 <i class="ri-store-line"></i>
@@ -147,7 +147,7 @@ if ($_SESSION['type'] == 'User') {
                                 <h3><a href="">Nemos Enimade</a></h3>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </section><!-- End Hero -->
@@ -439,6 +439,25 @@ if ($_SESSION['type'] == 'User') {
                 });
             });
 
+
+            const Quotes = [
+                "The purpose of our lives is to be happy.",
+                "Life is what happens when you're busy making other plans.",
+                "Get busy living or get busy dying.",
+                "You only live once, but if you do it right, once is enough.",
+                "Many of life's failures are people who did not realize how close they were to success when they gave up.",
+                "If you want to live a happy life, tie it to a goal, not to people or things.",
+                "Never let the fear of striking out keep you from playing the game.",
+                "Money and success don't change people; they merely amplify what is already there."
+            ];
+            let Dayof = Math.floor(Math.random() * Quotes.length);
+            let QuoteofDay = Quotes[Dayof];
+
+            // Select the H1 element and insert the quote
+            document.addEventListener("DOMContentLoaded", function () {
+                let punctuatedQuote = QuoteofDay.replace(/([\.,;:!?\-'"()])/g, '<span>$1</span>');
+                document.getElementById("quoteDisplay").innerHTML = punctuatedQuote;
+            });
         </script>
     </body>
 

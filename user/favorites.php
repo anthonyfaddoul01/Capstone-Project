@@ -13,7 +13,7 @@ if ($_SESSION['type'] == 'User') {
     <html>
 
     <head>
-        <title>Search</title>
+        <title>Favorites</title>
         <!-- Including jQuery is required. -->
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <!-- Including our scripting file. -->
@@ -43,28 +43,20 @@ if ($_SESSION['type'] == 'User') {
         <?php require ('nav.php'); ?>
         <main id="main">
             <section class="mt-5">
-            <!-- Search box. -->
-            <div class="container justify-content-center mb-3">
-                <div class="row justify-content-center">
-                    <div class="col-8">
-                        <div class="input-group mb-4">
-                            <input type="text" class="form-control input-text" id="searchTerm" placeholder="Search" />
-                        </div>
+                <div class="container">
+                    <div class="section-title pb-0">
+                        <p class="mb-3">My Favorite Books</p>
                     </div>
+                    <div id="display" class="display row"></div>
                 </div>
-            </div>
-            <!-- Suggestions will be displayed in below div. -->
-            <div class="container">
-                <div id="display" class="display row"></div>
-            </div>
-        </section>
+            </section>
         </main>
         <script>
-            function searchBooks(searchTerm, page) {
+            function searchBooks(page) {
                 $.ajax({
-                    url: "searchbytitle.php",
+                    url: "getfavorites.php",
                     type: "GET",
-                    data: { searchTerm: searchTerm, page: page },
+                    data: {page: page },
                     success: function (data) {
                         $('#display').html(data);
                     }
@@ -72,13 +64,7 @@ if ($_SESSION['type'] == 'User') {
             }
 
             $(document).ready(function () {
-                let searchTerm = $('#searchTerm').val();
-                searchBooks(searchTerm, 1); // Initial load
-
-                $('#searchTerm').on('input', function () {
-                    searchTerm = $(this).val();
-                    searchBooks(searchTerm, 1); // Trigger search with new input
-                });
+                searchBooks(1);
             });
         </script>
         <?php require ("scripts.php") ?>

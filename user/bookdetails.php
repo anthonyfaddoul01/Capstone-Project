@@ -170,12 +170,44 @@ if ($_SESSION['type'] == 'User') {
                                 </dd>
                             </div>
                             <hr />
+                            <?php
+                            $userid = $_SESSION['userId'];
+
+                            $stmt = $conn->prepare("SELECT * FROM bookbud.favorites WHERE userId = ? AND bookId = ?");
+                            $stmt->bind_param("ss", $userid, $bookid); // "ss" denotes two strings
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            // Check if the record exists
+                            $favoriteExists = $result->num_rows > 0;
+                            ?>
+
                             <div class="d-flex justify-content-between">
-                                <a href="#" class="btn btn-primary shadow-0" onclick="goBack()"> Go Back </a>
-                                <a href="#" class="btn btn-light border border-secondary  icon-hover px-3"> <i
-                                        class="me-1 fa fa-heart fa-lg"></i> Add to Favorite </a>
-                                <a href="requestbook.php?id=<?php echo $bookid ?>" class="btn btn-warning shadow-0"> <i
-                                        class="me-1 fas fa-paper-plane"></i> Request Book</a>
+                                <a href="#" class="btn btn-primary shadow-0" onclick="goBack()">Go Back</a>
+                                <?php if ($favoriteExists): ?>
+                                    <button id="favoriteButton" onclick="removeFromFavorites(<?php echo $bookid; ?>)"
+                                        class="btn btn-danger border border-secondary icon-hover px-3">
+                                        <i class="me-1 fa fa-heart fa-lg"></i> Added to Favorites
+                                    </button>
+                                <?php else: ?>
+                                    <button id="favoriteButton" onclick="addToFavorites(<?php echo $bookid; ?>)"
+                                        class="btn btn-light border border-secondary icon-hover px-3">
+                                        <i class="me-1 fa fa-heart fa-lg"></i> Add to Favorite
+                                    </button>
+                                <?php endif; ?>
+
+                                <?php if ($available == 1)
+                                    echo "<a id='submitButton' href='#' class='btn btn-warning shadow-0'>
+                                    <i class='me-1 fas fa-paper-plane'></i> Request Book
+                                </a>";
+                                else
+                                    echo "<a href='#' class='btn btn-secondary shadow-0' onclick='unavailable()'>
+                                    <i class='me-1 fas fa-paper-plane'></i> Request Book
+                                </a>" ?>
+
+                                    <!-- <a href="requestbook.php?id=<?php echo $bookid ?>" class="btn btn-warning shadow-0">
+                                <i class="me-1 fas fa-paper-plane"></i> Request Book
+                            </a> -->
                             </div>
 
                         </div>
@@ -186,9 +218,72 @@ if ($_SESSION['type'] == 'User') {
         <!-- content -->
         <?php require ("scripts.php") ?>
         <script>
+            function unavailable() {
+                alert('Book Unavailable!');
+            }
+
             function goBack() {
                 window.history.back();
             }
+
+            $(document).ready(function () {
+                $("#submitButton").click(function (e) {
+                    e.preventDefault();
+                    var bookid = "<?php echo $bookid; ?>"
+                    $.ajax({
+                        type: "GET",
+                        url: "requestbook.php",
+                        data: { id: bookid },
+                        success: function (response) {
+                            if (response.trim() === "success") {
+                                alert("Request Sent Successfully.");
+                            } else if (response.trim() === "error") {
+                                alert("Error: You have already made this request.");
+                            }
+                        },
+                        error: function () {
+                            alert("Request Already Sent!");
+                        }
+                    });
+                });
+            });
+
+            function addToFavorites(bookId) {
+                $.ajax({
+                    url: 'addfavorite.php',
+                    type: 'GET',
+                    data: { bookId: bookId },
+                    success: function (response) {
+                        if (response === 'success') {
+                            var button = $('#favoriteButton');
+                            button.removeClass('btn-light').addClass('btn-danger');
+                            button.html('<i class="me-1 fa fa-heart fa-lg"></i> Added to Favorites');
+                            button.attr("onclick", "removeFromFavorites(" + bookId + ");");
+                        } else {
+                            alert('Failed to add to favorites. Please try again.');
+                        }
+                    }
+                });
+            }
+
+            function removeFromFavorites(bookId) {
+                $.ajax({
+                    url: 'removefavorite.php',
+                    type: 'GET',
+                    data: { bookId: bookId },
+                    success: function (response) {
+                        if (response === 'success') {
+                            var button = $('#favoriteButton');
+                            button.removeClass('btn-danger').addClass('btn-light');
+                            button.html('<i class="me-1 fa fa-heart fa-lg"></i> Add to Favorite');
+                            button.attr("onclick", "addToFavorites(" + bookId + ");");
+                        } else {
+                            alert('Failed to remove from favorites. Please try again.');
+                        }
+                    }
+                });
+            }
+
         </script>
 
     </body>
