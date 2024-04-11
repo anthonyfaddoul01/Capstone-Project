@@ -51,8 +51,8 @@ if ($_SESSION['type'] == 'admin') {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $rollno = $_SESSION['RollNo'];
-                                            $sql = "select * from LMS.message where RollNo='$rollno' order by Date DESC,Time DESC";
+                                            $userid = $_SESSION['userId'];
+                                            $sql = "select * from LMS.message where userId='$userid' order by Date DESC,Time DESC";
                                             $result = $conn->query($sql);
                                             while ($row = $result->fetch_assoc()) {
                                                 $id = $row['M_Id'];

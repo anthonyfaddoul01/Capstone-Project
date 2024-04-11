@@ -103,7 +103,7 @@
                         }
 
                         ?>
-                        <a href="#" class=" dropdown-footer">See All
+                        <a href="message.php" class=" dropdown-footer">See All
                             Messages</a>
                     </div>
                 </li>

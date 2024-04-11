@@ -168,8 +168,8 @@ require ('dbconn.php');
       $_SESSION['msg_type'] = "error";
     }
   }
-
   ?>
+
 </body>
 <!-- //Body -->
 

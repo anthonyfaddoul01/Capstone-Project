@@ -148,12 +148,12 @@ if ($_SESSION['type'] == 'User') {
                                     ?>
                                 </dd>
 
-                                <dt class="col-4">Year of publication:</dt>
+                                <dt class="col-4">Shelf Location:</dt>
                                 <dd class="col-8">
                                     <?php echo $shelf; ?>
                                 </dd>
 
-                                <dt class="col-4">No. of pages:</dt>
+                                <dt class="col-4">Year of publication:</dt>
                                 <dd class="col-8">
                                     <?php echo $year; ?>
                                 </dd>
@@ -215,15 +215,30 @@ if ($_SESSION['type'] == 'User') {
                 </div>
             </div>
         </section>
+        <!-- Modal -->
+        <div id="messageModal"
+            style="display:none; position: fixed; z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0,0,0,0.5);">
+            <p id="modalText">...</p>
+        </div>
         <!-- content -->
         <?php require ("scripts.php") ?>
         <script>
             function unavailable() {
-                alert('Book Unavailable!');
+                showMessageModal("Book Unavailable", "text-danger");
             }
 
             function goBack() {
                 window.history.back();
+            }
+            function showMessageModal(message, className) {
+                var modalText = document.getElementById('modalText');
+                modalText.className = '';
+                modalText.classList.add(className);
+                modalText.innerText = message;
+                document.getElementById('messageModal').style.display = 'block';
+                setTimeout(function () {
+                    document.getElementById('messageModal').style.display = 'none';
+                }, 3000);
             }
 
             $(document).ready(function () {
@@ -236,13 +251,13 @@ if ($_SESSION['type'] == 'User') {
                         data: { id: bookid },
                         success: function (response) {
                             if (response.trim() === "success") {
-                                alert("Request Sent Successfully.");
+                                showMessageModal("Request Sent Successfully.", "text-warning");
                             } else if (response.trim() === "error") {
-                                alert("Error: You have already made this request.");
+                                showMessageModal("Error: You have already made this request.", "text-danger");
                             }
                         },
                         error: function () {
-                            alert("Request Already Sent!");
+                            showMessageModal("Error: You have already made this request.", "text-danger");
                         }
                     });
                 });
