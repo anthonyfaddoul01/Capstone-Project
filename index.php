@@ -128,7 +128,7 @@ require ('dbconn.php');
       $_SESSION['userId'] = $id;
       $_SESSION['type'] = $y;
 
-      if ($y == 'Admin') {
+      if ($y == 'admin') {
         echo header("Location:admin/index.php");
 
       } elseif ($y == 'Librarian') {
