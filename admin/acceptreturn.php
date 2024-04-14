@@ -14,7 +14,11 @@ if ($conn->query($sql1) === TRUE) {
     $result = $conn->query($sql3);
     $sql4 = "delete from bookbud.renew where bookId='$bookid' and userId='$userid'";
     $result = $conn->query($sql4);
-    $sql5 = "insert into bookbud.message (userId,Msg,Date,Time) values ('$userid','Your request for return of BookId: $bookid  has been accepted',curdate(),curtime())";
+    $sql6= "Select title from book where bookId='$bookid'";
+    $result1 = $conn->query($sql6);
+    $t=$result1->fetch_assoc();
+    $u=$t['title'];
+    $sql5 = "insert into bookbud.message (userId,Msg,Date,Time) values ('$userid','Your request for return of $u  has been accepted',curdate(),curtime())";
     $result = $conn->query($sql5);
     echo "<script type='text/javascript'>alert('Success')</script>";
     header("Refresh:0.01; url=return_request.php", true, 303);

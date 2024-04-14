@@ -37,31 +37,13 @@ if ($_SESSION['type'] == 'admin') {
                     <div class="card card-widget">
                         <div class="row">
                             <div class="col-12">
-                                <div class="card">
-                                    <div class="row justify-content-between p-4">
-                                        <form action="excel2.php" method="post" style="float: left;">
+                                    <div class="row justify-content-between">
+                                        <!-- <form action="excel2.php" method="post" style="float: left;">
                                             <input type="submit" name="export_excel" class="btn btn-success"
                                                 value="Export to Excel">
-                                        </form>
-                                        <div class="d-flex justify-content-end">
-                                            <form class="d-flex" action="current.php" method="post">
-                                                <input type="text" id="title" name="title"
-                                                    placeholder="Enter User Id/Book Name/Book Id"
-                                                    class="form-control form-control-md mx-2" style="width:300px;" required>
-                                                <button type="submit" name="submit"
-                                                    class="btn btn-secondary">Search</button>
-                                            </form>
-                                        </div>
-
-
+                                        </form> -->
                                         <?php
-                                        if (isset($_POST['submit'])) {
-                                            $s = $_POST['title'];
-                                            $sql = "select record.bookId,id,userId,title,Due_Date,Date_of_Issue,Date_of_Return,datediff(curdate(),Due_Date) 
-                                        as x from bookbud.record,bookbud.book where (Date_of_Issue and Date_of_Return and book.bookid = record.bookId) 
-                                        and (userId='$s' or record.bookId='$s' or title like '%$s%')";
-                                        } else
-                                            $sql = "select record.bookId,id,userId,title,Due_Date,Date_of_Issue,Date_of_Return,datediff(curdate(),Due_Date) 
+                                        $sql = "select record.bookId,id,userId,title,Due_Date,Date_of_Issue,Date_of_Return,datediff(curdate(),Due_Date) 
                                         as x from bookbud.record,bookbud.book where Date_of_Issue and Date_of_Return and book.bookid = record.bookId";
                                         $result = $conn->query($sql);
                                         $rowcount = mysqli_num_rows($result);
@@ -71,8 +53,8 @@ if ($_SESSION['type'] == 'admin') {
                                     </div>
 
 
-                                    <div class="card-body table-responsive p-0" style="height: 70vh;">
-                                        <table class="table table-head-fixed text-nowrap">
+                                    <div class="card-body table-responsive">
+                                        <table class="table table-head-fixed text-nowrap" id="example1">
                                             <thead>
                                                 <tr>
                                                     <th>Borrower's ID</th>
@@ -150,8 +132,7 @@ if ($_SESSION['type'] == 'admin') {
                                         </table>
                                     </div>
                                     <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
+                                
                             </div>
                         </div>
                     </div>
@@ -166,7 +147,14 @@ if ($_SESSION['type'] == 'admin') {
         <!--/.wrapper-->
 
         <?php require ("scripts.php") ?>
+        <script>
+            $(document).ready(function () {
+                $("#example1").DataTable({
+                    "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": false, "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+            });
+        </script>
     </body>
 
     </html>

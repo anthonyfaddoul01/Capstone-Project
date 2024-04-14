@@ -37,125 +37,107 @@ if ($_SESSION['type'] == 'admin') {
                     <div class="card card-widget">
                         <div class="row">
                             <div class="col-12">
-                                <div class="card">
-                                    <div class="row justify-content-between p-4">
-                                        <form action="excel1.php" method="post" style="float: left;">
+
+                                <div class="row justify-content-between">
+                                    <!-- <form action="excel1.php" method="post" style="float: left;">
                                             <input type="submit" name="export_excel" class="btn btn-success"
                                                 value="Export to Excel">
-                                        </form>
-                                        <div class="d-flex justify-content-end">
-                                            <form class="d-flex" action="current.php" method="post">
-                                                <input type="text" id="title" name="title"
-                                                    placeholder="Enter User Id/Book Name/Book Id"
-                                                    class="form-control form-control-md mx-2" style="width:300px;" required>
-                                                <button type="submit" name="submit"
-                                                    class="btn btn-secondary">Search</button>
-                                            </form>
-                                        </div>
+                                        </form> -->
 
-
-                                        <?php
-                                        if (isset($_POST['submit'])) {
-                                            $s = $_POST['title'];
-                                            $sql = "select record.bookId,id,userId,title,Due_Date,Date_of_Issue,Date_of_Return,datediff(curdate(),Due_Date) 
-                                        as x from bookbud.record,bookbud.book where (Date_of_Issue and Date_of_Return is NULL and book.bookid = record.bookId) 
-                                        and (userId='$s' or record.bookId='$s' or title like '%$s%')";
-                                        } else
-                                            $sql = "select record.bookId,id,userId,title,Due_Date,Date_of_Issue,Date_of_Return,datediff(curdate(),Due_Date) 
+                                    <?php
+                                    $sql = "select record.bookId,id,userId,title,Due_Date,Date_of_Issue,Date_of_Return,datediff(curdate(),Due_Date) 
                                         as x from bookbud.record,bookbud.book where Date_of_Issue and Date_of_Return is NULL and book.bookid = record.bookId";
-                                        $result = $conn->query($sql);
-                                        $rowcount = mysqli_num_rows($result);
+                                    $result = $conn->query($sql);
+                                    $rowcount = mysqli_num_rows($result);
 
 
-                                        ?>
-                                    </div>
-
-
-                                    <div class="card-body table-responsive p-0" style="height: 70vh;">
-                                        <table class="table table-head-fixed text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Borrower's ID</th>
-                                                    <th>Borrower's username</th>
-                                                    <th>Book id</th>
-                                                    <th>Book name</th>
-                                                    <th>Issue Date</th>
-                                                    <th>Due date</th>
-                                                    <th>Return Date</th>
-                                                    <th>Dues</th>
-                                                    <th>Delete</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                while ($row = $result->fetch_assoc()) {
-                                                    $id = $row['id'];
-                                                    $userid = $row['userId'];
-                                                    $bookid = $row['bookId'];
-                                                    $namequery = "SELECT username FROM bookbud.user WHERE userId='$userid'";
-                                                    $result2 = $conn->query($namequery);
-                                                    $name = $result2->fetch_assoc();
-                                                    $title = $row['title'];
-                                                    $issuedate = $row['Date_of_Issue'];
-                                                    $return = $row['Date_of_Return'];
-                                                    $duedate = $row['Due_Date'];
-                                                    $dues = $row['x'];
-                                                    ?>
-
-                                                    <tr>
-                                                        <td>
-                                                            <?php echo $userid ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $name['username'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $bookid ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $title ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $issuedate ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $duedate ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $return ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php if ($dues > 0)
-                                                                echo "<font color='red'>" . $dues . "</font>";
-                                                            else
-                                                                echo "<font color='green'>0</font>";
-                                                            ?>
-
-
-                                                        <td>
-                                                            <form action="delcu.php" method="post">
-                                                                <button onclick="return myFunction2()" name="delete"
-                                                                    type="submit" class="btn btn-primary">Delete</button>
-                                                                <input type="hidden" name="" value="<?php echo $bookid ?>">
-                                                                <script>
-                                                                    function myFunction2() {
-                                                                        return confirm('Are you sure you want to delete this currently issued book?');
-                                                                    }
-                                                                </script>
-
-
-                                                            </form>
-
-                                                        </td>
-                                                    </tr>
-
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
+                                    ?>
                                 </div>
-                                <!-- /.card -->
+
+
+                                <div class="card-body table-responsive ">
+                                    <table class="table table-head-fixed text-nowrap" id="example1">
+                                        <thead>
+                                            <tr>
+                                                <th>Borrower's ID</th>
+                                                <th>Borrower's username</th>
+                                                <th>Book id</th>
+                                                <th>Book name</th>
+                                                <th>Issue Date</th>
+                                                <th>Due date</th>
+                                                <th>Return Date</th>
+                                                <th>Dues</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            while ($row = $result->fetch_assoc()) {
+                                                $id = $row['id'];
+                                                $userid = $row['userId'];
+                                                $bookid = $row['bookId'];
+                                                $namequery = "SELECT username FROM bookbud.user WHERE userId='$userid'";
+                                                $result2 = $conn->query($namequery);
+                                                $name = $result2->fetch_assoc();
+                                                $title = $row['title'];
+                                                $issuedate = $row['Date_of_Issue'];
+                                                $return = $row['Date_of_Return'];
+                                                $duedate = $row['Due_Date'];
+                                                $dues = $row['x'];
+                                                ?>
+
+                                                <tr>
+                                                    <td>
+                                                        <?php echo $userid ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $name['username'] ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $bookid ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $title ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $issuedate ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $duedate ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $return ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($dues > 0)
+                                                            echo "<font color='red'>" . $dues . "</font>";
+                                                        else
+                                                            echo "<font color='green'>0</font>";
+                                                        ?>
+
+
+                                                    <td>
+                                                        <form action="delcu.php" method="post">
+                                                            <button onclick="return myFunction2()" name="delete" type="submit"
+                                                                class="btn btn-primary">Delete</button>
+                                                            <input type="hidden" name="" value="<?php echo $bookid ?>">
+                                                            <script>
+                                                                function myFunction2() {
+                                                                    return confirm('Are you sure you want to delete this currently issued book?');
+                                                                }
+                                                            </script>
+
+
+                                                        </form>
+
+                                                    </td>
+                                                </tr>
+
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
                             </div>
                         </div>
                     </div>
@@ -170,7 +152,14 @@ if ($_SESSION['type'] == 'admin') {
         <!--/.wrapper-->
 
         <?php require ("scripts.php") ?>
+        <script>
+            $(document).ready(function () {
+                $("#example1").DataTable({
+                    "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": false, "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+            });
+        </script>
     </body>
 
     </html>
