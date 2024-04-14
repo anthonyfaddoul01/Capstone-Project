@@ -106,7 +106,7 @@ if ($_SESSION['type'] == 'User') {
         <hr />
         <ul class="nav nav-pills flex-column mb-auto hov">
           <li class="nav-item">
-            <a href="#" class="nav-link active" onclick="displayPopularBooks(1)"> Popular </a>
+            <a href="#" class="nav-link active" onclick="displayPopularBooks(1)"> For You </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link active" onclick="searchBooks(1)"> Favorites </a>

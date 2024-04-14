@@ -37,10 +37,9 @@ if ($_SESSION['type'] == 'admin') {
                     <div class="card card-widget">
                         <div class="row">
                             <div class="col-12">
-                                <div class="card">
                                     <!-- /.card-header -->
-                                    <div class="card-body table-responsive p-0" style="height: 70vh;">
-                                        <table class="table table-head-fixed text-nowrap">
+                                    <div class="card-body table-responsive">
+                                        <table class="table table-head-fixed text-nowrap" id="example1">
                                             <thead>
                                                 <tr>
                                                     <th>Borrower's ID</th>
@@ -102,8 +101,7 @@ if ($_SESSION['type'] == 'admin') {
                                         </table>
                                     </div>
                                     <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
+                                
                             </div>
                         </div>
                     </div>
@@ -118,7 +116,14 @@ if ($_SESSION['type'] == 'admin') {
         <!--/.wrapper-->
 
         <?php require("scripts.php") ?>
+        <script>
+            $(document).ready(function () {
+                $("#example1").DataTable({
+                    "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": false
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+            });
+        </script>
 
     </body>
 

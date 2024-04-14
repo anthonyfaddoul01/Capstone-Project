@@ -139,7 +139,7 @@ ob_start();
         echo header("Location:user/index.php");
 
       } else {
-        echo header('Location:staff/index.php');
+        echo header('Location:error.php');
       }
 
     } else {

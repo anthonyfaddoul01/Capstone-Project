@@ -135,12 +135,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="testbook.php" class="nav-link">
-                            <i class="nav-icon fas fa-list-ul"></i>
-                            <p>Recent Deletion Books</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a href="logout.php" class="nav-link">
                             <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
                             <p class="text">Logout</p>

@@ -19,8 +19,8 @@ if ($_SESSION['type'] == 'User') {
         <?php require ("links.php") ?>
         <style>
             /*--------------------------------------------------------------
-                                    # Scroll horizontal
-                                    --------------------------------------------------------------*/
+                                        # Scroll horizontal
+                                        --------------------------------------------------------------*/
             .cover {
                 position: relative;
                 padding: 0px 30px;
@@ -278,19 +278,24 @@ if ($_SESSION['type'] == 'User') {
 
 
             const Quotes = [
-                "The purpose of our lives is to be happy.",
-                "Life is what happens when you're busy making other plans.",
-                "Get busy living or get busy dying.",
-                "You only live once, but if you do it right, once is enough.",
-                "Many of life's failures are people who did not realize how close they were to success when they gave up.",
-                "If you want to live a happy life, tie it to a goal, not to people or things.",
-                "Never let the fear of striking out keep you from playing the game.",
-                "Money and success don't change people; they merely amplify what is already there."
+                "A room without books is like a body without a soul.",
+                "The only thing that you absolutely have to know, is the location of the library.",
+                "I do believe something very magical can happen when you read a good book.",
+                "Libraries will get you through times of no money better than money will get you through times of no libraries.",
+                "So many books, so little time.",
+                "Once you learn to read, you will be forever free.",
+                "The library is the temple of learning, and learning has liberated more people than all the wars in history.",
+                "Reading is to the mind what exercise is to the body.",
+                "Books are a uniquely portable magic.",
+                "In the library, you can find people between the pages of books.",
+                "No two persons ever read the same book.",
+                "Reading gives us someplace to go when we have to stay where we are.",
+                "A book is a dream that you hold in your hand.",
+                "Libraries store the energy that fuels the imagination."
             ];
             let Dayof = Math.floor(Math.random() * Quotes.length);
             let QuoteofDay = Quotes[Dayof];
 
-            // Select the H1 element and insert the quote
             document.addEventListener("DOMContentLoaded", function () {
                 let punctuatedQuote = QuoteofDay.replace(/([\.,;:!?\-'"()])/g, '<span>$1</span>');
                 document.getElementById("quoteDisplay").innerHTML = punctuatedQuote;
