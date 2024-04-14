@@ -1,6 +1,6 @@
 <?php
 require ('dbconn.php');
-
+ob_start();
 ?>
 
 <!DOCTYPE html>
@@ -100,6 +100,7 @@ require ('dbconn.php');
                 <i class="fas fa-lock"></i>
                 <input type="password" Name="password" placeholder="Enter your password" required>
               </div>
+              <?php include("trial.php")?>
               <div class="button input-box">
                 <input type="submit" name="signup" value="Sign Up">
               </div>
@@ -153,9 +154,17 @@ require ('dbconn.php');
     $email = $_POST['email'];
     $password = $_POST['password'];
     $username = $_POST['username'];
+    if (isset ($_POST['interests']) && is_array($_POST['interests'])) {
+      $genre = array_map(function ($item) use ($conn) {
+        return mysqli_real_escape_string($conn, $item);
+      }, $_POST['interests']);
+    } else {
+      $genre = []; // Or handle the error as appropriate
+    }
+    $genres = implode(', ',$genre);
     $type = 'User';
 
-    $sql = "insert into bookbud.user (name,username,email,password,type) values ('$name','$username','$email','$password','$type')";
+    $sql = "insert into bookbud.user (name,username,email,password,type,interests) values ('$name','$username','$email','$password','$type','$genres')";
 
     if ($conn->query($sql) === TRUE) {
       //echo "<script type='text/javascript'>alert('Registration Successful')</script>";
@@ -168,6 +177,7 @@ require ('dbconn.php');
       $_SESSION['msg_type'] = "error";
     }
   }
+  ob_flush();
   ?>
 
 </body>
