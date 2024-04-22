@@ -231,3 +231,28 @@ body{
     border: 1px solid red;
     border-radius: 5px;
 }
+
+
+.error-message {
+  color: red;
+  background-color: #fff0f0;
+  border: 1px solid red;
+  border-radius: 4px;
+  padding: 5px 10px;
+  position: absolute;
+  margin-top: 5px;
+  left: 20px;
+  display: none;
+}
+
+.error-message::before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: -5px;
+  left: 10px;
+  border-width: 0 5px 5px 5px;
+  border-style: solid;
+  border-color: transparent transparent red transparent;
+}

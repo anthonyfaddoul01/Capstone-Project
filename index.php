@@ -29,19 +29,7 @@ ob_start();
   <!-- Fonts -->
   <link href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <!-- //Fonts -->
-  <script>
-    window.onload = function () {
-      <?php if (isset($_SESSION['message'])): ?>
-        var messageType = "<?php echo $_SESSION['msg_type']; ?>";
-        var messageDiv = document.getElementById('message');
-        messageDiv.style.display = 'block';
-        messageDiv.textContent = "<?php echo $_SESSION['message']; ?>";
-        messageDiv.className = messageType; // Use this class to style your message
-        <?php unset($_SESSION['message']);
-        unset($_SESSION['msg_type']); ?> // Clear message after displaying
-      <?php endif; ?>
-    }
-  </script>
+
 </head>
 <!-- //Head -->
 
@@ -82,25 +70,29 @@ ob_start();
         </div>
         <div class="signup-form">
           <div class="title">Signup</div>
-          <form action="index.php" method="post">
+          <form action="index.php" method="post" autocomplete="off">
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
                 <input type="text" Name="name" placeholder="Enter your name" required>
+                <div class="validation-message"></div>
               </div>
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
                 <input type="text" Name="email" placeholder="Enter your email" required>
+                <div class="validation-message"></div>
               </div>
               <div class="input-box">
                 <i class="fas fa-signature"></i>
                 <input type="text" Name="username" placeholder="Create a username" required>
+                <div class="validation-message"></div>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
                 <input type="password" Name="password" placeholder="Enter your password" required>
+                <div class="validation-message"></div>
               </div>
-              <?php include("trial.php")?>
+              <?php include ("trial.php") ?>
               <div class="button input-box">
                 <input type="submit" name="signup" value="Sign Up">
               </div>
@@ -114,6 +106,7 @@ ob_start();
 
   <?php
   if (isset($_POST['signin'])) {
+    
     $u = $_POST['email'];
     $p = $_POST['password'];
 
@@ -150,18 +143,19 @@ ob_start();
   }
 
   if (isset($_POST['signup'])) {
+    echo '<script>console.log("")</script>';
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $username = $_POST['username'];
-    if (isset ($_POST['interests']) && is_array($_POST['interests'])) {
+    if (isset($_POST['interests']) && is_array($_POST['interests'])) {
       $genre = array_map(function ($item) use ($conn) {
         return mysqli_real_escape_string($conn, $item);
       }, $_POST['interests']);
     } else {
       $genre = []; // Or handle the error as appropriate
     }
-    $genres = implode(', ',$genre);
+    $genres = implode(', ', $genre);
     $type = 'User';
 
     $sql = "insert into bookbud.user (name,username,email,password,type,interests) values ('$name','$username','$email','$password','$type','$genres')";
@@ -179,7 +173,100 @@ ob_start();
   }
   ob_flush();
   ?>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const signupForm = document.querySelector('.signup-form');
+    if (signupForm) {
+        const inputs = signupForm.querySelectorAll('input[required]');
 
+        // Utility function to update custom validation messages
+        function updateCustomMessage(input) {
+            if (!input.value) {
+                input.setCustomValidity('Please fill in this field.');
+            } else {
+                input.setCustomValidity(''); // Clear any existing custom messages
+            }
+
+            switch (input.name) {
+                case 'name':
+                    if (!/^[A-Za-z\s]{3,20}$/.test(input.value)) {
+                        input.setCustomValidity('Name must be 3-20 characters long and contain only letters and spaces.');
+                    }
+                    break;
+                case 'email':
+                    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value)) {
+                        input.setCustomValidity('Please enter a valid email address.');
+                    }
+                    break;
+                case 'username':
+                    // Add any username-specific validations here if needed
+                    break;
+                case 'password':
+                    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(input.value)) {
+                        input.setCustomValidity('Password must be at least 8 characters with one uppercase, one lowercase, one number, and one special character.');
+                    }
+                    break;
+            }
+            input.reportValidity();
+        }
+
+        // Event listener for input changes to update validation messages
+        inputs.forEach(input => {
+            input.addEventListener('input', function () {
+                updateCustomMessage(input);
+            });
+        });
+
+        // Handling form submission with validation
+        signupForm.addEventListener('submit', function (event) {
+        //    event.preventDefault(); // Prevent the form from submitting until validation is complete
+
+            let formIsValid = true;
+            inputs.forEach(input => {
+                updateCustomMessage(input);
+                if (!input.checkValidity()) {
+                    formIsValid = false;
+                }
+            });
+
+            if (formIsValid) {
+                this.submit(); // Submit the form if all validations are passed
+            }
+        });
+    }
+});
+</script>
+<!-- <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const usernameInput = document.querySelector('input[name="username"]');
+
+    usernameInput.addEventListener('input', function() {
+        const username = this.value;
+
+        if (username.length >= 3) { // Only check if username length is 3 or more
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'check_username.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    if (this.responseText === 'taken') {
+                      input.setCustomValidity('Please enter a valid email address.');
+                        // Optionally, disable the submit button
+                        // document.querySelector('input[type="submit"]').disabled = true;
+                    } else {
+                        
+                        // Optionally, enable the submit button
+                        // document.querySelector('input[type="submit"]').disabled = false;
+                    }
+                } else {
+                    alert('Error checking username.');
+                }
+            };
+            xhr.send('username=' + encodeURIComponent(username));
+        }
+    });
+}); 
+</script> -->
 </body>
 <!-- //Body -->
 
