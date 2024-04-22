@@ -41,7 +41,7 @@ if ($_SESSION['type'] == 'User') {
                                 <?php
                                 $userid = $_SESSION['userId'];
                                 $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
-                                and Date_of_Issue is NOT NULL and Date_of_Return is NULL and book.bookid = record.bookId";
+                                and Date_of_Issue != '0000-00-00' and Date_of_Return is NULL and book.bookid = record.bookId";
 
                                 $result = $conn->query($sql);
                                 while ($row = $result->fetch_assoc()) {
@@ -50,6 +50,8 @@ if ($_SESSION['type'] == 'User') {
                                     $issuedate = $row['Date_of_Issue'];
                                     $duedate = $row['Due_Date'];
                                     $renewals = $row['Renewals_left'];
+                                    $dues = $row['Dues'];
+                                    $pen = $row['Penalty'];
                                     ?>
                                     <tr>
                                         <th scope="row" class="scope">
@@ -61,8 +63,8 @@ if ($_SESSION['type'] == 'User') {
                                         <td>
                                             <?php echo $duedate ?>
                                         </td>
-                                        <th scope="row" class="scope text-danger">10</th>
-                                        <td>10$</td>
+                                        <th scope="row" class="scope text-danger"><?php echo $dues ?></th>
+                                        <td><?php echo $pen ?>$</td>
                                         <td>
                                             <center>
                                                 <?php

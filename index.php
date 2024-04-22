@@ -24,30 +24,34 @@ ob_start();
     crossorigin="anonymous"></script>
   <!-- //Meta-Tags -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
   <!-- Style -->
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
   <!-- Fonts -->
   <link href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <!-- //Fonts -->
-  <script>
-    window.onload = function () {
-      <?php if (isset($_SESSION['message'])): ?>
-        var messageType = "<?php echo $_SESSION['msg_type']; ?>";
-        var messageDiv = document.getElementById('message');
-        messageDiv.style.display = 'block';
-        messageDiv.textContent = "<?php echo $_SESSION['message']; ?>";
-        messageDiv.className = messageType; // Use this class to style your message
-        <?php unset($_SESSION['message']);
-        unset($_SESSION['msg_type']); ?> // Clear message after displaying
-      <?php endif; ?>
+  <style>
+    .signup-form {
+      min-height: 550px;
     }
-  </script>
+
+    #logo {
+      width: 5%;
+      -webkit-filter: invert(100%); /* turning it black */
+      filter: invert(100%);
+    }
+  </style>
 </head>
 <!-- //Head -->
 
 <!-- Body -->
 
-<body class="flex-row">
+<body class="flex-column">
+  <div class="container-sm d-flex align-items-center gap-3 justify-content-center p-2 ">
+    <img src="images/logo.png" alt="Logo" id="logo">
+    <h1 class="title m-0">BookBud</h1>
+  </div>
   <div class="container">
     <input type="checkbox" id="flip">
     <div class="cover">
@@ -100,7 +104,7 @@ ob_start();
                 <i class="fas fa-lock"></i>
                 <input type="password" Name="password" placeholder="Enter your password" required>
               </div>
-              <?php include("trial.php")?>
+              <?php include ("trial.php") ?>
               <div class="button input-box">
                 <input type="submit" name="signup" value="Sign Up">
               </div>
@@ -154,14 +158,14 @@ ob_start();
     $email = $_POST['email'];
     $password = $_POST['password'];
     $username = $_POST['username'];
-    if (isset ($_POST['interests']) && is_array($_POST['interests'])) {
+    if (isset($_POST['interests']) && is_array($_POST['interests'])) {
       $genre = array_map(function ($item) use ($conn) {
         return mysqli_real_escape_string($conn, $item);
       }, $_POST['interests']);
     } else {
       $genre = []; // Or handle the error as appropriate
     }
-    $genres = implode(', ',$genre);
+    $genres = implode(', ', $genre);
     $type = 'User';
 
     $sql = "insert into bookbud.user (name,username,email,password,type,interests) values ('$name','$username','$email','$password','$type','$genres')";

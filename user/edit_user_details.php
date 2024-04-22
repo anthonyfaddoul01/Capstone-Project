@@ -75,7 +75,7 @@ if ($_SESSION['type'] == 'User') {
                             <!-- /.card-body -->
 
                             <div class="float-right p-3">
-                                <button type="submit" name="submit" class="btn btn-success">Update Details</button>
+                                <button type="submit" name="submit" class="btn btn-warning">Update Details</button>
                             </div>
                         </form>
                     </div>

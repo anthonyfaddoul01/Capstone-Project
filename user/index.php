@@ -6,7 +6,7 @@ require ('dbconn.php');
 
 
 if ($_SESSION['type'] == 'User') {
-    //require ('cal.php');
+    require ('cal.php');
     ?>
 
     <!DOCTYPE html>
