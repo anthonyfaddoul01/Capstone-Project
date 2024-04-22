@@ -19,8 +19,8 @@ if ($_SESSION['type'] == 'User') {
         <?php require ("links.php") ?>
         <style>
             /*--------------------------------------------------------------
-                                        # Scroll horizontal
-                                        --------------------------------------------------------------*/
+                                                    # Scroll horizontal
+                                                    --------------------------------------------------------------*/
             .cover {
                 position: relative;
                 padding: 0px 30px;
@@ -169,6 +169,15 @@ if ($_SESSION['type'] == 'User') {
 
                 </div>
             </section><!-- End Hero -->
+
+            <div class="cover mx-3">
+                <div class="section-title pb-0">
+                    <p class="mb-0">Recommended For You</p>
+                </div>
+                <button class="left"><i class="fas fa-arrow-left"></i></button>
+                <div id="recommendationsBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
+            </div>
             <div class="cover mx-3">
                 <div class="section-title pb-0">
                     <p class="mb-0">top rated books</p>
@@ -238,7 +247,6 @@ if ($_SESSION['type'] == 'User') {
                     success: function (data) {
                         const sectionId = '#' + section + 'Books';
                         $(sectionId).html(data);
-                        // Apply scrolling functionality after the content is loaded
                         applyScrolling(sectionId);
                     }
                 });
@@ -274,6 +282,59 @@ if ($_SESSION['type'] == 'User') {
                 loadSectionBooks('romance');
                 loadSectionBooks('new');
 
+            });
+
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'getRecommendedForUser.php', // Adjust this to the actual PHP file fetching books
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (books) {
+                        console.log(books);
+                        books.forEach(function (book) {
+                            getRecommendations(book.title, book.bookId);
+                        });
+                        applyScrolling('#recommendationsBooks');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Failed to retrieve books: ' + error);
+                    }
+                });
+                
+
+                function getRecommendations(bookTitle, bookId) {
+                    $.ajax({
+                        url: 'http://127.0.0.1:5000/recommend',
+                        data: { title: bookTitle },
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            var recommendations = data.slice(0, 5); // Get only the first two recommendations
+                            recommendations.forEach(function (rec) {
+                                fetchBookDetails(rec.ID);
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Failed to retrieve recommendations: ' + error);
+                        }
+                    });
+                }
+
+                function fetchBookDetails(recBookId) {
+                    $.ajax({
+                        url: 'fetch_recbook_details.php', // PHP script to fetch book details by ID
+                        data: { bookId: recBookId },
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (bookDetails) {
+                            var bookHtml = '<div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div>';
+                            $('#recommendationsBooks').append(bookHtml);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Failed to fetch book details: ' + error);
+                        }
+                    });
+                }
             });
 
 
