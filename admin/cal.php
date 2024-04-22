@@ -7,14 +7,12 @@ require ('dbconn.php');
     
 <?php
 $userId=$_SESSION['userId'] ;
-$sql = "SELECT * FROM record WHERE userId = 1000";
+$sql = "SELECT * FROM record WHERE userId = $userId";
 
 
-// Execute query
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-  // Output data of each row
   $balance=0;
   while ($row = $result->fetch_assoc()) {
     // echo "Record: " . print_r($row) . "<br>"; // Replace some_column_name with the actual column name you want to display

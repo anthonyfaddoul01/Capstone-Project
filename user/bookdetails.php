@@ -253,11 +253,11 @@ if ($_SESSION['type'] == 'User') {
                             if (response.trim() === "success") {
                                 showMessageModal("Request Sent Successfully.", "text-warning");
                             } else if (response.trim() === "error") {
-                                showMessageModal("Error: You have already made this request.", "text-danger");
+                                showMessageModal("You have already made this request.", "text-danger");
                             }
                         },
                         error: function () {
-                            showMessageModal("Error: You have already made this request.", "text-danger");
+                            showMessageModal("You have already made this request.", "text-danger");
                         }
                     });
                 });

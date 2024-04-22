@@ -2,7 +2,7 @@
 require ('dbconn.php');
 $userid = $_SESSION['userId'];
 $sql = "SELECT * FROM bookbud.record,bookbud.book WHERE userId = '$userid' 
-        and Date_of_Issue is NOT NULL and Date_of_Return is NOT NULL and book.bookId = record.bookId ORDER BY RAND() LIMIT 10";  
+        and Date_of_Issue != '0000-00-00' and Date_of_Return is NOT NULL and book.bookId = record.bookId ORDER BY RAND() LIMIT 10";  
 
 $result = $conn->query($sql);
 $books = [];

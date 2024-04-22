@@ -22,23 +22,11 @@ if ($_SESSION['type'] == 'User') {
 
     <body>
         <?php require ('nav.php'); ?>
-        <main id="main">
-
-            <!-- ======= Breadcrumbs ======= -->
-            <section class="breadcrumbs">
-                <div class="container">
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2>Profile</h2>
-                        <ol>
-                            <li><a href="index.html">Home</a></li>
-                            <li>Profile</li>
-                        </ol>
-                    </div>
-
-                </div>
-            </section><!-- End Breadcrumbs -->
-
+        <script>
+            const element = document.getElementById("header");
+            element.classList.remove("fixed-top");
+        </script>
+        <main id="main" class="container">
             <section class="inner-page">
                 <div class="d-flex justify-content-center">
                     <div class="card-container">
@@ -49,22 +37,25 @@ if ($_SESSION['type'] == 'User') {
                         <h6>
                             <?php echo $email ?>
                         </h6>
-                        <p>User interface designer and <br /> front-end developer</p>
+                        <p>Balance: <?php echo $bal ?>$</p>
                         <div class="buttons"><a href="edit_user_details.php">
-                            <button class="primary">
-                                Edit Details
-                            </button></a>
+                                <button class="primary">
+                                    Edit Details
+                                </button></a>
+                            <a href="message.php">
+                                <button class="primary">
+                                    Messages
+                                </button></a>
                         </div>
                         <div class="skills">
                             <h6>Interests</h6>
                             <ul>
-                                <li>UI / UX</li>
-                                <li>Front End Development</li>
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>JavaScript</li>
-                                <li>React</li>
-                                <li>Node</li>
+                                <?php
+                                $l = explode(", ", $interests);
+                                for($i=0;$i<count($l);$i++){
+                                    echo "<li>" . $l[$i] . "</li>";
+                                }
+                                ?>  
                             </ul>
                         </div>
                     </div>

@@ -7,7 +7,7 @@
 }
 body{
   min-height: 100vh;
-  display: flex;
+  
   align-items: center;
   justify-content: center;
   background: #FFC107;
@@ -106,6 +106,12 @@ body{
   width: calc(100% / 2 - 25px);
 }
 .forms .form-content .title{
+  position: relative;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+.title{
   position: relative;
   font-size: 24px;
   font-weight: 500;

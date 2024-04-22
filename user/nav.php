@@ -14,6 +14,8 @@
         $email = $row['email'];
         $username = $row['username'];
         $type = $row['type'];
+        $bal = $row['balance'];
+        $interests = $row['interests'];
         ?>
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>

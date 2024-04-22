@@ -66,7 +66,7 @@ if ($_SESSION['type'] == 'User') {
                                 <?php
                                 $userid = $_SESSION['userId'];
                                 $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
-                and Date_of_Issue is NOT NULL and Date_of_Return is NOT NULL and book.bookid = record.bookId";
+                and Date_of_Issue != '0000-00-00' and Date_of_Return != '0000-00-00' and book.bookid = record.bookId";
 
                                 $result = $conn->query($sql);
                                 while ($row = $result->fetch_assoc()) {
