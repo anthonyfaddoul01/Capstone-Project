@@ -54,7 +54,7 @@ ob_start();
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
-                <input type="text" Name="email" placeholder="Enter your email" required="">
+                <input type="text" Name="email" placeholder="Enter your email or username" required="">
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
@@ -70,7 +70,7 @@ ob_start();
         </div>
         <div class="signup-form">
           <div class="title">Signup</div>
-          <form action="index.php" method="post" autocomplete="off">
+          <form action="index.php" method="post" name="signup" id="signup" autocomplete="off">
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
@@ -143,8 +143,11 @@ ob_start();
   }
 
   if (isset($_POST['signup'])) {
+    echo '<script>alert("This is an alert message from PHP!");</script>';
+
     echo '<script>console.log("")</script>';
     $name = $_POST['name'];
+    echo '<script>console.log("helooo")</script>';
     $email = $_POST['email'];
     $password = $_POST['password'];
     $username = $_POST['username'];
@@ -173,7 +176,97 @@ ob_start();
   }
   ob_flush();
   ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const signupForm = document.getElementById("signup");
+    if (signupForm) {
+        const inputs = signupForm.querySelectorAll('input[required]');
+
+        function updateCustomMessage(input) {
+            if (!input.value) {
+                input.setCustomValidity('Please fill in this field.');
+            } else {
+                input.setCustomValidity('');
+            }
+
+            switch (input.name) {
+                case 'name':
+                    if (!/^[A-Za-z\s]{3,20}$/.test(input.value)) {
+                        input.setCustomValidity('Name must be 3-20 characters long and contain only letters and spaces.');
+                    }
+                    break;
+                case 'email':
+                    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value)) {
+                        input.setCustomValidity('Please enter a valid email address.');
+                    }
+                    break;
+                case 'username':
+                    if (input.value) {
+                        checkUsername(input);
+                    }
+                    break;
+                case 'password':
+                    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(input.value)) {
+                        input.setCustomValidity('Password must be at least 8 characters with one uppercase, one lowercase, one number, and one special character.');
+                    }
+                    break;
+            }
+            input.reportValidity();
+        }
+
+        function checkUsername(input) {
+            const username = input.value;
+            $.ajax({
+                url: 'check_username.php',
+                type: 'POST',
+                data: {username: username},
+                dataType: 'json',
+                success: function(data) {
+                    if (data.exists) {
+                        input.setCustomValidity('Username already exists.');
+                    } else {
+                        input.setCustomValidity('');
+                    }
+                    input.reportValidity();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    console.error("Detailed server response: " + jqXHR.responseText); // Provides the actual response from the server
+                    input.setCustomValidity('Failed to validate username. Try again.');
+                    input.reportValidity();
+                }
+            });
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                updateCustomMessage(input);
+            });
+        });
+
+        signupForm.addEventListener('submit', function(event) {
+            // event.preventDefault();
+            let formIsValid = true;
+            inputs.forEach(input => {
+                updateCustomMessage(input);
+                if (!input.checkValidity()) {
+                    formIsValid = false;
+                }
+            });
+
+            if (formIsValid) {
+             this.submit(); // Updated to use requestSubmit
+            }
+        });
+    }
+});
+
+</script>
+
+
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function () {
     const signupForm = document.querySelector('.signup-form');
     if (signupForm) {
@@ -235,7 +328,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-</script>
+</script> -->
 <!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     const usernameInput = document.querySelector('input[name="username"]');
