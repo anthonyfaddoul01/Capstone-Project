@@ -86,5 +86,5 @@ if ($_SESSION['type'] == 'User') {
 
     </html>
 <?php } else {
-    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+    echo "<script>window.location = '../error.php';</script>";
 } ?>
