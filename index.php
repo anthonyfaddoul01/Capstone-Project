@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     break;
                 case 'username':
-                    // Add any username-specific validations here if needed
+                    
                     break;
                 case 'password':
                     if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(input.value)) {
@@ -252,37 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 </script>
-<!-- <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const usernameInput = document.querySelector('input[name="username"]');
 
-    usernameInput.addEventListener('input', function() {
-        const username = this.value;
-
-        if (username.length >= 3) { // Only check if username length is 3 or more
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'check_username.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                if (this.status == 200) {
-                    if (this.responseText === 'taken') {
-                      input.setCustomValidity('Please enter a valid email address.');
-                        // Optionally, disable the submit button
-                        // document.querySelector('input[type="submit"]').disabled = true;
-                    } else {
-                        
-                        // Optionally, enable the submit button
-                        // document.querySelector('input[type="submit"]').disabled = false;
-                    }
-                } else {
-                    alert('Error checking username.');
-                }
-            };
-            xhr.send('username=' + encodeURIComponent(username));
-        }
-    });
-}); 
-</script> -->
 </body>
 <!-- //Body -->
 

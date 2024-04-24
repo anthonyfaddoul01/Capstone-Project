@@ -3,33 +3,27 @@ require 'dbconn.php';  // Make sure dbconn.php correctly sets up a database conn
 
 $username = $_POST['username'] ?? '';
 
-header('Content-Type: application/json'); // Good practice for AJAX responses
-
 if ($username) {
     $sql = "SELECT COUNT(*) AS count FROM users WHERE username = ?";
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("s", $param_username);
-        $param_username = $username;
-
+        $stmt->bind_param("s", $username);
         if ($stmt->execute()) {
             $stmt->bind_result($count);
             $stmt->fetch();
-
             if ($count > 0) {
-                echo json_encode(['status' => 'taken']);
+                echo "exists";  // Username exists
             } else {
-                echo json_encode(['status' => 'not_taken']);
+                echo "available";  // Username is available
             }
         } else {
-            echo json_encode(['error' => 'Error on database query.']);
+            echo "error";
         }
         $stmt->close();
     } else {
-        echo json_encode(['error' => 'Failed to prepare the statement.']);
+        echo "error";
     }
 } else {
-    echo json_encode(['error' => 'No username provided.']);
+    echo "error";
 }
 
-$conn->close();
 ?>
