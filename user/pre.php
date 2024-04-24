@@ -77,7 +77,8 @@ if ($_SESSION['type'] == 'User') {
                                     ?>
                                     <tr>
                                         <th scope="row" class="scope">
-                                        <a class="text-black" href="bookdetails.php?id=<?php echo $bookid ?>"><?php echo $name ?></a>
+                                            <a class="text-black"
+                                                href="bookdetails.php?id=<?php echo $bookid ?>"><?php echo $name ?></a>
                                         </th>
                                         <td>
                                             <?php echo $issuedate ?>
@@ -157,5 +158,5 @@ if ($_SESSION['type'] == 'User') {
 
 
 <?php } else {
-    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+    echo "<script>window.location = '../error.php';</script>";
 } ?>

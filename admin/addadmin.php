@@ -113,5 +113,5 @@ if ($_SESSION['type'] == 'admin') {
 
 
 <?php } else {
-    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+    echo "<script>window.location = '../error.php';</script>";
 } ?>

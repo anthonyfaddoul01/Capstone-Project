@@ -24,11 +24,35 @@ if ($_SESSION['type'] == 'User') {
 
     <style>
       /*--------------------------------------------------------------
-                                                        # Scroll horizontal
-                                                        --------------------------------------------------------------*/
+                                                                  # Scroll horizontal
+                                                                  --------------------------------------------------------------*/
       .cover {
         position: relative;
         padding: 0px 30px;
+      }
+
+      .left-arrow,
+      .right-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10;
+        height:80%;
+        padding: 10px;
+        margin-top: 6px;
+      }
+
+      .left-arrow {
+        left: 10px;
+      }
+
+      .right-arrow {
+        right: 10px;
       }
 
       .left {
@@ -428,68 +452,86 @@ if ($_SESSION['type'] == 'User') {
       document.addEventListener("DOMContentLoaded", function () {
         getRec();
       });
-        function getRec() {
-          document.getElementById('display').innerHTML = "";
-          $.ajax({
-            url: 'getRecommendedForUser.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function (books) {
-              console.log(books);
-              books.forEach(function (book) {
-                createRecommendationSection(book.title);
-                getRecommendations(book.title, book.bookId);
-              });
-            },
-            error: function (xhr, status, error) {
-              console.error('Failed to retrieve books: ' + error);
-            }
-          });
-        }
-        function createRecommendationSection(bookTitle) {
-          var sectionHtml = '<div class="cover mx-3">' +
-            '<div class="section-title pb-0">' +
-            '<p class="mb-0">Because you read <span class="text-warning">' + bookTitle + '</span></p>' +
-            '</div>' +
-            '<div class="scroll-images" id="recommendations_' + bookTitle.replace(/\s+/g, '_') + '"></div>' +
-            '</div>';
-          $('#display').append(sectionHtml); // Append to a main container
-        }
+      function getRec() {
+        document.getElementById('display').innerHTML = "";
+        $.ajax({
+          url: 'getRecommendedForUser.php',
+          type: 'GET',
+          dataType: 'json',
+          success: function (books) {
+            console.log(books);
+            books.forEach(function (book) {
+              createRecommendationSection(book.title);
+              getRecommendations(book.title, book.bookId);
+            });
+          },
+          error: function (xhr, status, error) {
+            console.error('Failed to retrieve books: ' + error);
+          }
+        });
+      }
+      function createRecommendationSection(bookTitle) {
+        var safeId = bookTitle.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, ''); // Strip special characters
+        var sectionHtml = '<div class="cover mx-3">' +
+          '<div class="section-title pb-0">' +
+          '<p class="mb-0">Because you read <span class="text-warning">' + bookTitle + '</span></p>' +
+          '</div>' +
+          '<button class="left-arrow" onclick="scrollHorizontally(\'recommendations_' + safeId + '\', \'left\')">&#9664;</button>' +
+          '<div class="scroll-images" id="recommendations_' + safeId + '"></div>' +
+          '<button class="right-arrow" onclick="scrollHorizontally(\'recommendations_' + safeId + '\', \'right\')">&#9654;</button>' +
+          '</div>';
+        $('#display').append(sectionHtml); // Append to a main container
+      }
 
-        function getRecommendations(bookTitle, bookId) {
-          $.ajax({
-            url: 'http://127.0.0.1:5000/recommend',
-            data: { title: bookTitle },
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-              var recommendations = data.slice(0, 5);
-              recommendations.forEach(function (rec) {
-                fetchBookDetails(rec.ID, bookTitle);
-              });
-            },
-            error: function (xhr, status, error) {
-              console.error('Failed to retrieve recommendations: ' + error);
-            }
-          });
+      function getRecommendations(bookTitle, bookId) {
+        $.ajax({
+          url: 'http://127.0.0.1:5000/recommend',
+          data: { title: bookTitle },
+          type: 'GET',
+          dataType: 'json',
+          success: function (data) {
+            var recommendations = data.slice(0, 5);
+            recommendations.forEach(function (rec) {
+              fetchBookDetails(rec.ID, bookTitle);
+            });
+          },
+          error: function (xhr, status, error) {
+            console.error('Failed to retrieve recommendations: ' + error);
+          }
+        });
+      }
+      function updateScrolling(containerId) {
+        var scrollContainer = $('#' + containerId);
+        if (scrollContainer.outerWidth() < scrollContainer.get(0).scrollWidth) {
+          scrollContainer.css('cursor', 'pointer');
         }
+      }
+      function fetchBookDetails(recBookId, bookTitle) {
+        $.ajax({
+          url: 'fetch_recbook_details.php',
+          data: { bookId: recBookId },
+          type: 'GET',
+          dataType: 'json',
+          success: function (bookDetails) {
+            var bookHtml = '<div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div><div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div>';
+            $('#recommendations_' + bookTitle.replace(/\s+/g, '_')).append(bookHtml);
+            updateScrolling('recommendations_' + bookTitle.replace(/\s+/g, '_'));
+          },
+          error: function (xhr, status, error) {
+            console.error('Failed to fetch book details: ' + error);
+          }
+        });
+      }
+      function scrollHorizontally(id, direction) {
+        var container = document.getElementById(id);
+        var scrollAmount = 200; // adjust scroll step size as needed
 
-        function fetchBookDetails(recBookId, bookTitle) {
-          $.ajax({
-            url: 'fetch_recbook_details.php',
-            data: { bookId: recBookId },
-            type: 'GET',
-            dataType: 'json',
-            success: function (bookDetails) {
-              var bookHtml = '<div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div>';
-              $('#recommendations_' + bookTitle.replace(/\s+/g, '_')).append(bookHtml);
-            },
-            error: function (xhr, status, error) {
-              console.error('Failed to fetch book details: ' + error);
-            }
-          });
+        if (direction === 'right') {
+          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         }
-    
+      }
 
 
     </script>
@@ -500,5 +542,5 @@ if ($_SESSION['type'] == 'User') {
 
 
 <?php } else {
-  echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+  echo "<script>window.location = '../error.php';</script>";
 } ?>

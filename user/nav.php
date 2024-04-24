@@ -72,14 +72,14 @@
                             $interval = $now->diff($requestDateTime);
 
 
-                            echo "<a href='#' class=''>
+                            echo "<a href='message.php' class=''>
                             <!-- Message Start -->
                             <div class='media p-3'>
                                 <div class='media-body'>
                                     <h3 class='dropdown-item-title'>
                                         $name Admin
                                     </h3>
-                                    <p class='text-sm text-light'>$msg</p>
+                                    <p class='text-sm text-black'>$msg</p>
                                     <p class='text-sm text-muted'><i class='far fa-clock mr-1'></i>" ?>
                             <?php
                             if ($interval->y > 0) {
