@@ -24,18 +24,34 @@ ob_start();
     crossorigin="anonymous"></script>
   <!-- //Meta-Tags -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
   <!-- Style -->
   <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
   <!-- Fonts -->
   <link href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <!-- //Fonts -->
+  <style>
+    .signup-form {
+      min-height: 550px;
+    }
 
+    #logo {
+      width: 5%;
+      -webkit-filter: invert(100%); /* turning it black */
+      filter: invert(100%);
+    }
+  </style>
 </head>
 <!-- //Head -->
 
 <!-- Body -->
 
-<body class="flex-row">
+<body class="flex-column">
+  <div class="container-sm d-flex align-items-center gap-3 justify-content-center p-2 ">
+    <img src="images/logo.png" alt="Logo" id="logo">
+    <h1 class="title m-0">BookBud</h1>
+  </div>
   <div class="container">
     <input type="checkbox" id="flip">
     <div class="cover">
@@ -292,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     break;
                 case 'username':
-                    // Add any username-specific validations here if needed
+                    
                     break;
                 case 'password':
                     if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(input.value)) {
@@ -331,36 +347,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </script> -->
 <!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const usernameInput = document.querySelector('input[name="username"]');
+    const usernameInput = document.querySelector('input[name="username"]');  -->
 
-    usernameInput.addEventListener('input', function() {
-        const username = this.value;
+ </body>
 
-        if (username.length >= 3) { // Only check if username length is 3 or more
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'check_username.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                if (this.status == 200) {
-                    if (this.responseText === 'taken') {
-                      input.setCustomValidity('Please enter a valid email address.');
-                        // Optionally, disable the submit button
-                        // document.querySelector('input[type="submit"]').disabled = true;
-                    } else {
-                        
-                        // Optionally, enable the submit button
-                        // document.querySelector('input[type="submit"]').disabled = false;
-                    }
-                } else {
-                    alert('Error checking username.');
-                }
-            };
-            xhr.send('username=' + encodeURIComponent(username));
-        }
-    });
-}); 
-</script> -->
-</body>
-<!-- //Body -->
 
 </html>

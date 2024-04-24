@@ -23,6 +23,130 @@ if ($_SESSION['type'] == 'User') {
 
 
     <style>
+      /*--------------------------------------------------------------
+                                                                  # Scroll horizontal
+                                                                  --------------------------------------------------------------*/
+      .cover {
+        position: relative;
+        padding: 0px 30px;
+      }
+
+      .left-arrow,
+      .right-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10;
+        height:80%;
+        padding: 10px;
+        margin-top: 6px;
+      }
+
+      .left-arrow {
+        left: 10px;
+      }
+
+      .right-arrow {
+        right: 10px;
+      }
+
+      .left {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .right {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .scroll-images {
+        position: relative;
+        width: 100%;
+        padding: 0px;
+        padding-top: 20px;
+        height: auto;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 300px;
+        height: 800px;
+        padding: 0px 15px;
+        margin: 1px 10px;
+        border: 1px solid #f1f1f1;
+        overflow: hidden;
+        -webkit-box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
+        ;
+        box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
+        ;
+      }
+
+      .scroll-images::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #aaa;
+      }
+
+      .scroll-images::-webkit-scrollbar-thumb {
+        background-color: black;
+      }
+
+      button {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 25px;
+      }
+
+      .imgcontainer {
+        height: 400px;
+        width: 100%;
+        object-fit: fill;
+        object-position: center;
+
+      }
+
+      .imgcontainer:hover {
+        transform: scale(1.1);
+      }
+
+      @media (max-width: 768px) {
+
+        .cover button.left,
+        .cover button.right {
+          font-size: 20px;
+          /* Adjust button size */
+        }
+
+        .scroll-images .child {
+          min-width: 250px;
+          /* Adjust book card width */
+          height: auto;
+          /* Adjust height as needed */
+          padding: 0 10px;
+          margin: 1px 5px;
+        }
+      }
+
       .sidebar {
         width: inherit;
         /* Adjust the width as needed */
@@ -106,7 +230,7 @@ if ($_SESSION['type'] == 'User') {
         <hr />
         <ul class="nav nav-pills flex-column mb-auto hov">
           <li class="nav-item">
-            <a href="#" class="nav-link active" onclick="displayPopularBooks(1)"> For You </a>
+            <a href="#" class="nav-link active" onclick="getRec()"> For You </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link active" onclick="searchBooks(1)"> Favorites </a>
@@ -297,6 +421,7 @@ if ($_SESSION['type'] == 'User') {
     <div class="content-wrapper mt-5 bg-white">
       <div id="display" class="display row col-12"></div>
     </div>
+    <div id="rec"></div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -322,20 +447,93 @@ if ($_SESSION['type'] == 'User') {
         });
       }
 
-      function displayPopularBooks(page) {
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+        getRec();
+      });
+      function getRec() {
+        document.getElementById('display').innerHTML = "";
         $.ajax({
-          url: "getfavorites.php", //get popular books based on what????? machine leaning??? getpopular.php
-          type: "GET",
-          data: { page: page },
-          success: function (data) {
-            $('#display').html(data);
+          url: 'getRecommendedForUser.php',
+          type: 'GET',
+          dataType: 'json',
+          success: function (books) {
+            console.log(books);
+            books.forEach(function (book) {
+              createRecommendationSection(book.title);
+              getRecommendations(book.title, book.bookId);
+            });
+          },
+          error: function (xhr, status, error) {
+            console.error('Failed to retrieve books: ' + error);
           }
         });
       }
+      function createRecommendationSection(bookTitle) {
+        var safeId = bookTitle.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, ''); // Strip special characters
+        var sectionHtml = '<div class="cover mx-3">' +
+          '<div class="section-title pb-0">' +
+          '<p class="mb-0">Because you read <span class="text-warning">' + bookTitle + '</span></p>' +
+          '</div>' +
+          '<button class="left-arrow" onclick="scrollHorizontally(\'recommendations_' + safeId + '\', \'left\')">&#9664;</button>' +
+          '<div class="scroll-images" id="recommendations_' + safeId + '"></div>' +
+          '<button class="right-arrow" onclick="scrollHorizontally(\'recommendations_' + safeId + '\', \'right\')">&#9654;</button>' +
+          '</div>';
+        $('#display').append(sectionHtml); // Append to a main container
+      }
 
-      document.addEventListener("DOMContentLoaded", function(event){
-        displayPopularBooks(1);
-      });
+      function getRecommendations(bookTitle, bookId) {
+        $.ajax({
+          url: 'http://127.0.0.1:5000/recommend',
+          data: { title: bookTitle },
+          type: 'GET',
+          dataType: 'json',
+          success: function (data) {
+            var recommendations = data.slice(0, 5);
+            recommendations.forEach(function (rec) {
+              fetchBookDetails(rec.ID, bookTitle);
+            });
+          },
+          error: function (xhr, status, error) {
+            console.error('Failed to retrieve recommendations: ' + error);
+          }
+        });
+      }
+      function updateScrolling(containerId) {
+        var scrollContainer = $('#' + containerId);
+        if (scrollContainer.outerWidth() < scrollContainer.get(0).scrollWidth) {
+          scrollContainer.css('cursor', 'pointer');
+        }
+      }
+      function fetchBookDetails(recBookId, bookTitle) {
+        $.ajax({
+          url: 'fetch_recbook_details.php',
+          data: { bookId: recBookId },
+          type: 'GET',
+          dataType: 'json',
+          success: function (bookDetails) {
+            var bookHtml = '<div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div><div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div>';
+            $('#recommendations_' + bookTitle.replace(/\s+/g, '_')).append(bookHtml);
+            updateScrolling('recommendations_' + bookTitle.replace(/\s+/g, '_'));
+          },
+          error: function (xhr, status, error) {
+            console.error('Failed to fetch book details: ' + error);
+          }
+        });
+      }
+      function scrollHorizontally(id, direction) {
+        var container = document.getElementById(id);
+        var scrollAmount = 200; // adjust scroll step size as needed
+
+        if (direction === 'right') {
+          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        }
+      }
+
+
     </script>
     <?php require ("scripts.php") ?>
   </body>
@@ -344,5 +542,5 @@ if ($_SESSION['type'] == 'User') {
 
 
 <?php } else {
-  echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+  echo "<script>window.location = '../error.php';</script>";
 } ?>

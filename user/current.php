@@ -41,7 +41,7 @@ if ($_SESSION['type'] == 'User') {
                                 <?php
                                 $userid = $_SESSION['userId'];
                                 $sql = "select * from bookbud.record,bookbud.book where userId = '$userid' 
-                                and Date_of_Issue is NOT NULL and Date_of_Return is NULL and book.bookid = record.bookId";
+                                and Date_of_Issue != '0000-00-00' and Date_of_Return is NULL and book.bookid = record.bookId";
 
                                 $result = $conn->query($sql);
                                 while ($row = $result->fetch_assoc()) {
@@ -50,10 +50,13 @@ if ($_SESSION['type'] == 'User') {
                                     $issuedate = $row['Date_of_Issue'];
                                     $duedate = $row['Due_Date'];
                                     $renewals = $row['Renewals_left'];
+                                    $dues = $row['Dues'];
+                                    $pen = $row['Penalty'];
                                     ?>
                                     <tr>
                                         <th scope="row" class="scope">
-                                            <a class="text-black" href="bookdetails.php?id=<?php echo $bookid ?>"><?php echo $name ?></a>
+                                            <a class="text-black"
+                                                href="bookdetails.php?id=<?php echo $bookid ?>"><?php echo $name ?></a>
                                         </th>
                                         <td>
                                             <?php echo $issuedate ?>
@@ -61,16 +64,15 @@ if ($_SESSION['type'] == 'User') {
                                         <td>
                                             <?php echo $duedate ?>
                                         </td>
-                                        <th scope="row" class="scope text-danger">10</th>
-                                        <td>10$</td>
+                                        <th scope="row" class="scope text-danger"><?php echo $dues ?></th>
+                                        <td><?php echo $pen ?>$</td>
                                         <td>
                                             <center>
                                                 <?php
                                                 if ($renewals)
-                                                    echo "<a href=\"renew_request.php?id=" . $bookid . "\" class=\"btn btn-success\">Renew</a>";
+                                                    echo "<a class='btn btn-success renew'>Renew</a>";
                                                 ?>
-                                                <a href="return_request.php?id=<?php echo $bookid; ?>"
-                                                    class="btn btn-danger">Return</a>
+                                                <a class="btn btn-danger return">Return</a>
                                             </center>
                                         </td>
 
@@ -84,12 +86,67 @@ if ($_SESSION['type'] == 'User') {
                 </div>
             </div>
         </section>
+        <div id="messageModal"
+            style="display:none; position: fixed; z-index: 1000; left: 50%; top: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0,0,0,0.5);">
+            <p id="modalText">...</p>
+        </div>
         <!--/.wrapper-->
 
         <?php require ("scripts.php") ?>
         <script>
+            function showMessageModal(message, className) {
+                var modalText = document.getElementById('modalText');
+                modalText.className = '';
+                modalText.classList.add(className);
+                modalText.innerText = message;
+                document.getElementById('messageModal').style.display = 'block';
+                setTimeout(function () {
+                    document.getElementById('messageModal').style.display = 'none';
+                }, 3000);
+            }
+            $(document).ready(function () {
+                $(".renew").click(function (e) {
+                    e.preventDefault();
+                    var bookid = $(this).closest("tr").find("a.text-black").attr("href").split('=')[1];
+                    var userid = "<?php echo $userid; ?>";
+                    $.ajax({
+                        type: "GET",
+                        url: "renew_request.php",
+                        data: { id: bookid, userid: userid },
+                        success: function (response) {
+                            if (response.trim() === "success") {
+                                showMessageModal("Request Sent Successfully.", "text-warning");
+                            } else if (response.trim() === "error") {
+                                showMessageModal("You have already made this request.", "text-danger");
+                            }
+                        },
+                        error: function () {
+                            showMessageModal("Error occurred. Please try again later.", "text-danger");
+                        }
+                    });
+                });
 
-
+                $(".return").click(function (e) {
+                    e.preventDefault();
+                    var bookid = $(this).closest("tr").find("a.text-black").attr("href").split('=')[1];
+                    var userid = "<?php echo $userid; ?>";
+                    $.ajax({
+                        type: "GET",
+                        url: "return_request.php",
+                        data: { id: bookid, userid: userid },
+                        success: function (response) {
+                            if (response.trim() === "success") {
+                                showMessageModal("Request Sent Successfully.", "text-warning");
+                            } else if (response.trim() === "error") {
+                                showMessageModal("You have already made this request.", "text-danger");
+                            }
+                        },
+                        error: function () {
+                            showMessageModal("Error occurred. Please try again later.", "text-danger");
+                        }
+                    });
+                });
+            });
         </script>
 
     </body>
@@ -98,5 +155,5 @@ if ($_SESSION['type'] == 'User') {
 
 
 <?php } else {
-    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+    echo "<script>window.location = '../error.php';</script>";
 } ?>

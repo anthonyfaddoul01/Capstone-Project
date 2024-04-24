@@ -75,7 +75,7 @@ if ($_SESSION['type'] == 'User') {
                             <!-- /.card-body -->
 
                             <div class="float-right p-3">
-                                <button type="submit" name="submit" class="btn btn-success">Update Details</button>
+                                <button type="submit" name="submit" class="btn btn-warning">Update Details</button>
                             </div>
                         </form>
                     </div>
@@ -117,5 +117,5 @@ if ($_SESSION['type'] == 'User') {
 
 
 <?php } else {
-    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+    echo "<script>window.location = '../error.php';</script>";
 } ?>

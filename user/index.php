@@ -6,7 +6,7 @@ require ('dbconn.php');
 
 
 if ($_SESSION['type'] == 'User') {
-    //require ('cal.php');
+    require ('cal.php');
     ?>
 
     <!DOCTYPE html>
@@ -19,8 +19,8 @@ if ($_SESSION['type'] == 'User') {
         <?php require ("links.php") ?>
         <style>
             /*--------------------------------------------------------------
-                                                    # Scroll horizontal
-                                                    --------------------------------------------------------------*/
+                                                        # Scroll horizontal
+                                                        --------------------------------------------------------------*/
             .cover {
                 position: relative;
                 padding: 0px 30px;
@@ -300,7 +300,7 @@ if ($_SESSION['type'] == 'User') {
                         console.error('Failed to retrieve books: ' + error);
                     }
                 });
-                
+
 
                 function getRecommendations(bookTitle, bookId) {
                     $.ajax({
@@ -366,5 +366,5 @@ if ($_SESSION['type'] == 'User') {
 
     </html>
 <?php } else {
-    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+    echo "<script>window.location = '../error.php';</script>";
 } ?>

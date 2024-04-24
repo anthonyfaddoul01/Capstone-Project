@@ -253,11 +253,11 @@ if ($_SESSION['type'] == 'User') {
                             if (response.trim() === "success") {
                                 showMessageModal("Request Sent Successfully.", "text-warning");
                             } else if (response.trim() === "error") {
-                                showMessageModal("Error: You have already made this request.", "text-danger");
+                                showMessageModal("You have already made this request.", "text-danger");
                             }
                         },
                         error: function () {
-                            showMessageModal("Error: You have already made this request.", "text-danger");
+                            showMessageModal("You have already made this request.", "text-danger");
                         }
                     });
                 });
@@ -307,5 +307,5 @@ if ($_SESSION['type'] == 'User') {
 
 
 <?php } else {
-    echo "<script type='text/javascript'>alert('Access Denied!!!')</script>";
+    echo "<script>window.location = '../error.php';</script>";
 } ?>
