@@ -173,7 +173,7 @@ CREATE TABLE `user` (
   `type` varchar(50) DEFAULT NULL,
   `balance` int(255) DEFAULT 0,
   `currentBorrowed` int(255) DEFAULT NULL,
-  `interests` VARCHAR(250) DEFAULT NULL 
+  `interests` VARCHAR(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

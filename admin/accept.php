@@ -7,7 +7,7 @@ $userid = $_GET['id2'];
 $sql1 = "update bookbud.record set Date_of_Issue=curdate(),Due_Date=date_add(curdate(),interval 10 day),Renewals_left=1 where bookId='$bookid' and userId='$userid'";
 
 if ($conn->query($sql1) === TRUE) {
-    $sql2 = "update bookbud.book set isAvailable=isAvailable-1 where bookId='$bookid'";
+    $sql2 = "update bookbud.book set isAvailable=isAvailable-1 , reservedNb = reservedNb+1 where bookId='$bookid'";
     $result = $conn->query($sql2);
     $sql4= "Select title from book where bookId='$bookid'";
     $result1 = $conn->query($sql4);
