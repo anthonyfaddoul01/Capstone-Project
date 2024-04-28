@@ -25,9 +25,9 @@
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Books by Search</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Books by Genres</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="index.php">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="search.php">Books by Search</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="genresearch.php">Books by Genres</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
             </ul>
@@ -36,9 +36,11 @@
           <div class="col-lg-3 col-md-6 footer-links">
             <h4><?php echo $username?></h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Currently Issued Books</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Favorites</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Profile</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="current.php">Currently Issued Books</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="favorites.php">Favorites</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="pre.php">Previously Issued Books</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="profile.php">Profile</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="message.php">Messages</a></li>
             </ul>
           </div>
 

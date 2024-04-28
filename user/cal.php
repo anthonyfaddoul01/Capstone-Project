@@ -29,5 +29,6 @@ $sqlUpdateBalance = "
 ";
 $conn->query($sqlUpdateBalance);
 
+$sqlmessage = "INSERT INTO message (userId,Msg,Date,Time) VALUES ('$userId','Reminder to pay dues',curdate(),curtime())" //complete the message to remind dues
 
 ?>
