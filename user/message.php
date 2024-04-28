@@ -83,7 +83,7 @@ if ($_SESSION['type'] == 'User') {
                                     ?>
                                     <tr>
                                         <th scope="row" class="scope">
-                                                <?php echo $msg ?>
+                                            <?php echo $msg ?>
                                         </th>
                                         <td>
                                             <?php echo $date ?>
@@ -177,7 +177,7 @@ if ($_SESSION['type'] == 'User') {
             });
         </script>
 
-
+        <?php require ("footer.php") ?>
     </body>
 
     </html>

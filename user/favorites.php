@@ -67,6 +67,7 @@ if ($_SESSION['type'] == 'User') {
                 searchBooks(1);
             });
         </script>
+        <?php require ("footer.php") ?>
         <?php require ("scripts.php") ?>
     </body>
 

@@ -81,6 +81,7 @@ if ($_SESSION['type'] == 'User') {
                 });
             });
         </script>
+        <?php require ("footer.php") ?>
         <?php require ("scripts.php") ?>
     </body>
 

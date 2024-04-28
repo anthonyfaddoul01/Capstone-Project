@@ -122,11 +122,10 @@ ob_start();
 
   <!-- Signup Complete Modal -->
 <div id="signupModal" style="display:none;" class="modal">
-  <div class="modal-content">
-    <span class="close-button">×</span>
+  <div class="modal-content bg-warning">
     <h2>Signup Complete!</h2>
     <p>Thank you for registering! Please check your email to verify your account.</p>
-    <button onclick="closeModal()">Continue</button>
+    <button class="btn btn-light" onclick="closeModal()">Continue</button>
   </div>
 </div>
 

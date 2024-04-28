@@ -13,12 +13,7 @@ $bookid = $_GET['id1'];
 $userid = $_GET['id2'];
 // nggn aljx doux joah google key
 // Prepared statement to prevent SQL injection
-$stmt = $conn->prepare("UPDATE bookbud.record SET Date_of_Issue=CURDATE(), Due_Date=DATE_ADD(CURDATE(), INTERVAL 10 DAY), Renewals_left=1 WHERE bookId=? AND userId=?");
-$stmt->bind_param("ss", $bookid, $userid);
-if ($stmt->execute()) {
-    $stmt2 = $conn->prepare("UPDATE bookbud.book SET isAvailable=isAvailable-1 WHERE bookId=?");
-    $stmt2->bind_param("s", $bookid);
-    $stmt2->execute();
+$sql1 = "UPDATE bookbud.record SET Date_of_Issue=CURDATE(), Due_Date=DATE_ADD(CURDATE(), INTERVAL 10 DAY), Renewals_left=1 WHERE bookId='$bookid' AND userId='$userid'";
 
     $stmt4 = $conn->prepare("SELECT title FROM book WHERE bookId=?");
     $stmt4->bind_param("s", $bookid);
@@ -54,7 +49,5 @@ if ($stmt->execute()) {
     } catch (Exception $e) {
         echo "<script>alert('Mailer Error: {$mail->ErrorInfo}'); window.location.href='issue_request.php';</script>";
     }
-} else {
-    echo "<script>alert('Database Error'); window.location.href='issue_request.php';</script>";
-}
+ 
 ?>
