@@ -52,42 +52,70 @@ if ($_SESSION['type'] == 'admin') {
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Monthly Checkouts -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Monthly Checkouts</h3>
+                                </div>
+                                <div class="card-body" style="height:500px;">
+                                    <canvas id="checkoutsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Yearly Checkouts -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Yearly Checkouts</h3>
+                                </div>
+                                <div class="card-body" style="height:500px;">
+                                    <canvas id="checkoutsChart2"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Late Returns -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Late Returns</h3>
+                                </div>
+                                <div class="card-body" style="height:500px;">
+                                    <canvas id="lateReturnsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Penalty Revenue -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Fines Revenue</h3>
+                                </div>
+                                <div class="card-body" style="height:500px;">
+                                    <canvas id="finesRevenueChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Books age -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Late Returns</h3>
+                                </div>
+                                <div class="card-body" style="height:500px;">
+                                    <canvas id="bookPublicationYearHistogram"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
-            <section class="content p-4">
-                <div class="card card-primary col-12 p-0">
-                    <div class="card-header col-12">
-                        <h3 class="card-title">Monthly Checkouts</h3>
-                    </div>
-                </div>
-                <div class="card card-primary col-12">
-                    <canvas id="checkoutsChart"></canvas>
-                </div>
-                <div class="card card-primary col-12 p-0">
-                    <div class="card-header col-12">
-                        <h3 class="card-title">Yearly Checkouts</h3>
-                    </div>
-                </div>
-                <div class="card card-primary col-12">
-                    <canvas id="checkoutsChart2"></canvas>
-                </div>
-                <div class="card card-primary col-12 p-0">
-                    <div class="card-header col-12">
-                        <h3 class="card-title">Late Returns</h3>
-                    </div>
-                </div>
-                <div class="card card-primary col-12">
-                    <canvas id="lateReturnsChart"></canvas>
-                </div>
-                <div class="card card-primary col-12 p-0">
-                    <div class="card-header col-12">
-                        <h3 class="card-title">Fines Revenue</h3>
-                    </div>
-                </div>
-                <div class="card card-primary col-12">
-                    <canvas id="finesRevenueChart"></canvas>
-                </div>
-            </section>
+
         </div>
         <canvas id="checkoutsChart"></canvas>
         <script>
@@ -211,6 +239,57 @@ if ($_SESSION['type'] == 'admin') {
                     },
                     error: function (xhr, status, error) {
                         console.error("An error occurred: " + error);
+                    }
+                });
+                $.ajax({
+                    url: 'agebooks.php', // Adjust if necessary
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);  // Debugging to see what data is received
+
+                        const publicationYears = data.map(item => item.yearOfPublication);
+                        const numberOfBooks = data.map(item => item.NumberOfBooks);
+
+                        console.log("Publication Years:", publicationYears);  // Ensure years are logged correctly
+                        console.log("Number of Books:", numberOfBooks);  // Corresponding counts
+
+                        const ctx = document.getElementById('bookPublicationYearHistogram').getContext('2d');
+                        const bookPublicationYearHistogram = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: publicationYears,  // Set labels here
+                                datasets: [{
+                                    label: 'Number of Books',
+                                    data: numberOfBooks,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        title: {
+                                            display: true,
+                                            text: 'Number of Books'
+                                        }
+                                    },
+                                    x: {
+                                        title: {
+                                            display: true,
+                                            text: 'Year of Publication'
+                                        }
+                                    }
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("An error occurred: ", error);
                     }
                 });
 
