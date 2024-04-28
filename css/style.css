@@ -262,3 +262,26 @@ body{
   border-style: solid;
   border-color: transparent transparent red transparent;
 }
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 30%;
+  height: 30%;
+  background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it is on top of other content */
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for 3D effect */
+  width: auto; /* Auto width based on content */
+  max-width: 400px; /* Maximum width */
+  text-align: center;
+}

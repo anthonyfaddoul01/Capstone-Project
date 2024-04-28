@@ -120,6 +120,17 @@ ob_start();
     </div>
   </div>
 
+  <!-- Signup Complete Modal -->
+<div id="signupModal" style="display:none;" class="modal">
+  <div class="modal-content">
+    <span class="close-button">×</span>
+    <h2>Signup Complete!</h2>
+    <p>Thank you for registering! Please check your email to verify your account.</p>
+    <button onclick="closeModal()">Continue</button>
+  </div>
+</div>
+
+
   <?php
   if (isset($_POST['signin'])) {
     
@@ -159,7 +170,7 @@ ob_start();
   }
 
   if (isset($_POST['signup'])) {
-    echo '<script>alert("This is an alert message from PHP!");</script>';
+    // echo '<script>alert("This is an alert message from PHP!");</script>';
 
     echo '<script>console.log("")</script>';
     $name = $_POST['name'];
@@ -180,7 +191,12 @@ ob_start();
     $sql = "insert into bookbud.user (name,username,email,password,type,interests) values ('$name','$username','$email','$password','$type','$genres')";
 
     if ($conn->query($sql) === TRUE) {
-      //echo "<script type='text/javascript'>alert('Registration Successful')</script>";
+      //echo "<script type='text/javascript'>alert('Registration Successful')</script>";\
+      echo "<script type='text/javascript'>
+      document.addEventListener('DOMContentLoaded', function() {
+        openModal(); // Call the function to display the modal
+      });
+    </script>";
       $_SESSION['message'] = "Registration Successful";
       $_SESSION['msg_type'] = "success";
     } else {
@@ -216,6 +232,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 case 'email':
                     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value)) {
                         input.setCustomValidity('Please enter a valid email address.');
+                    }
+                    else{
+                      checkEmail(input);
                     }
                     break;
                 case 'username':
@@ -256,6 +275,30 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
+        function checkEmail(input) {
+            const email = input.value;
+            $.ajax({
+                url: 'check_email.php',
+                type: 'POST',
+                data: {email: email},
+                dataType: 'json',
+                success: function(data) {
+                    if (data.exists) {
+                        input.setCustomValidity('Email already exists.');
+                    } else {
+                        input.setCustomValidity('');
+                    }
+                    input.reportValidity();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    console.error("Detailed server response: " + jqXHR.responseText); // Provides the actual response from the server
+                    input.setCustomValidity('Failed to validate email. Try again.');
+                    input.reportValidity();
+                }
+            });
+        }
+
         inputs.forEach(input => {
             input.addEventListener('input', function() {
                 updateCustomMessage(input);
@@ -278,76 +321,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+// Function to close the modal
+function closeModal() {
+  document.getElementById('signupModal').style.display = 'none';
+}
+
+// Function to open the modal (could be triggered after a successful signup)
+function openModal() {
+  document.getElementById('signupModal').style.display = 'flex';
+}
+
+// Close the modal when the user clicks on the (x) button
+document.querySelector('.close-button').addEventListener('click', closeModal);
 
 </script>
 
-
-<!-- <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const signupForm = document.querySelector('.signup-form');
-    if (signupForm) {
-        const inputs = signupForm.querySelectorAll('input[required]');
-
-        // Utility function to update custom validation messages
-        function updateCustomMessage(input) {
-            if (!input.value) {
-                input.setCustomValidity('Please fill in this field.');
-            } else {
-                input.setCustomValidity(''); // Clear any existing custom messages
-            }
-
-            switch (input.name) {
-                case 'name':
-                    if (!/^[A-Za-z\s]{3,20}$/.test(input.value)) {
-                        input.setCustomValidity('Name must be 3-20 characters long and contain only letters and spaces.');
-                    }
-                    break;
-                case 'email':
-                    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value)) {
-                        input.setCustomValidity('Please enter a valid email address.');
-                    }
-                    break;
-                case 'username':
-                    
-                    break;
-                case 'password':
-                    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(input.value)) {
-                        input.setCustomValidity('Password must be at least 8 characters with one uppercase, one lowercase, one number, and one special character.');
-                    }
-                    break;
-            }
-            input.reportValidity();
-        }
-
-        // Event listener for input changes to update validation messages
-        inputs.forEach(input => {
-            input.addEventListener('input', function () {
-                updateCustomMessage(input);
-            });
-        });
-
-        // Handling form submission with validation
-        signupForm.addEventListener('submit', function (event) {
-        //    event.preventDefault(); // Prevent the form from submitting until validation is complete
-
-            let formIsValid = true;
-            inputs.forEach(input => {
-                updateCustomMessage(input);
-                if (!input.checkValidity()) {
-                    formIsValid = false;
-                }
-            });
-
-            if (formIsValid) {
-                this.submit(); // Submit the form if all validations are passed
-            }
-        });
-    }
-});
-</script> -->
-<!-- <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const usernameInput = document.querySelector('input[name="username"]');  -->
 
  </body>
 
