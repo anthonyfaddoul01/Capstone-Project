@@ -11,7 +11,7 @@ $mail = new PHPMailer(true);
 $mail->SMTPDebug=SMTP::DEBUG_SERVER;
 $bookid = $_GET['id1'];
 $userid = $_GET['id2'];
-
+// nggn aljx doux joah google key
 // Prepared statement to prevent SQL injection
 $stmt = $conn->prepare("UPDATE bookbud.record SET Date_of_Issue=CURDATE(), Due_Date=DATE_ADD(CURDATE(), INTERVAL 10 DAY), Renewals_left=1 WHERE bookId=? AND userId=?");
 $stmt->bind_param("ss", $bookid, $userid);
@@ -37,12 +37,12 @@ if ($stmt->execute()) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'bookkbudd@gmail.com';
-        $mail->Password = 'anthonyanthony';
+        $mail->Password = 'nggn aljx doux joah';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         // Email content
-        $mail->setFrom('bookkbudd@gmail.com', 'BookBudd');
+        $mail->setFrom('bookkbudd@gmail.com', 'BookBud');
         $mail->addAddress('ramadanhasan118@gmail.com');  // Set recipient
         $mail->isHTML(true);
         $mail->Subject = 'Book Issue Confirmation';
