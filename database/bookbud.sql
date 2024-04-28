@@ -174,8 +174,8 @@ CREATE TABLE `user` (
   `balance` int(255) DEFAULT 0,
   `currentBorrowed` int(255) DEFAULT NULL,
   `interests` VARCHAR(250) DEFAULT NULL,
-  `borrowsNb` int(10) DEFAULT 0,
-  `` 
+  `borrowedNb` int(10) DEFAULT 0,
+  `creationDate` TIMESTAMP DEFAULT CURRENT_DATE() 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

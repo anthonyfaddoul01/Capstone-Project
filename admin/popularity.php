@@ -105,10 +105,23 @@ if ($_SESSION['type'] == 'admin') {
                             <!-- Books age -->
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Late Returns</h3>
+                                    <h3 class="card-title">Books Age</h3>
                                 </div>
                                 <div class="card-body" style="height:500px;">
                                     <canvas id="bookPublicationYearHistogram"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Books age -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Users</h3>
+                                </div>
+                                <div class="card-body" style="height:500px;">
+                                    <canvas id="membershipGrowthChart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -292,7 +305,43 @@ if ($_SESSION['type'] == 'admin') {
                         console.error("An error occurred: ", error);
                     }
                 });
+                $.ajax({
+                    url: 'userstat.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        const months = data.map(item => item.MembershipMonth);
+                        const newMemberships = data.map(item => item.NewMemberships);
 
+                        const ctx = document.getElementById('membershipGrowthChart').getContext('2d');
+                        const membershipGrowthChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: months,
+                                datasets: [{
+                                    label: 'New Memberships',
+                                    data: newMemberships,
+                                    borderColor: 'rgb(54, 162, 235)',
+                                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                                    fill: true,
+                                    tension: 0.1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("An error occurred: " + error);
+                    }
+                });
                 $.ajax({
                     url: 'penaltymonthly.php',
                     method: 'GET',
