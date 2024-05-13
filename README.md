@@ -1,6 +1,6 @@
 # BookBud
 
-Welcome to the BookBud, a software designed to manage library operations and enhance user experience with personalized book recommendations. This system is a capstone project developed at The Lebanese American University.
+Welcome to the BookBud, a software designed to manage library operations and enhance user experience with personalized book recommendations. This Library Management System is a capstone project developed at The Lebanese American University.
 
 # Features of BookBud
 Book Management: Add, update, and manage books within the library's catalog.  
