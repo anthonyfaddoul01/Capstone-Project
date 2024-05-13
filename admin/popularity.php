@@ -219,7 +219,7 @@ if ($_SESSION['type'] == 'admin') {
                     }
                 });
                 $.ajax({
-                    url: 'latereturns.php', // Ensure this is the correct path to your PHP script
+                    url: 'latereturns.php', 
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {
@@ -255,23 +255,23 @@ if ($_SESSION['type'] == 'admin') {
                     }
                 });
                 $.ajax({
-                    url: 'agebooks.php', // Adjust if necessary
+                    url: 'agebooks.php',
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data);  // Debugging to see what data is received
+                        console.log(data); 
 
                         const publicationYears = data.map(item => item.yearOfPublication);
                         const numberOfBooks = data.map(item => item.NumberOfBooks);
 
-                        console.log("Publication Years:", publicationYears);  // Ensure years are logged correctly
-                        console.log("Number of Books:", numberOfBooks);  // Corresponding counts
+                        console.log("Publication Years:", publicationYears); 
+                        console.log("Number of Books:", numberOfBooks); 
 
                         const ctx = document.getElementById('bookPublicationYearHistogram').getContext('2d');
                         const bookPublicationYearHistogram = new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: publicationYears,  // Set labels here
+                                labels: publicationYears,  
                                 datasets: [{
                                     label: 'Number of Books',
                                     data: numberOfBooks,
