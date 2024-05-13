@@ -58,7 +58,7 @@ if ($nbreserved >= 10) {
 
             $mail->send();
             echo "<script type='text/javascript'>alert('Success')</script>";
-            header("Refresh:0.01; url=return_request.php", true, 303);
+            header("Refresh:0.01; url=issue_request.php", true, 303);
         } catch (Exception $e) {
             echo "<script>alert('Mailer Error: {$mail->ErrorInfo}'); window.location.href='issue_request.php';</script>";
         }

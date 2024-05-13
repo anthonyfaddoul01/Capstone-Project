@@ -48,9 +48,9 @@ if ($conn->query($sql1) === TRUE) {
         $mail->AltBody = "Hello $name, your request for renewal of $u  has been accepted";
 
         $mail->send();
-        echo "<script>alert('Success'); window.location.href='issue_request.php';</script>";
+        echo "<script>alert('Success'); window.location.href='renew_request.php';</script>";
     } catch (Exception $e) {
-        echo "<script>alert('Mailer Error: {$mail->ErrorInfo}'); window.location.href='issue_request.php';</script>";
+        echo "<script>alert('Mailer Error: {$mail->ErrorInfo}'); window.location.href='renew_request.php';</script>";
     }
     echo "<script type='text/javascript'>alert('Success')</script>";
     header("Refresh:0.01; url=renew_request.php", true, 303);

@@ -55,10 +55,10 @@ if ($conn->query($sql1) === TRUE) {
         $mail->AltBody = "Hello $name, your request for return of $u has been accepted.";
 
         $mail->send();
-        echo "<script type='text/javascript'>alert('Success')</script>";
+        echo "<script type='text/javascript'>alert('Success'); window.location.href='return_request.php';</script>";
     header("Refresh:0.01; url=return_request.php", true, 303);
     } catch (Exception $e) {
-        echo "<script>alert('Mailer Error: {$mail->ErrorInfo}'); window.location.href='issue_request.php';</script>";
+        echo "<script>alert('Mailer Error: {$mail->ErrorInfo}'); window.location.href='return_request.php';</script>";
     }
     echo "<script type='text/javascript'>alert('Success')</script>";
     header("Refresh:0.01; url=return_request.php", true, 303);
