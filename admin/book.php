@@ -34,7 +34,6 @@ if ($_SESSION['type'] == 'admin') {
                 <div class="card">
 
                     <?php
-                    //$sql = "select * from bookbud.book";
                     $sql = "SELECT bookId, title, author, mainGenre, isAvailable FROM bookbud.book";
                     $result = $conn->query($sql);
 
@@ -65,11 +64,6 @@ if ($_SESSION['type'] == 'admin') {
 
         <?php require ("scripts.php") ?>
         <script>
-            // $(document).ready(function () {
-            //     $("#example1").DataTable({
-            //         "responsive": true, "lengthChange": false, "autoWidth": false, "pageLength": 100
-            //     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            // });
 
             $(document).ready(function () {
                 var table = $("#example1").DataTable({

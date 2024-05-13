@@ -74,15 +74,12 @@ with open('book_map.pkl', 'rb') as f:
     book_map = pickle.load(f)
 
 def get_recommendation(title, top_n=11):
-    # get index from input title
     book_id = book_map[title]
 
-    # calculate similarity score, sort value descending and get top_n book
     sim_score = list(enumerate(cosine_sim[book_id]))
     sim_score = sorted(sim_score, key=lambda x: x[1], reverse=True)
     sim_score = sim_score[:top_n]
 
-    # get book index from top_n recommendation
     book_indices = [score[0] for score in sim_score]
     scores = [score[1] for score in sim_score]
     top_n_recommendation = final_df[['ID','title', 'author', 'genres']].iloc[book_indices]
@@ -112,13 +109,12 @@ def genre():
         normalized_numRating = row['numRating'] / max_numRating if max_numRating > 0 else 0
         normalized_reservedNb = row['reservedNb'] / max_reservedNb if max_reservedNb > 0 else 0
         score = (w1 * normalized_rating) + (w2 * normalized_numRating) + (w3 * normalized_reservedNb)
-        return score * 100  # Convert score to percentage
+        return score * 100 
 
     df['popularityScore'] = df.apply(compute_popularity_score, axis=1)
     
     genre_popularity = df.groupby('mainGenre')['popularityScore'].sum()
 
-    # Normalize total popularity score for all genres to sum up to 100
     total_popularity_sum = genre_popularity.sum()
     genre_popularity = genre_popularity * (100 / total_popularity_sum)
 
@@ -146,7 +142,6 @@ def recommend():
     try:
         recommendations = get_recommendation(title)
         response_data = recommendations.to_dict(orient='records')
-        #print("Sending response data:", response_data)  # Debug output
         return jsonify(response_data)
     except Exception as e:
         return jsonify({'error': str(e)}), 500

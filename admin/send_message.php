@@ -20,7 +20,7 @@ if ($_SESSION['type'] == 'admin') {
     <body class="hold-transition sidebar-mini layout-fixed">
         <?php require ("nav.php") ?>
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
+
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
@@ -28,12 +28,12 @@ if ($_SESSION['type'] == 'admin') {
                             <h1>Send Message</h1>
                         </div>
                     </div>
-                </div><!-- /.container-fluid -->
+                </div>
             </section>
             <div class="card-body">
 
                 <div class="col">
-                    <!-- Box Comment -->
+
                     <div class="card card-widget">
                         <div class="row">
                             <div class="col-12 p-3">
@@ -64,11 +64,10 @@ if ($_SESSION['type'] == 'admin') {
                             </div>
                         </div>
                     </div>
-                    <!-- /.card -->
                 </div>
             </div>
         </div>
-        <!--/.wrapper-->
+
 
         <?php require ("scripts.php") ?>
         <?php
@@ -81,7 +80,7 @@ if ($_SESSION['type'] == 'admin') {
 
             if ($conn->query($sql1) === TRUE) {
                 echo "<script type='text/javascript'>alert('Success')</script>";
-            } else {//echo $conn->error;
+            } else {
                 echo "<script type='text/javascript'>alert('Error')</script>";
             }
 
