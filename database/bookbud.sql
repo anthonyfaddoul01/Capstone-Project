@@ -71,7 +71,7 @@ CREATE TABLE `book` (
 
 CREATE TABLE `message` (
   `M_Id` int(10) NOT NULL,
-  `Sender` varchar(255) NOT NULL,
+  `Sender` varchar(255) NOT NULL DEFAULT 'Library',
   `userId` int(10) DEFAULT NULL,
   `Msg` varchar(255) DEFAULT NULL,
   `Date` date DEFAULT NULL,
@@ -88,12 +88,12 @@ CREATE TABLE `record` (
   `id` int(11) NOT NULL,
   `userId` int(10) NOT NULL,
   `bookId` int(255) NOT NULL,
-  `Date_of_Issue` date NOT NULL,
-  `Due_Date` date NOT NULL,
-  `Date_of_Return` date NOT NULL,
-  `Dues` int(255) NOT NULL,
-  `Penalty` int(255) NOT NULL,
-  `Renewals_left` int(255) NOT NULL,
+  `Date_of_Issue` date NOT NULL DEFAULT '00-00-0000',
+  `Due_Date` date NOT NULL DEFAULT '00-00-0000',
+  `Date_of_Return` date NOT NULL DEFAULT '00-00-0000',
+  `Dues` int(255) NOT NULL DEFAULT 0,
+  `Penalty` int(255) NOT NULL DEFAULT 0,
+  `Renewals_left` int(255) NOT NULL DEFAULT 0,
   `Time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -155,7 +155,7 @@ CREATE TABLE `favorites` (
 --
 
 INSERT INTO `user` (`userId`, `name`, `username`, `email`, `password`,`type`) VALUES
-('1', 'Administrator', 'admin', 'admin', 'admin','Admin');
+('1', 'Administrator', 'admin', 'admin', 'admin','admin');
 
 --
 -- Indexes for dumped tables
