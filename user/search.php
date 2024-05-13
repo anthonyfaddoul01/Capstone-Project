@@ -43,7 +43,6 @@ if ($_SESSION['type'] == 'User') {
         <?php require ('nav.php'); ?>
         <main id="main">
             <section class="mt-5">
-            <!-- Search box. -->
             <div class="container justify-content-center mb-3">
                 <div class="row justify-content-center">
                     <div class="col-8">
@@ -53,7 +52,6 @@ if ($_SESSION['type'] == 'User') {
                     </div>
                 </div>
             </div>
-            <!-- Suggestions will be displayed in below div. -->
             <div class="container">
                 <div id="display" class="display row"></div>
             </div>
@@ -73,11 +71,11 @@ if ($_SESSION['type'] == 'User') {
 
             $(document).ready(function () {
                 let searchTerm = $('#searchTerm').val();
-                searchBooks(searchTerm, 1); // Initial load
+                searchBooks(searchTerm, 1);
 
                 $('#searchTerm').on('input', function () {
                     searchTerm = $(this).val();
-                    searchBooks(searchTerm, 1); // Trigger search with new input
+                    searchBooks(searchTerm, 1);
                 });
             });
         </script>

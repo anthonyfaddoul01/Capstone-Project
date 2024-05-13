@@ -6,7 +6,7 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 24; 
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT bookId, coverImage FROM book WHERE mainGenre = ? LIMIT ?, ?";
+$sql = "SELECT bookId, coverImage FROM book WHERE mainGenre = ? order by RAND() LIMIT ?, ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sii", $genre, $offset, $limit);
 $stmt->execute();

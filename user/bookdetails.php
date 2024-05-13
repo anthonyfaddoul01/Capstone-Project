@@ -114,14 +114,6 @@ if ($_SESSION['type'] == 'User') {
                                         echo "Unkown"; ?>
                                 </dd>
 
-                                <dt class="col-4">Shelf:</dt>
-                                <dd class="col-8">
-                                    <?php if ($shelf)
-                                        echo $shelf;
-                                    else
-                                        echo "Unkown"; ?>
-                                </dd>
-
                                 <dt class="col-4">No. of pages:</dt>
                                 <dd class="col-8">
                                     <?php if ($pages)
@@ -161,7 +153,7 @@ if ($_SESSION['type'] == 'User') {
                                 <dt class="col-4">Other genres:</dt>
                                 <dd class="col-8">
                                     <?php
-                                    $allgenres = "Young Adult, Fantasy, Romance, Vampires, Fiction";
+                                    //$allgenres = "Young Adult, Fantasy, Romance, Vampires, Fiction";
                                     $genresArray = explode(", ", $allgenres);
                                     unset($genresArray[0]);
                                     $genresWithoutFirst = implode(", ", $genresArray);
@@ -192,7 +184,7 @@ if ($_SESSION['type'] == 'User') {
                                 <?php else: ?>
                                     <button id="favoriteButton" onclick="addToFavorites(<?php echo $bookid; ?>)"
                                         class="btn btn-light border border-secondary icon-hover px-3">
-                                        <i class="me-1 fa fa-heart fa-lg"></i> Add to Favorite
+                                        <i class="me-1 fa fa-heart fa-lg"></i> Add to Favorites
                                     </button>
                                 <?php endif; ?>
 
@@ -254,7 +246,10 @@ if ($_SESSION['type'] == 'User') {
                                 showMessageModal("Request Sent Successfully.", "text-warning");
                             } else if (response.trim() === "error") {
                                 showMessageModal("You have already made this request.", "text-danger");
+                            }else if (response.trim() === "limit") {
+                                showMessageModal("You can't borrow more than 10 books.", "text-danger");
                             }
+                            
                         },
                         error: function () {
                             showMessageModal("You have already made this request.", "text-danger");

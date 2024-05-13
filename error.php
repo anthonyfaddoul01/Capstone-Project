@@ -34,7 +34,7 @@
 while (ob_get_level()) {
   ob_end_flush();
 }
-flush();  // Make sure all buffers are flushed
+flush();
 sleep(3);
 echo "<script>window.location = 'index.php';</script>";
 ?>

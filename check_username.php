@@ -1,18 +1,18 @@
 <?php
-require 'dbconn.php';  // This assumes dbconn.php sets up $mysqli correctly as shown above
+require 'dbconn.php';
 
 header('Content-Type: application/json');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$username = $_POST['username'] ?? ''; // Use null coalescing operator to default to an empty string if not set
+$username = $_POST['username'] ?? '';
 
 if (empty($username)) {
     echo json_encode(['error' => 'Username is required']);
     exit;
 }
 
-$query = $conn->prepare("SELECT COUNT(*) FROM user WHERE  name= ?"); // Replace 'username_column' with the actual column name
+$query = $conn->prepare("SELECT COUNT(*) FROM user WHERE  username= ?"); 
 if ($query) {
     $query->bind_param("s", $username);
     $query->execute();
@@ -24,5 +24,5 @@ if ($query) {
 } else {
     echo json_encode(['error' => 'Query preparation failed: ' . $conn->error]);
 }
-// $mysqli->close();
+
 ?>

@@ -77,7 +77,11 @@
                             <div class='media p-3'>
                                 <div class='media-body'>
                                     <h3 class='dropdown-item-title'>
-                                        $name Admin
+                                    <?php if (!empty($name)): ?>
+                                        <?php echo $name; ?>
+                                    <?php else: ?>
+                                        Library
+                                    <?php endif; ?>
                                     </h3>
                                     <p class='text-sm text-black'>$msg</p>
                                     <p class='text-sm text-muted'><i class='far fa-clock mr-1'></i>" ?>

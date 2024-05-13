@@ -69,7 +69,7 @@ if ($_SESSION['type'] == 'admin') {
                 </div>
                 <br>
                 <div class="d-flex justify-content-center">
-                    <a href="edit_admin_details.php" class="btn btn-primary mx-3">Edit Details</a>
+                    <a href="edit_admin_details.php" class="btn btn-primary mx-3">Change Password</a>
                     <a href="addadmin.php" class="btn btn-primary mx-3">Add admin</a>
                     <a href="addlibrarian.php" class="btn btn-primary mx-3">Add Librarian</a>
                 </div>

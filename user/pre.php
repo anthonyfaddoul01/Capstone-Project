@@ -104,7 +104,7 @@ if ($_SESSION['type'] == 'User') {
                 const rows = table.querySelectorAll('tbody tr');
                 const numRows = rows.length;
                 const numPages = Math.ceil(numRows / rowsPerPage);
-                let currentPage = 1; // Track the current page
+                let currentPage = 1;
 
                 function displayPage(page) {
                     rows.forEach((row, index) => {
@@ -117,7 +117,7 @@ if ($_SESSION['type'] == 'User') {
                     paginationWrapper.className = 'pagination';
 
                     const prevBtn = document.createElement('button');
-                    prevBtn.innerHTML = '&laquo;'; // Left-pointing double angle quotation mark
+                    prevBtn.innerHTML = '&laquo;';
                     prevBtn.onclick = () => {
                         if (currentPage > 1) {
                             displayPage(--currentPage);
@@ -126,7 +126,7 @@ if ($_SESSION['type'] == 'User') {
                     };
 
                     const nextBtn = document.createElement('button');
-                    nextBtn.innerHTML = '&raquo;'; // Right-pointing double angle quotation mark
+                    nextBtn.innerHTML = '&raquo;';
                     nextBtn.onclick = () => {
                         if (currentPage < numPages) {
                             displayPage(++currentPage);

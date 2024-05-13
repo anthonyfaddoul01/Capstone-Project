@@ -56,7 +56,7 @@ if ($_SESSION['type'] == 'admin') {
                                         <hr>
                                         <div class="control-group">
                                             <div class="controls">
-                                                <button type="submit" name="submit" class="btn btn-success">Add
+                                                <button type="submit" name="submit" class="btn btn-success">Send
                                                     Message</button>
                                             </div>
                                         </div>

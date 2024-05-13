@@ -40,7 +40,7 @@ if ($_SESSION['type'] == 'User') {
                         <p>Balance: <?php echo $bal ?>$</p>
                         <div class="buttons"><a href="edit_user_details.php">
                                 <button class="primary">
-                                    Edit Details
+                                    Change Password
                                 </button></a>
                             <a href="message.php">
                                 <button class="primary">
@@ -52,10 +52,10 @@ if ($_SESSION['type'] == 'User') {
                             <ul>
                                 <?php
                                 $l = explode(", ", $interests);
-                                for($i=0;$i<count($l);$i++){
+                                for ($i = 0; $i < count($l); $i++) {
                                     echo "<li>" . $l[$i] . "</li>";
                                 }
-                                ?>  
+                                ?>
                             </ul>
                         </div>
                     </div>

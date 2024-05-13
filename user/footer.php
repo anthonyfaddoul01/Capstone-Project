@@ -11,7 +11,7 @@
               <p>
                 Beirut, Lebanon<br><br>
                 
-                <strong>Email:</strong> info@bookbud.lb<br>
+                <strong>Email:</strong><a href="mailto:bookkbudd@gmail.com"> bookkbudd@gmail.com<br></a>
               </p>
               <div class="social-links mt-3">
                 <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>

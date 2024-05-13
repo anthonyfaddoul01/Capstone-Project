@@ -43,8 +43,8 @@ if ($_SESSION['type'] == 'admin') {
                                                 value="Export to Excel">
                                         </form> -->
                                         <?php
-                                        $sql = "select record.bookId,id,userId,title,Due_Date,Date_of_Issue,Date_of_Return,datediff(curdate(),Due_Date) 
-                                        as x from bookbud.record,bookbud.book where Date_of_Issue and Date_of_Return and book.bookid = record.bookId";
+                                        $sql = "select record.bookId,id,userId,title,Due_Date,Date_of_Issue,Date_of_Return
+                                         from bookbud.record,bookbud.book where Date_of_Issue and Date_of_Return and book.bookid = record.bookId";
                                         $result = $conn->query($sql);
                                         $rowcount = mysqli_num_rows($result);
 
@@ -63,24 +63,22 @@ if ($_SESSION['type'] == 'admin') {
                                                     <th>Book name</th>
                                                     <th>Issue Date</th>
                                                     <th>Return Date</th>
-                                                    <th>Dues</th>
                                                     <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 while ($row = $result->fetch_assoc()) {
+                                                    
+                                                    $id = $row['id'];
+                                                    $userid = $row['userId'];
+                                                    $bookid = $row['bookId'];
+                                                    $title = $row['title'];
+                                                    $issuedate = $row['Date_of_Issue'];
+                                                    $return = $row['Date_of_Return'];
                                                     $namequery = "SELECT username FROM bookbud.user WHERE userId='$userid'";
                                                     $result2 = $conn->query($namequery);
                                                     $name = $result2->fetch_assoc();
-                                                    $id = $row['id'];
-                                                    $userid = $row['userId'];
-                                                    $bookid = $row['BookId'];
-                                                    $name = $row['title'];
-                                                    $issuedate = $row['Date_of_Issue'];
-                                                    $return = $row['Date_of_Return'];
-                                                    $dues = $row['x'];
-                                                    $dues = $row['x'];
                                                     ?>
 
                                                     <tr>
@@ -94,7 +92,7 @@ if ($_SESSION['type'] == 'admin') {
                                                             <?php echo $bookid ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo $name ?>
+                                                            <?php echo $title ?>
                                                         </td>
                                                         <td>
                                                             <?php echo $issuedate ?>
@@ -102,14 +100,6 @@ if ($_SESSION['type'] == 'admin') {
                                                         <td>
                                                             <?php echo $return ?>
                                                         </td>
-                                                        <td>
-                                                            <?php if ($dues > 0)
-                                                                echo "<font color='red'>" . $dues . "</font>";
-                                                            else
-                                                                echo "<font color='green'>0</font>";
-                                                            ?>
-
-
                                                         <td>
                                                             <form action="delcu.php" method="post">
                                                                 <button onclick="return myFunction2()" name="delete"

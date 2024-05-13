@@ -1,5 +1,5 @@
 <?php
-require('dbconn.php');
+require ('dbconn.php');
 
 ?>
 
@@ -14,11 +14,11 @@ if ($_SESSION['type'] == 'admin') {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Library</title>
-        <?php require("links.php") ?>
+        <?php require ("links.php") ?>
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">
-        <?php require("nav.php") ?>
+        <?php require ("nav.php") ?>
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -30,69 +30,40 @@ if ($_SESSION['type'] == 'admin') {
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
-            <div class="card-body">
+            <section class="content">
+                <div class="card">
 
-                <?php
-                //$sql = "select * from bookbud.book";
-                $sql = "SELECT bookId, title, author, mainGenre, isAvailable FROM bookbud.book";
-                $result = $conn->query($sql);
+                    <?php
+                    //$sql = "select * from bookbud.book";
+                    $sql = "SELECT bookId, title, author, mainGenre, isAvailable FROM bookbud.book";
+                    $result = $conn->query($sql);
 
-                ?>
-                <form action="excel.php" method="post" style="float: left;">
-                    <input type="submit" name="export_excel" class="btn btn-success" value="Export All Books">
+                    ?>
+                     <form action="excel.php" method="post" class="pl-4 pt-4">
+                    <input type="submit" name="export_excel" class="btn btn-success" value="Export All Books With all details">
                 </form>
-                <br><br>
-                <table class="table table-bordered table-striped" id="example1">
-                    <thead>
-                        <tr>
-                            <th>Book ID No.</th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Genre</th>
-                            <th>Availability</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <!--<tbody>
-                        <?php
+                
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped" id="example1">
+                            <thead>
+                                <tr>
+                                    <th>Book ID No.</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Genre</th>
+                                    <th>Availability</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
 
-                        //$result=$conn->query($sql);
-                        while ($row = $result->fetch_assoc()) {
-                            $bookid = $row['bookId'];
-                            $title = $row['title'];
-                            $author = $row['author'];
-                            $genre = $row['mainGenre'];
-                            $avail = $row['isAvailable'];
-
-                            ?>
-                            <tr>
-                                <td>
-                                    <?php echo $bookid ?>
-                                </td>
-                                <td>
-                                    <?php echo $title ?>
-                                </td>
-                                <td>
-                                    <?php echo $author ?>
-                                </td>
-                                <td>
-                                    <?php echo $genre ?>
-                                </td>
-                                <td><b>
-                                        <?php echo $avail ?>
-                                    </b></td>
-                                <td>hi</td>
-                                <?php  //add action buttons     ?>
-
-                            </tr>
-                        <?php } ?>
-                    </tbody>-->
-                </table>
-            </div>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </div>
         <!--/.wrapper-->
 
-        <?php require("scripts.php") ?>
+        <?php require ("scripts.php") ?>
         <script>
             // $(document).ready(function () {
             //     $("#example1").DataTable({
@@ -109,9 +80,11 @@ if ($_SESSION['type'] == 'admin') {
                     "lengthChange": false,
                     "autoWidth": false,
                     "ordering": false,
-                    //"searchDelay": 500,
-                    "pageLength": 100
+                    "pageLength": 100,
+                    "dom": 'Bfrtip',
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 });
+                table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
                 $('#example1 tbody').on('click', '.details-btn', function () {
                     var dataId = $(this).data('id');
                     window.location.href = `bookdetails.php?id=${dataId}`;

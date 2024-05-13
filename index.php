@@ -38,15 +38,13 @@ ob_start();
 
     #logo {
       width: 5%;
-      -webkit-filter: invert(100%); /* turning it black */
+      -webkit-filter: invert(100%);
       filter: invert(100%);
     }
   </style>
 </head>
-<!-- //Head -->
 
 <!-- Body -->
-
 <body class="flex-column">
   <div class="container-sm d-flex align-items-center gap-3 justify-content-center p-2 ">
     <img src="images/logo.png" alt="Logo" id="logo">
@@ -121,18 +119,18 @@ ob_start();
   </div>
 
   <!-- Signup Complete Modal -->
-<div id="signupModal" style="display:none;" class="modal">
-  <div class="modal-content bg-warning">
-    <h2>Signup Complete!</h2>
-    <p>Thank you for registering! Please check your email to verify your account.</p>
-    <button class="btn btn-light" onclick="closeModal()">Continue</button>
+  <div id="signupModal" style="display:none;" class="modal">
+    <div class="modal-content bg-warning">
+      <h2>Signup Complete!</h2>
+      <p>Thank you for registering! Please check your email to verify your account.</p>
+      <button class="btn btn-light" onclick="closeModal()">Continue</button>
+    </div>
   </div>
-</div>
 
 
   <?php
   if (isset($_POST['signin'])) {
-    
+
     $u = $_POST['email'];
     $p = $_POST['password'];
 
@@ -143,7 +141,7 @@ ob_start();
     $x = $row['password'];
     $y = $row['type'];
     $id = $row['userId'];
-    if (strcasecmp($x, $p) == 0 && !empty($u) && !empty($p)) {//echo "Login Successful";
+    if (strcasecmp($x, $p) == 0 && !empty($u) && !empty($p)) {
       $_SESSION['email'] = $u;
       $_SESSION['userId'] = $id;
       $_SESSION['type'] = $y;
@@ -169,7 +167,6 @@ ob_start();
   }
 
   if (isset($_POST['signup'])) {
-    // echo '<script>alert("This is an alert message from PHP!");</script>';
 
     echo '<script>console.log("")</script>';
     $name = $_POST['name'];
@@ -182,7 +179,7 @@ ob_start();
         return mysqli_real_escape_string($conn, $item);
       }, $_POST['interests']);
     } else {
-      $genre = []; // Or handle the error as appropriate
+      $genre = [];
     }
     $genres = implode(', ', $genre);
     $type = 'User';
@@ -190,7 +187,6 @@ ob_start();
     $sql = "insert into bookbud.user (name,username,email,password,type,interests) values ('$name','$username','$email','$password','$type','$genres')";
 
     if ($conn->query($sql) === TRUE) {
-      //echo "<script type='text/javascript'>alert('Registration Successful')</script>";\
       echo "<script type='text/javascript'>
       document.addEventListener('DOMContentLoaded', function() {
         openModal(); // Call the function to display the modal
@@ -199,144 +195,139 @@ ob_start();
       $_SESSION['message'] = "Registration Successful";
       $_SESSION['msg_type'] = "success";
     } else {
-      //echo "Error: " . $sql . "<br>" . $conn->error;
-      //echo "<script type='text/javascript'>alert('User Exists')</script>";
       $_SESSION['message'] = "User Exists";
       $_SESSION['msg_type'] = "error";
     }
   }
   ob_flush();
   ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const signupForm = document.getElementById("signup");
-    if (signupForm) {
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const signupForm = document.getElementById("signup");
+      if (signupForm) {
         const inputs = signupForm.querySelectorAll('input[required]');
 
         function updateCustomMessage(input) {
-            if (!input.value) {
-                input.setCustomValidity('Please fill in this field.');
-            } else {
-                input.setCustomValidity('');
-            }
+          if (!input.value) {
+            input.setCustomValidity('Please fill in this field.');
+          } else {
+            input.setCustomValidity('');
+          }
 
-            switch (input.name) {
-                case 'name':
-                    if (!/^[A-Za-z\s]{3,20}$/.test(input.value)) {
-                        input.setCustomValidity('Name must be 3-20 characters long and contain only letters and spaces.');
-                    }
-                    break;
-                case 'email':
-                    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value)) {
-                        input.setCustomValidity('Please enter a valid email address.');
-                    }
-                    else{
-                      checkEmail(input);
-                    }
-                    break;
-                case 'username':
-                    if (input.value) {
-                        checkUsername(input);
-                    }
-                    break;
-                case 'password':
-                    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(input.value)) {
-                        input.setCustomValidity('Password must be at least 8 characters with one uppercase, one lowercase, one number, and one special character.');
-                    }
-                    break;
-            }
-            input.reportValidity();
+          switch (input.name) {
+            case 'name':
+              if (!/^[A-Za-z\s]{3,20}$/.test(input.value)) {
+                input.setCustomValidity('Name must be 3-20 characters long and contain only letters and spaces.');
+              }
+              break;
+            case 'email':
+              if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value)) {
+                input.setCustomValidity('Please enter a valid email address.');
+              }
+              else {
+                checkEmail(input);
+              }
+              break;
+            case 'username':
+              if (input.value) {
+                checkUsername(input);
+              }
+              break;
+            case 'password':
+              if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(input.value)) {
+                input.setCustomValidity('Password must be at least 8 characters with one uppercase, one lowercase, one number, and one special character.');
+              }
+              break;
+          }
+          input.reportValidity();
         }
 
         function checkUsername(input) {
-            const username = input.value;
-            $.ajax({
-                url: 'check_username.php',
-                type: 'POST',
-                data: {username: username},
-                dataType: 'json',
-                success: function(data) {
-                    if (data.exists) {
-                        input.setCustomValidity('Username already exists.');
-                    } else {
-                        input.setCustomValidity('');
-                    }
-                    input.reportValidity();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
-                    console.error("Detailed server response: " + jqXHR.responseText); // Provides the actual response from the server
-                    input.setCustomValidity('Failed to validate username. Try again.');
-                    input.reportValidity();
-                }
-            });
+          const username = input.value;
+          $.ajax({
+            url: 'check_username.php',
+            type: 'POST',
+            data: { username: username },
+            dataType: 'json',
+            success: function (data) {
+              if (data.exists) {
+                input.setCustomValidity('Username already exists.');
+              } else {
+                input.setCustomValidity('');
+              }
+              input.reportValidity();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
+              console.error("Detailed server response: " + jqXHR.responseText); 
+              input.setCustomValidity('Failed to validate username. Try again.');
+              input.reportValidity();
+            }
+          });
         }
 
         function checkEmail(input) {
-            const email = input.value;
-            $.ajax({
-                url: 'check_email.php',
-                type: 'POST',
-                data: {email: email},
-                dataType: 'json',
-                success: function(data) {
-                    if (data.exists) {
-                        input.setCustomValidity('Email already exists.');
-                    } else {
-                        input.setCustomValidity('');
-                    }
-                    input.reportValidity();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
-                    console.error("Detailed server response: " + jqXHR.responseText); // Provides the actual response from the server
-                    input.setCustomValidity('Failed to validate email. Try again.');
-                    input.reportValidity();
-                }
-            });
+          const email = input.value;
+          $.ajax({
+            url: 'check_email.php',
+            type: 'POST',
+            data: { email: email },
+            dataType: 'json',
+            success: function (data) {
+              if (data.exists) {
+                input.setCustomValidity('Email already exists.');
+              } else {
+                input.setCustomValidity('');
+              }
+              input.reportValidity();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
+              console.error("Detailed server response: " + jqXHR.responseText);
+              input.setCustomValidity('Failed to validate email. Try again.');
+              input.reportValidity();
+            }
+          });
         }
 
         inputs.forEach(input => {
-            input.addEventListener('input', function() {
-                updateCustomMessage(input);
-            });
+          input.addEventListener('input', function () {
+            updateCustomMessage(input);
+          });
         });
 
-        signupForm.addEventListener('submit', function(event) {
-            // event.preventDefault();
-            let formIsValid = true;
-            inputs.forEach(input => {
-                updateCustomMessage(input);
-                if (!input.checkValidity()) {
-                    formIsValid = false;
-                }
-            });
-
-            if (formIsValid) {
-             this.submit(); // Updated to use requestSubmit
+        signupForm.addEventListener('submit', function (event) {
+          // event.preventDefault();
+          let formIsValid = true;
+          inputs.forEach(input => {
+            updateCustomMessage(input);
+            if (!input.checkValidity()) {
+              formIsValid = false;
             }
+          });
+
+          if (formIsValid) {
+            this.submit(); 
+          }
         });
+      }
+    });
+    function closeModal() {
+      document.getElementById('signupModal').style.display = 'none';
     }
-});
-// Function to close the modal
-function closeModal() {
-  document.getElementById('signupModal').style.display = 'none';
-}
 
-// Function to open the modal (could be triggered after a successful signup)
-function openModal() {
-  document.getElementById('signupModal').style.display = 'flex';
-}
+    function openModal() {
+      document.getElementById('signupModal').style.display = 'flex';
+    }
 
-// Close the modal when the user clicks on the (x) button
-document.querySelector('.close-button').addEventListener('click', closeModal);
+    document.querySelector('.close-button').addEventListener('click', closeModal);
 
-</script>
+  </script>
 
 
- </body>
+</body>
 
 
 </html>

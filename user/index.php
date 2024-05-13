@@ -19,8 +19,8 @@ if ($_SESSION['type'] == 'User') {
         <?php require ("links.php") ?>
         <style>
             /*--------------------------------------------------------------
-                                                        # Scroll horizontal
-                                                        --------------------------------------------------------------*/
+                                # Scroll horizontal
+            --------------------------------------------------------------*/
             .cover {
                 position: relative;
                 padding: 0px 30px;
@@ -101,18 +101,14 @@ if ($_SESSION['type'] == 'User') {
             }
 
             @media (max-width: 768px) {
-
                 .cover button.left,
                 .cover button.right {
                     font-size: 20px;
-                    /* Adjust button size */
                 }
 
                 .scroll-images .child {
                     min-width: 250px;
-                    /* Adjust book card width */
                     height: auto;
-                    /* Adjust height as needed */
                     padding: 0 10px;
                     margin: 1px 5px;
                 }
@@ -123,59 +119,23 @@ if ($_SESSION['type'] == 'User') {
     <body>
         <?php require ('nav.php'); ?>
         <main id="main">
-            <!-- ======= Hero Section ======= -->
             <section id="hero" class="d-flex align-items-center justify-content-center mt-0">
                 <div class="container">
 
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-lg-8">
                             <h1 id="quoteDisplay"></h1>
-                            <!-- <h2>We are team of talented digital marketers</h2> -->
                         </div>
                     </div>
-
-                    <!-- <div class="row gy-4 mt-5 justify-content-center">
-                        <div class="col-xl-2 col-md-4">
-                            <div class="icon-box">
-                                <i class="ri-store-line"></i>
-                                <h3><a href="">Lorem Ipsum</a></h3>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-md-4">
-                            <div class="icon-box">
-                                <i class="ri-bar-chart-box-line"></i>
-                                <h3><a href="">Dolor Sitema</a></h3>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-md-4">
-                            <div class="icon-box">
-                                <i class="ri-calendar-todo-line"></i>
-                                <h3><a href="">Sedare Perspiciatis</a></h3>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-md-4">
-                            <div class="icon-box">
-                                <i class="ri-paint-brush-line"></i>
-                                <h3><a href="">Magni Dolores</a></h3>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-md-4">
-                            <div class="icon-box">
-                                <i class="ri-database-2-line"></i>
-                                <h3><a href="">Nemos Enimade</a></h3>
-                            </div>
-                        </div>
-                    </div> -->
-
                 </div>
-            </section><!-- End Hero -->
+            </section>
 
             <div class="cover mx-3">
                 <div class="section-title pb-0">
                     <p class="mb-0">Recommended For You</p>
                 </div>
                 <button class="left"><i class="fas fa-arrow-left"></i></button>
-                <div id="recommendationsBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <div id="recommendationsBooks" class="scroll-images"></div>
                 <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="cover mx-3">
@@ -183,7 +143,7 @@ if ($_SESSION['type'] == 'User') {
                     <p class="mb-0">top rated books</p>
                 </div>
                 <button class="left"><i class="fas fa-arrow-left"></i></button>
-                <div id="topRatedBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <div id="topRatedBooks" class="scroll-images"></div> 
                 <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="cover mx-3">
@@ -191,7 +151,7 @@ if ($_SESSION['type'] == 'User') {
                     <p class="mb-0">fiction books</p>
                 </div>
                 <button class="left"><i class="fas fa-arrow-left"></i></button>
-                <div id="fictionBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <div id="fictionBooks" class="scroll-images"></div> 
                 <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="cover mx-3">
@@ -199,7 +159,7 @@ if ($_SESSION['type'] == 'User') {
                     <p class="mb-0">fantasy books</p>
                 </div>
                 <button class="left"><i class="fas fa-arrow-left"></i></button>
-                <div id="fantasyBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <div id="fantasyBooks" class="scroll-images"></div> 
                 <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="cover mx-3">
@@ -207,7 +167,7 @@ if ($_SESSION['type'] == 'User') {
                     <p class="mb-0">young adult books</p>
                 </div>
                 <button class="left"><i class="fas fa-arrow-left"></i></button>
-                <div id="youngadultBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <div id="youngadultBooks" class="scroll-images"></div> 
                 <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="cover mx-3">
@@ -215,7 +175,7 @@ if ($_SESSION['type'] == 'User') {
                     <p class="mb-0">Romance books</p>
                 </div>
                 <button class="left"><i class="fas fa-arrow-left"></i></button>
-                <div id="romanceBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <div id="romanceBooks" class="scroll-images"></div> 
                 <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="cover mx-3">
@@ -223,7 +183,7 @@ if ($_SESSION['type'] == 'User') {
                     <p class="mb-0">Nonfiction books</p>
                 </div>
                 <button class="left"><i class="fas fa-arrow-left"></i></button>
-                <div id="nonfictionBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <div id="nonfictionBooks" class="scroll-images"></div> 
                 <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
             </div>
             <div class="cover mx-3">
@@ -231,10 +191,10 @@ if ($_SESSION['type'] == 'User') {
                     <p class="mb-0">New books - 2024</p>
                 </div>
                 <button class="left"><i class="fas fa-arrow-left"></i></button>
-                <div id="newBooks" class="scroll-images"></div> <!-- Dynamically loaded content goes here -->
+                <div id="newBooks" class="scroll-images"></div> 
                 <button class="right pr-0"><i class="fas fa-arrow-right"></i></button>
             </div>
-        </main><!-- End #main -->
+        </main>
         <?php require ("footer.php") ?>
 
         <?php require ("scripts.php") ?>
@@ -257,14 +217,12 @@ if ($_SESSION['type'] == 'User') {
                 const $leftButton = $(sectionId).siblings('.left');
                 const $rightButton = $(sectionId).siblings('.right');
 
-                // Function to scroll left
                 $leftButton.off('click').on('click', function () {
                     $scrollContainer.animate({
                         scrollLeft: '-=300'
                     }, 'smooth');
                 });
 
-                // Function to scroll right
                 $rightButton.off('click').on('click', function () {
                     $scrollContainer.animate({
                         scrollLeft: '+=300'
@@ -272,7 +230,6 @@ if ($_SESSION['type'] == 'User') {
                 });
             }
 
-            // Call this function for each section on document ready or specific events
             $(document).ready(function () {
                 loadSectionBooks('topRated');
                 loadSectionBooks('fiction');
@@ -286,7 +243,7 @@ if ($_SESSION['type'] == 'User') {
 
             $(document).ready(function () {
                 $.ajax({
-                    url: 'getRecommendedForUser.php', // Adjust this to the actual PHP file fetching books
+                    url: 'getRecommendedForUser.php',
                     type: 'GET',
                     dataType: 'json',
                     success: function (books) {
@@ -309,7 +266,7 @@ if ($_SESSION['type'] == 'User') {
                         type: 'GET',
                         dataType: 'json',
                         success: function (data) {
-                            var recommendations = data.slice(0, 5); // Get only the first two recommendations
+                            var recommendations = data.slice(0, 3);
                             recommendations.forEach(function (rec) {
                                 fetchBookDetails(rec.ID);
                             });
@@ -322,7 +279,7 @@ if ($_SESSION['type'] == 'User') {
 
                 function fetchBookDetails(recBookId) {
                     $.ajax({
-                        url: 'fetch_recbook_details.php', // PHP script to fetch book details by ID
+                        url: 'fetch_recbook_details.php',
                         data: { bookId: recBookId },
                         type: 'GET',
                         dataType: 'json',

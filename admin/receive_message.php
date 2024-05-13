@@ -25,7 +25,7 @@ if ($_SESSION['type'] == 'admin') {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Currently Issued Books</h1>
+                            <h1>Messages</h1>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -77,7 +77,7 @@ if ($_SESSION['type'] == 'admin') {
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <form action="del.php" method="post">
+                                                        <form action="delmessage.php" method="post">
                                                             <button onclick="return myFunction2()" name="delete" type="submit"
                                                                 class="btn btn-primary">Delete </button>
                                                             <script>

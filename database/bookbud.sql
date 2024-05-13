@@ -81,19 +81,6 @@ CREATE TABLE `message` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recommendations`
---
-
-CREATE TABLE `recommendations` (
-  `R_ID` int(10) NOT NULL,
-  `Book_Name` varchar(50) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  `userId` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `record`
 --
 
@@ -136,31 +123,6 @@ CREATE TABLE `return` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock`
---
-
-CREATE TABLE `stock` (
-  `id` int(11) NOT NULL,
-  `stock_left` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl`
---
-
-CREATE TABLE `tbl` (
-  `bookId` int(11) NOT NULL,
-  `deletor` varchar(255) NOT NULL,
-  `item` varchar(255) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user`
 --
 
@@ -171,11 +133,11 @@ CREATE TABLE `user` (
   `email` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `type` varchar(50) DEFAULT NULL,
-  `balance` int(255) DEFAULT 0,
+  `balance` Numeric(10,2) DEFAULT 0,
   `currentBorrowed` int(255) DEFAULT NULL,
   `interests` VARCHAR(250) DEFAULT NULL,
   `borrowedNb` int(10) DEFAULT 0,
-  `creationDate` TIMESTAMP DEFAULT CURRENT_DATE() 
+  `creationDate` TIMESTAMP DEFAULT CURRENT_DATE()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -219,13 +181,6 @@ ALTER TABLE `message`
   ADD KEY `userId` (`userId`);
 
 --
--- Indexes for table `recommendations`
---
-ALTER TABLE `recommendations`
-  ADD PRIMARY KEY (`R_ID`),
-  ADD KEY `userId` (`userId`);
-
---
 -- Indexes for table `record`
 --
 ALTER TABLE `record`
@@ -243,18 +198,6 @@ ALTER TABLE `renew`
 --
 ALTER TABLE `return`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `stock`
---
-ALTER TABLE `stock`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl`
---
-ALTER TABLE `tbl`
-  ADD PRIMARY KEY (`bookId`);
 
 --
 -- Indexes for table `user`
@@ -286,12 +229,6 @@ ALTER TABLE `message`
   MODIFY `M_Id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=371;
 
 --
--- AUTO_INCREMENT for table `recommendations`
---
-ALTER TABLE `recommendations`
-  MODIFY `R_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
 -- AUTO_INCREMENT for table `record`
 --
 ALTER TABLE `record`
@@ -302,19 +239,6 @@ ALTER TABLE `record`
 --
 ALTER TABLE `return`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
---
--- AUTO_INCREMENT for table `stock`
---
-ALTER TABLE `stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tbl`
---
-ALTER TABLE `tbl`
-  MODIFY `BookId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
-
 
 --
 -- Constraints for dumped tables
@@ -331,12 +255,6 @@ ALTER TABLE `message`
 ALTER TABLE `favorites`
   ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
   ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`bookId`) REFERENCES `book` (`bookId`);
-
---
--- Constraints for table `recommendations`
---
-ALTER TABLE `recommendations`
-  ADD CONSTRAINT `recommendations_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
 
 --
 -- Constraints for table `renew`

@@ -46,14 +46,15 @@ if ($_SESSION['type'] == 'admin') {
                                                 <th>Borrower's Username</th>
                                                 <th>Book ID</th>
                                                 <th>Book Name</th>
-                                                <th>Availability</th>
+                                                <th>Dues</th>
+                                                <th>Penalty</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $sql = "select return.bookId,return.userId,title,datediff(curdate(),Due_Date) 
-                                                as x from bookbud.return,bookbud.book,bookbud.record where Date_of_Return is NULL and 
+                                            $sql = "select return.bookId,return.userId,title,Dues, Penalty 
+                                                from bookbud.return,bookbud.book,bookbud.record where Date_of_Return is NULL and 
                                                 return.bookId=book.bookId and return.bookId=record.bookId and return.userId=record.userId";
 
                                             $result = $conn->query($sql);
@@ -64,7 +65,8 @@ if ($_SESSION['type'] == 'admin') {
                                                 $result2 = $conn->query($namequery);
                                                 $name = $result2->fetch_all(MYSQLI_ASSOC);
                                                 $title = $row['title'];
-                                                $dues = $row['x'];
+                                                $dues = $row['Dues'];
+                                                $penalty = $row['Penalty'];
 
 
                                                 ?>
@@ -83,6 +85,9 @@ if ($_SESSION['type'] == 'admin') {
                                                         </b></td>
                                                     <td>
                                                         <?php echo $dues ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $penalty ?>
                                                     </td>
                                                     <td>
                                                         <center>

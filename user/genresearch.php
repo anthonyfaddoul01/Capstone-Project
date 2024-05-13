@@ -24,8 +24,8 @@ if ($_SESSION['type'] == 'User') {
 
     <style>
       /*--------------------------------------------------------------
-                                                                  # Scroll horizontal
-                                                                  --------------------------------------------------------------*/
+                           # Scroll horizontal
+      --------------------------------------------------------------*/
       .cover {
         position: relative;
         padding: 0px 30px;
@@ -42,7 +42,7 @@ if ($_SESSION['type'] == 'User') {
         font-size: 24px;
         cursor: pointer;
         z-index: 10;
-        height:80%;
+        height: 80%;
         padding: 10px;
         margin-top: 6px;
       }
@@ -134,14 +134,11 @@ if ($_SESSION['type'] == 'User') {
         .cover button.left,
         .cover button.right {
           font-size: 20px;
-          /* Adjust button size */
         }
 
         .scroll-images .child {
           min-width: 250px;
-          /* Adjust book card width */
           height: auto;
-          /* Adjust height as needed */
           padding: 0 10px;
           margin: 1px 5px;
         }
@@ -149,14 +146,10 @@ if ($_SESSION['type'] == 'User') {
 
       .sidebar {
         width: inherit;
-        /* Adjust the width as needed */
         height: 100vh;
-        /* Set the height to the full view height */
         background-color: #000;
-        /* Adjust the background color to match your sidebar */
         padding: 1rem;
         position: fixed;
-        /* Fixed sidebar */
         overflow-y: auto;
       }
 
@@ -174,7 +167,6 @@ if ($_SESSION['type'] == 'User') {
       .sidebar .nav-link.active {
         color: #000;
         background-color: #fff;
-        /* Adjust active link background color */
         border-radius: 0.25rem;
         font-weight: bolder;
       }
@@ -213,14 +205,12 @@ if ($_SESSION['type'] == 'User') {
 
       }
 
-      /* Further customization can be done here */
     </style>
   </head>
 
   <body class="bg-white">
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <div class="sidebar">
-        <!-- Sidebar content -->
         <a href="#" class="brand d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
           <img src="images/logo.png" alt="Logo" width="40" height="32" />
           BookBud
@@ -236,7 +226,6 @@ if ($_SESSION['type'] == 'User') {
             <a href="#" class="nav-link active" onclick="searchBooks(1)"> Favorites </a>
           </li>
 
-          <!-- More categories -->
         </ul>
         <hr />
         <span
@@ -364,22 +353,15 @@ if ($_SESSION['type'] == 'User') {
             </a>
           </li>
 
-
-
-          <!-- More genres -->
         </ul>
         <hr />
-        <!-- Rest of the sidebar content -->
       </div>
     </aside>
-    <!-- ======= Header ======= -->
     <header id="header" class=" header-inner-pages" style="background:rgba(0, 0, 0, 1);">
       <div class="container-lg d-flex align-items-center justify-content-between justify-content-lg-center pr-3">
         <a class="nav-link d-block d-lg-none" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"
             style="color:white; font-size:20px;"></i></a>
 
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         <?php
         $userId = $_SESSION['userId'];
         $sql = "select * from bookbud.user where userId='$userId'";
@@ -412,17 +394,17 @@ if ($_SESSION['type'] == 'User') {
             </li>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
+        </nav>
         <div></div>
 
 
       </div>
-    </header><!-- End Header -->
+    </header>
     <div class="content-wrapper mt-5 bg-white">
       <div id="display" class="display row col-12"></div>
     </div>
     <div id="rec"></div>
-    <!-- Bootstrap JS -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       function fetchBooksByGenre(genre, page) {
@@ -470,18 +452,6 @@ if ($_SESSION['type'] == 'User') {
           }
         });
       }
-      function createRecommendationSection(bookTitle) {
-        var safeId = bookTitle.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, ''); // Strip special characters
-        var sectionHtml = '<div class="cover mx-3">' +
-          '<div class="section-title pb-0">' +
-          '<p class="mb-0">Because you read <span class="text-warning">' + bookTitle + '</span></p>' +
-          '</div>' +
-          '<button class="left-arrow" onclick="scrollHorizontally(\'recommendations_' + safeId + '\', \'left\')">&#9664;</button>' +
-          '<div class="scroll-images" id="recommendations_' + safeId + '"></div>' +
-          '<button class="right-arrow" onclick="scrollHorizontally(\'recommendations_' + safeId + '\', \'right\')">&#9654;</button>' +
-          '</div>';
-        $('#display').append(sectionHtml); // Append to a main container
-      }
 
       function getRecommendations(bookTitle, bookId) {
         $.ajax({
@@ -490,7 +460,7 @@ if ($_SESSION['type'] == 'User') {
           type: 'GET',
           dataType: 'json',
           success: function (data) {
-            var recommendations = data.slice(0, 5);
+            var recommendations = data.slice(0, 10);
             recommendations.forEach(function (rec) {
               fetchBookDetails(rec.ID, bookTitle);
             });
@@ -500,31 +470,52 @@ if ($_SESSION['type'] == 'User') {
           }
         });
       }
-      function updateScrolling(containerId) {
-        var scrollContainer = $('#' + containerId);
-        if (scrollContainer.outerWidth() < scrollContainer.get(0).scrollWidth) {
-          scrollContainer.css('cursor', 'pointer');
+      function createRecommendationSection(bookTitle) {
+        var safeId = bookTitle.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+        var sectionHtml = '<div class="cover mx-3">' +
+          '<div class="section-title pb-0">' +
+          '<p class="mb-0">Because you read <span class="text-warning">' + bookTitle + '</span></p>' +
+          '</div>' +
+          '<button class="left-arrow" onclick="scrollHorizontally(\'recommendations_' + safeId + '\', \'left\')">&#9664;</button>' +
+          '<div class="scroll-images" id="recommendations_' + safeId + '"></div>' +
+          '<button class="right-arrow" onclick="scrollHorizontally(\'recommendations_' + safeId + '\', \'right\')">&#9654;</button>' +
+          '</div>';
+        $('#display').append(sectionHtml);
+      }
+
+      function scrollHorizontally(id, direction) {
+        var container = $('#' + id.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|/@])/g, '\\$1'));
+        var scrollAmount = 200;
+
+        if (direction === 'right') {
+          container.scrollLeft(container.scrollLeft() + scrollAmount);
+        } else {
+          container.scrollLeft(container.scrollLeft() - scrollAmount);
         }
       }
+
       function fetchBookDetails(recBookId, bookTitle) {
+        var safeId = 'recommendations_' + bookTitle.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
         $.ajax({
           url: 'fetch_recbook_details.php',
           data: { bookId: recBookId },
           type: 'GET',
           dataType: 'json',
           success: function (bookDetails) {
-            var bookHtml = '<div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div><div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div>';
-            $('#recommendations_' + bookTitle.replace(/\s+/g, '_')).append(bookHtml);
-            updateScrolling('recommendations_' + bookTitle.replace(/\s+/g, '_'));
+            var bookHtml = '<div class="col mb-5"><div class="card" style="width: 18rem;"><a href="bookdetails.php?id=' + bookDetails.bookId + '"><img src="' + bookDetails.coverImage + '" class="card-img-top imgcontainer"></a></div></div>';
+            $('#' + safeId).append(bookHtml);
+            console.log('#' + safeId);
+            updateScrolling(safeId);
           },
           error: function (xhr, status, error) {
             console.error('Failed to fetch book details: ' + error);
           }
         });
       }
+      
       function scrollHorizontally(id, direction) {
         var container = document.getElementById(id);
-        var scrollAmount = 200; // adjust scroll step size as needed
+        var scrollAmount = 200;
 
         if (direction === 'right') {
           container.scrollBy({ left: scrollAmount, behavior: 'smooth' });

@@ -1,5 +1,5 @@
 <?php
-require('dbconn.php');
+require ('dbconn.php');
 
 ?>
 
@@ -14,11 +14,11 @@ if ($_SESSION['type'] == 'admin') {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Library</title>
-        <?php require("links.php") ?>
+        <?php require ("links.php") ?>
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">
-        <?php require("nav.php") ?>
+        <?php require ("nav.php") ?>
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -41,38 +41,20 @@ if ($_SESSION['type'] == 'admin') {
                         $sql = "select * from bookbud.user where userId='$userid'";
                         $result = $conn->query($sql);
                         $row = $result->fetch_assoc();
-
-                        $name = $row['name'];
-                        $email = $row['email'];
-                        $username = $row['username'];
                         $pass = $row['password'];
                         ?>
                         <!-- form start -->
                         <form action="edit_admin_details.php?id=<?php echo $userid ?>" method="post">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" name="name" id="name" required
-                                        value="<?php echo $name ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="text" class="form-control" name="email" id="email"
-                                        value="<?php echo $email ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" class="form-control" name="username" id="username"
-                                        value="<?php echo $username ?>">
-                                </div>
-                                <div class="form-group">
                                     <label for="oldpassword">Current Password <span class="text-danger">*</span></label>
                                     <input type="password" class="form-control" name="oldpassword" id="oldpassword"
                                         required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password">New Password</label>
-                                    <input type="password" class="form-control" name="password" id="password">
+                                    <label for="password">New Password <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" name="password" id="password" required
+                                        oninput="updateCustomMessage(this)">
                                 </div>
                                 <input name="matchpass" id="matchpass" type="hidden" value="<?php echo $pass ?>">
 
@@ -80,7 +62,7 @@ if ($_SESSION['type'] == 'admin') {
                             <!-- /.card-body -->
 
                             <div class="card-footer float-right">
-                                <button type="submit" name="submit" class="btn btn-success">Update Details</button>
+                                <button type="submit" name="submit" class="btn btn-success">Update Password</button>
                             </div>
                         </form>
                     </div>
@@ -91,23 +73,36 @@ if ($_SESSION['type'] == 'admin') {
             </div>
         </div>
         <!--/.wrapper-->
-
-        <?php require("scripts.php") ?>
+        <script>
+            function updateCustomMessage(input) {
+                var oldpass = "<?php echo $pass; ?>";
+                if (!input.value) {
+                    input.setCustomValidity('Please fill in this field.');
+                } else {
+                    input.setCustomValidity('');
+                    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/.test(input.value)) {
+                        input.setCustomValidity('Password must be at least 8 characters with one uppercase, one lowercase, one number, and one special character.');
+                    }
+                    else if (input.value === oldpass) {
+                        input.setCustomValidity('New password cannot be the same as the current password.');
+                    }
+                }
+                input.reportValidity();
+            }
+        </script>
+        <?php require ("scripts.php") ?>
 
         <?php
         if (isset($_POST['submit'])) {
             $userid = $_GET['id'];
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $username = $_POST['username'];
             $oldpass = $_POST['oldpassword'];
             $matchpass = $_POST['matchpass'];
-            $newpass = empty($_POST['password']) ? $matchpass : $newpass;
+            $newpass = $_POST['password'];
 
-            if ($oldpass === $matchpass) {
-                $sql1 = "UPDATE bookbud.user SET name=?, email=?, username=?, password=? WHERE userId=?";
+            if ($oldpass === $matchpass && $newpass != $matchpass) {
+                $sql1 = "UPDATE bookbud.user SET password=? WHERE userId=?";
                 $stmt = $conn->prepare($sql1);
-                $stmt->bind_param("ssssi", $name, $email, $username, $newpass, $userid);
+                $stmt->bind_param("si", $newpass, $userid);
                 if ($stmt->execute()) {
                     echo "<script>alert('Success'); window.location.href='index.php';</script>";
                 } else {
